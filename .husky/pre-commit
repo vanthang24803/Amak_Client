@@ -1,0 +1,7 @@
+echo "Running lint 🧨🧨🧨🧨🧨"
+pnpm lint
+
+echo "Runing build application 💀💀💀💀💀"
+pnpm build
+
+echo "Application build sucess 👏👏👏👏👏"
