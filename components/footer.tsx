@@ -13,7 +13,7 @@ import {
 export const Footer = () => {
   return (
     <>
-      <div className="max-w-screen-xl lg:block hidden mx-auto  py-8 border-t-[1px]">
+      <footer className="max-w-screen-xl lg:block hidden mx-auto  py-8 border-t-[1px]">
         <div className="flex justify-between pb-6">
           <div className="flex flex-col space-y-3">
             <p className="text-xl font-semibold text-[#417505]">
@@ -68,7 +68,7 @@ export const Footer = () => {
             May Nguyen
           </Link>
         </span>
-      </div>
+      </footer>
 
       <div className="lg:hidden flex flex-col ">
         <Accordion type="single" collapsible className="w-full px-4 md:px-8">

@@ -1,7 +1,10 @@
+"use client";
+
 import { Logo } from "@/components/logo";
-// import { SearchPage } from "@/components/search";
-// import { Menubar } from "@/components/menu-bar";
-// import { ActionMenu } from "@/components/action-menu";
+import SearchComponent from "@/components/search/search";
+import { Menubar } from "@/components/menu-bar";
+import ActionMenu from "@/components/action-menu";
+import { Suspense } from "react";
 
 export const Navbar = () => {
   return (
@@ -9,10 +12,12 @@ export const Navbar = () => {
       <div className="md:max-w-screen-xl mx-auto flex items-center w-full justify-between">
         <div className="flex items-center space-x-8">
           <Logo />
-          {/* <Menubar /> */}
+          <Menubar />
         </div>
-        {/* <SearchPage /> */}
-        {/* <ActionMenu /> */}
+        <Suspense fallback={null}>
+          <SearchComponent />
+        </Suspense>
+        <ActionMenu />
       </div>
     </nav>
   );
