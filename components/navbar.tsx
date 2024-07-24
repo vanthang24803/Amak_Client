@@ -3,7 +3,7 @@
 import { Logo } from "@/components/logo";
 import SearchComponent from "@/components/search/search";
 import { Menubar } from "@/components/menu-bar";
-// import { ActionMenu } from "@/components/action-menu";
+import ActionMenu from "@/components/action-menu";
 import { Suspense } from "react";
 
 export const Navbar = () => {
@@ -17,7 +17,7 @@ export const Navbar = () => {
         <Suspense fallback={null}>
           <SearchComponent />
         </Suspense>
-        {/* <ActionMenu /> */}
+        <ActionMenu />
       </div>
     </nav>
   );
