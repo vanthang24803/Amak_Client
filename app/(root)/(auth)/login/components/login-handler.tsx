@@ -20,6 +20,7 @@ import { SocialButton } from "./social-btn";
 import toast from "react-hot-toast";
 import _http from "@/utils/http";
 import useAuth from "@/hooks/use-auth";
+import useSocialLogin from "@/hooks/use-social-login";
 
 export type LoginFromValue = z.infer<typeof loginValidation>;
 
@@ -29,6 +30,8 @@ export const LoginHandler = () => {
   const [loading, setLoading] = useState(false);
 
   const { login, isLogin } = useAuth();
+
+  const { loginWithGoogle } = useSocialLogin();
 
   const form = useForm({
     resolver: zodResolver(loginValidation),
@@ -127,7 +130,7 @@ export const LoginHandler = () => {
         <SocialButton
           provider="google"
           size={18}
-          onClick={() => toast.success("Hello World")}
+          onClick={() => loginWithGoogle()}
         />
       </div>
 

@@ -14,7 +14,7 @@ type Store = {
   getProfile: () => Promise<void>;
   signInWithSocial: (token: string | undefined) => void;
   logout: () => Promise<void>;
-  verifyEmail: (userId: string | null, token: string | null) => void;
+  verifyEmail: () => void;
 };
 
 const useAuth = create(
@@ -77,18 +77,22 @@ const useAuth = create(
       signInWithSocial(token) {
         if (token) {
           _http
-            .post(`/api/auth/social?token=${token}`)
+            .post(`/Authentication/Google`, {
+              token: token,
+            })
             .then((response) => {
               set({
                 isLogin: true,
               });
 
-              Cookies.set("token", response.data.token);
-              Cookies.set("roles", response.data.user.role);
+              Cookies.set("ac_token", response.data.result.accessToken);
+              Cookies.set("rf_token", response.data.result.refreshToken);
             })
             .catch((error) => {
               console.log(error);
             });
+
+          console.log(token);
         }
       },
       logout: async () => {
@@ -105,21 +109,11 @@ const useAuth = create(
           console.log(error);
         }
       },
-      verifyEmail: (userId, token) => {
-        _http
-          .get(`/api/auth/verify-account?userId=${userId}&token=${token}`)
-          .then((response) => {
-            set({
-              profile: response.data.user,
-              isLogin: true,
-            });
 
-            Cookies.set("token", response.data.token);
-            Cookies.set("roles", response.data.user.role);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      verifyEmail: () => {
+        set({
+          isLogin: true,
+        });
       },
     }),
     {
