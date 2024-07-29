@@ -21,8 +21,6 @@ const useAuth = create(
   persist<Store>(
     (set, get) => ({
       profile: null,
-      accessToken: "",
-      refreshToken: "",
       isLogin: false,
       login: async (data: LoginFromValue) => {
         try {
@@ -69,8 +67,13 @@ const useAuth = create(
               profile: response.data.result,
             });
           }
-        } catch (error) {
+        } catch (error: any) {
           console.log(error);
+          if (error.response && error.response.status === 401) {
+            set({
+              isLogin: false,
+            });
+          }
         }
       },
 
@@ -87,17 +90,18 @@ const useAuth = create(
 
               Cookies.set("ac_token", response.data.result.accessToken);
               Cookies.set("rf_token", response.data.result.refreshToken);
+              console.log(response);
             })
             .catch((error) => {
               console.log(error);
             });
-
-          console.log(token);
         }
       },
       logout: async () => {
         try {
-          const response = await _http.post("/Authentication/Logout");
+          const response = await _http.post("/Authentication/Logout", {
+            token: Cookies.get("ac_token"),
+          });
           if (response.status === 200) {
             set({ profile: null, isLogin: false });
             Cookies.set("ac_token", "");

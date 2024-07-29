@@ -35,7 +35,7 @@ const SearchComponent = () => {
 
 
   return (
-    <div className="relative md:block hidden dark:border-white group" ref={ref}>
+    <div className="relative lg:block hidden dark:border-white group" ref={ref}>
       <Input
         className="lg:w-[500px] md:w-[300px] h-10 font-medium"
         onClick={() => setOpen(true)}

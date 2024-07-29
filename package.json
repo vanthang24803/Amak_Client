@@ -32,6 +32,8 @@
     "clipboard-copy": "^4.0.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "embla-carousel-autoplay": "^8.1.7",
+    "embla-carousel-react": "^8.1.7",
     "firebase": "^10.12.4",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",

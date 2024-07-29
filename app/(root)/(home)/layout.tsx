@@ -15,7 +15,7 @@ export default async function HomeLayout({
       <body className={font.className}>
         <Navbar />
         <ModalProvider />
-        <div className="bg-[#f2f3f5] h-svh mt-14">{children}</div>
+        <div className="bg-[#f2f3f5]  mt-14">{children}</div>
         <Footer />
       </body>
     </html>
