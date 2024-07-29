@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Minus, Plus } from "lucide-react";
 import { DialogTitle } from "../ui/dialog";
+import { ShareModal } from "./share-modal";
 
 type Props = {
   product: Product;
@@ -39,13 +40,15 @@ export default function InformationModal({ product }: Props) {
 
   return (
     <div className="flex flex-col space-y-2 p-4">
-      <DialogTitle className="text-md font-bold tracking-tighter">{product?.name}</DialogTitle>
-      <div className="text-[12px]">
+      <DialogTitle className="text-md font-bold tracking-tighter">
+        {product?.name}
+      </DialogTitle>
+      <div className="text-[12px] tracking-tighter">
         Mã sản phẩm:{" "}
         <span className="text-[#417505] font-bold">{option?.id}</span>
       </div>
       <div className="flex items-center justify-between">
-        <div className="text-[12px]">
+        <div className="text-[12px] tracking-tighter">
           Tình trạng:{" "}
           {option?.isActive ? (
             <span className="text-[#417505] font-bold">Còn hàng</span>
@@ -53,8 +56,8 @@ export default function InformationModal({ product }: Props) {
             <span className="text-[#417505] font-bold">Hết hàng</span>
           )}
         </div>
-        <div className="text-[12px]">
-          Thuơng Hiệu:
+        <div className="text-[12px] tracking-tighter">
+          Thuơng Hiệu:{" "}
           <span className="text-[#417505] font-bold">{product.brand}</span>
         </div>
       </div>
@@ -90,7 +93,7 @@ export default function InformationModal({ product }: Props) {
               variant={item.id === option?.id ? "primary" : "outline"}
               key={index}
               onClick={() => handleOptionChange(item.id)}
-              className="rounded-sm h-8 px-3 py-4 text-[12px]"
+              className="rounded-sm h-8 px-3 py-4 text-[12px] tracking-tighter"
             >
               {item.name}
             </Button>
@@ -102,7 +105,11 @@ export default function InformationModal({ product }: Props) {
         <span className="font-semibold">Số lượng:</span>
         <div className="flex items-center space-x-2">
           {total > 0 ? (
-            <Button className="rounded-sm w-7 h-7" size="icon" onClick={() => setTotal(total - 1)}>
+            <Button
+              className="rounded-sm w-7 h-7"
+              size="icon"
+              onClick={() => setTotal(total - 1)}
+            >
               <Minus className="w-4 h-4 " />
             </Button>
           ) : (
@@ -115,10 +122,14 @@ export default function InformationModal({ product }: Props) {
               <Minus className="w-4 h-4" />
             </Button>
           )}
-          <Button disabled variant="outline" size="icon" >
+          <Button disabled variant="outline" size="icon">
             {total}
           </Button>
-          <Button size="icon" className="w-7 h-7 rounded-sm"  onClick={() => setTotal(total + 1)}>
+          <Button
+            size="icon"
+            className="w-7 h-7 rounded-sm"
+            onClick={() => setTotal(total + 1)}
+          >
             <Plus className="w-4 h-4" />
           </Button>
         </div>
@@ -146,7 +157,9 @@ export default function InformationModal({ product }: Props) {
         </Button>
       )}
 
-      {/* {product && <Share id={product.id} name={product.name} show={true} />} */}
+      {product && (
+        <ShareModal id={product.id} name={product.name} isActive={true} />
+      )}
     </div>
   );
 }

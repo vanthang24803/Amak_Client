@@ -5,6 +5,7 @@ import { Separator } from "../ui/separator";
 import { Spinner } from "../spinner";
 import { Product } from "@/types/product";
 import { convertPrice, formatPrice } from "@/utils/price";
+import { generateSlug } from "@/utils/slug";
 
 export const SearchContent = ({
   content,
@@ -34,7 +35,7 @@ export const SearchContent = ({
                     {product.slice(0, 5).map((item, index) => (
                       <div className="flex flex-col space-y-2" key={index}>
                         <Link
-                          href={`/products/${item.id}`}
+                          href={`/products/${generateSlug(item.name, item.id)}`}
                           className="flex items-center justify-between"
                         >
                           <div className="flex flex-col space-y-1 lg:w-full w-2/3">
