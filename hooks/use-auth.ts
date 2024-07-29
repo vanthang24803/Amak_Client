@@ -70,7 +70,9 @@ const useAuth = create(
         } catch (error: any) {
           console.log(error);
           if (error.response && error.response.status === 401) {
-            get().logout();
+            set({
+              isLogin: false,
+            });
           }
         }
       },

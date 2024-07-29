@@ -18,8 +18,9 @@ import { ScrollArea } from "../ui/scroll-area";
 import { useRouter } from "next/navigation";
 import { ShoppingCart, X } from "lucide-react";
 import { Separator } from "../ui/separator";
-import { convertPrice } from "@/utils/price";
+import { convertPrice, formatPrice } from "@/utils/price";
 import { Button } from "../ui/button";
+import { UpdateCart } from "./cart-update";
 
 export default function CartAction() {
   const { isClient } = useClient();
@@ -47,7 +48,7 @@ export default function CartAction() {
       <SheetContent>
         <SheetHeader>
           <Link href={`/cart`}>
-            <SheetTitle>Giỏ Hàng </SheetTitle>
+            <SheetTitle>Giỏ Hàng</SheetTitle>
           </Link>
           <SheetDescription>
             Số sản phẩm trong giỏ hàng: {cart.totalItems()}
@@ -67,7 +68,7 @@ export default function CartAction() {
                         <img
                           src={item.product.thumbnail}
                           alt="thumbnail"
-                          className="w-[20%] object-cover"
+                          className="w-1/4 object-fill"
                           onClick={() =>
                             router.push(`/products/${item.product.id}`)
                           }
@@ -75,7 +76,7 @@ export default function CartAction() {
                         <div className="flex flex-col">
                           <div className="relative w-[250px]">
                             <span
-                              className="font-semibold md:w-[180px] line-clamp-2"
+                              className="font-semibold text-[12px] md:w-[160px] line-clamp-2"
                               onClick={() =>
                                 router.push(`/products/${item.product.id}`)
                               }
@@ -92,10 +93,10 @@ export default function CartAction() {
                               }
                             />
                           </div>
-                          <span className="text-neutral-400 text-[12px]">
+                          <span className="text-neutral-400 text-[11px] tracking-tighter">
                             {item.product.options[0].name}
                           </span>
-                          {/* <div className="flex items-center justify-between space-x-6 my-2">
+                          <div className="flex items-center space-x-4 mt-2 mb-4">
                             <UpdateCart
                               productId={item.product.id}
                               optionId={item.product.options[0].id}
@@ -112,10 +113,10 @@ export default function CartAction() {
                               </span>
 
                               <span className="text-[12px] line-through hidden md:block">
-                                {price(item.product.options[0].price)}₫
+                                {convertPrice(item.product.options[0].price)}₫
                               </span>
                             </div>
-                          </div> */}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -124,7 +125,9 @@ export default function CartAction() {
               ) : (
                 <div className="flex items-center justify-center flex-col space-y-4 my-8">
                   <ShoppingCart className="w-20 h-20" />
-                  <span className="tracking-tighter font-medium text-sm">Hiện chưa có sản phẩm</span>
+                  <span className="tracking-tighter font-medium text-sm">
+                    Hiện chưa có sản phẩm
+                  </span>
                 </div>
               )}
             </div>

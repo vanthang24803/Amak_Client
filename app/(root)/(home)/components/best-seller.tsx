@@ -8,11 +8,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Skeleton } from "@/components/ui/skeleton";
 import useFetch from "@/hooks/use-fetch";
 import { Product } from "@/types/product";
 
 export const BestSeller = () => {
-  const { data } = useFetch<Product[]>({
+  const { data, loading } = useFetch<Product[]>({
     url: `/Products?Limit=6`,
   });
 
@@ -44,7 +45,11 @@ export const BestSeller = () => {
           </div>
         </Carousel>
       ) : (
-        <span>Hello</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full h-[50vh] md:gap-8">
+          {[...Array(4)].map((_, index) => (
+            <Skeleton key={index} className="w-full h-full bg-white " />
+          ))}
+        </div>
       )}
     </div>
   );

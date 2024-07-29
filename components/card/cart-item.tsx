@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Cart } from "../svg";
 import useCart from "@/hooks/use-cart";
+import { ProductModal } from "../modal/product-modal";
 
 type Props = {
   product: Product;
@@ -26,6 +27,7 @@ export const Card = ({ product }: Props) => {
         title={product.name}
         className="md:h-[35vh] object-contain rounded-md  transform transition-transform duration-500 p-2 w-full"
       />
+      <ProductModal id={product.id} />
       {!product.options[0].isActive && (
         <div className="absolute top-3 left-3  bg-neutral-700/80 rounded-md text-white flex items-center justify-center text-[10px] px-2 py-1 font-medium">
           Hết hàng
