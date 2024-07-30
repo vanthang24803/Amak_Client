@@ -1,6 +1,9 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { BestSeller } from "./components/best-seller";
 import { BillboardComponent } from "./components/billboard";
 import { Categories } from "./components/categories";
+import { NewBook } from "./components/new-book";
+import { Manga } from "./components/manga";
 
 export default function Home() {
   return (
@@ -8,6 +11,9 @@ export default function Home() {
       <BillboardComponent />
       <Categories />
       <BestSeller />
+      <Skeleton className="w-full h-10 bg-white" />
+      <NewBook />
+      <Manga />
     </main>
   );
 }
