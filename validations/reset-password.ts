@@ -4,9 +4,9 @@ import { specialCharValidation, uppercaseCharValidation } from './text';
 
 import { digitValidation } from './number';
 
-export const resetPasswordValidation = z.object({
+export const resetPasswordValidation =                   z.object({
   password: z
-    .string()
+    .     string()
     .min(6, {
       message:
         'Mật khẩu của bạn quá ngắn ít nhất 6 chữ cái gồm 1 chữ in hoa, 1 số, 1 ký tự đặc biệt',
