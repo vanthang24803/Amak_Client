@@ -1,13 +1,12 @@
-"use client"
+'use client';
 
-import useClient from "@/hooks/use-client";
-import { Toaster } from "react-hot-toast";
+import useClient from '@/hooks/use-client';
+import { Toaster } from 'react-hot-toast';
 
 export const ToasterProvider = () => {
+  const { isClient } = useClient();
 
-  const {isClient} = useClient();
-
-  if(!isClient) return null;
+  if (!isClient) return null;
 
   return <Toaster />;
 };

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Review } from "@/types/review";
-import _http from "@/utils/http";
-import { useEffect, useState } from "react";
+import { Review } from '@/types/review';
+import _http from '@/utils/http';
+import { useEffect, useState } from 'react';
 
 type Props = {
   productId: string | null;

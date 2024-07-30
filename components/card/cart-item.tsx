@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
+'use client';
 
-import { Product } from "@/types/product";
-import { convertPrice, formatPrice } from "@/utils/price";
-import { generateSlug } from "@/utils/slug";
-import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
-import { Cart } from "../svg";
-import useCart from "@/hooks/use-cart";
-import { ProductModal } from "../modal/product-modal";
+import { Product } from '@/types/product';
+import { convertPrice, formatPrice } from '@/utils/price';
+import { generateSlug } from '@/utils/slug';
+import { useRouter } from 'next/navigation';
+import { Button } from '../ui/button';
+import { Cart } from '../svg';
+import useCart from '@/hooks/use-cart';
+import { ProductModal } from '../modal/product-modal';
 
 type Props = {
   product: Product;

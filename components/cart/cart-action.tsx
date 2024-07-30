@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
+'use client';
 
-import useClient from "@/hooks/use-client";
+import useClient from '@/hooks/use-client';
 
 import {
   Sheet,
@@ -10,17 +10,17 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Cart } from "../svg";
-import Link from "next/link";
-import useCart from "@/hooks/use-cart";
-import { ScrollArea } from "../ui/scroll-area";
-import { useRouter } from "next/navigation";
-import { ShoppingCart, X } from "lucide-react";
-import { Separator } from "../ui/separator";
-import { convertPrice, formatPrice } from "@/utils/price";
-import { Button } from "../ui/button";
-import { UpdateCart } from "./cart-update";
+} from '@/components/ui/sheet';
+import { Cart } from '../svg';
+import Link from 'next/link';
+import useCart from '@/hooks/use-cart';
+import { ScrollArea } from '../ui/scroll-area';
+import { useRouter } from 'next/navigation';
+import { ShoppingCart, X } from 'lucide-react';
+import { Separator } from '../ui/separator';
+import { convertPrice, formatPrice } from '@/utils/price';
+import { Button } from '../ui/button';
+import { UpdateCart } from './cart-update';
 
 export default function CartAction() {
   const { isClient } = useClient();
@@ -141,7 +141,7 @@ export default function CartAction() {
           </div>
           <Button
             className="w-full bg-[#417505] hover:bg-[#65b10d]"
-            onClick={() => router.push("/checkout")}
+            onClick={() => router.push('/checkout')}
             disabled={cart.totalItems() == 0}
           >
             Thanh toán

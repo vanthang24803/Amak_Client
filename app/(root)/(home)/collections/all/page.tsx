@@ -1,10 +1,10 @@
-import { Metadata } from "next";
-import { Handler } from "./components/handler";
+import { Metadata } from 'next';
+import { Container } from './components/container';
 
 export const metadata: Metadata = {
-  title: "Tất cả sản phẩm",
+  title: 'Tất cả sản phẩm',
 };
 
 export default function AllCategory() {
-  return <Handler />;
+  return <Container />;
 }

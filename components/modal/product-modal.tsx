@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import useFetch from "@/hooks/use-fetch";
-import { Product } from "@/types/product";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Eye } from "lucide-react";
-import { Spinner } from "../spinner";
-import PhotoModal from "./photo-modal";
-import InformationModal from "./information-modal";
+import useFetch from '@/hooks/use-fetch';
+import { Product } from '@/types/product';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Eye } from 'lucide-react';
+import { Spinner } from '../spinner';
+import PhotoModal from './photo-modal';
+import InformationModal from './information-modal';
 
 type Props = {
   id: string;
@@ -23,7 +23,7 @@ export const ProductModal = ({ id }: Props) => {
         <div className="w-8 h-8 rounded-full items-center justify-center absolute top-[30%] left-[45%] bg-white text-neutral-600  hidden group-hover:flex hover:bg-black hover:text-white ">
           <Eye />
         </div>
-      </DialogTrigger>  
+      </DialogTrigger>
 
       <DialogContent>
         {data ? (

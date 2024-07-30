@@ -1,12 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Product } from "@/types/product";
-import { Products } from "./products";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import _http from "@/utils/http";
+import { Button } from '@/components/ui/button';
+import { Product } from '@/types/product';
+import { Products } from './products';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import _http from '@/utils/http';
+import { Category } from '@/utils/category';
 
 export const NewBook = () => {
   const [data, setData] = useState<Product[]>([]);
@@ -17,7 +18,7 @@ export const NewBook = () => {
       setLoading(true);
       const response = await _http.get(`/Products`, {
         params: {
-          Category: "Sách mới",
+          Category: Category.SachMoi,
           Limit: 10,
         },
       });

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { ProductDetail } from "@/types/product";
-import { Minus, Plus } from "lucide-react";
-import { useState } from "react";
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { ProductDetail } from '@/types/product';
+import { Minus, Plus } from 'lucide-react';
+import { useState } from 'react';
 
 type Props = {
   data: ProductDetail | undefined;
@@ -24,7 +24,7 @@ export const Introduce = ({ data }: Props) => {
         <div className="flex flex-col space-y-1 text-sm">
           <div
             dangerouslySetInnerHTML={{
-              __html: data.specifications || "",
+              __html: data.specifications || '',
             }}
           />
           {!show && (

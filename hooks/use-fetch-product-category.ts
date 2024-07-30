@@ -1,6 +1,6 @@
-import { env } from "@/configs/env";
-import { FilterType, PriceType, Product } from "@/types";
-import { useState, useEffect } from "react";
+import { env } from '@/configs/env';
+import { FilterType, PriceType, Product } from '@/types';
+import { useState, useEffect } from 'react';
 
 type Props = {
   price: PriceType | null;
@@ -33,13 +33,13 @@ export default function useProductByCategory({
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
       })
       .then((data) => setData(data))
       .catch((error) =>
         console.error(
-          "There has been a problem with your fetch operation: ",
+          'There has been a problem with your fetch operation: ',
           error
         )
       );

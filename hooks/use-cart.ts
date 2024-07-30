@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { toast } from "react-hot-toast";
-import { persist, createJSONStorage } from "zustand/middleware";
-import { Product } from "@/types/product";
+import { create } from 'zustand';
+import { toast } from 'react-hot-toast';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { Product } from '@/types/product';
 
 interface CartItem {
   product: Product;
@@ -52,7 +52,7 @@ const useCart = create(
           set({ items: [...get().items, { product: data, quantity }] });
         }
 
-        toast.success("Sản phẩm đã được thêm vào giỏ.");
+        toast.success('Sản phẩm đã được thêm vào giỏ.');
       },
       removeItem: (id: string, optionId: string) => {
         set({
@@ -66,7 +66,7 @@ const useCart = create(
             ),
           ],
         });
-        toast.success("Đã xóa sản phẩm khỏi giỏ hàng");
+        toast.success('Đã xóa sản phẩm khỏi giỏ hàng');
       },
       updateItemQuantity: (id: string, optionId: string, quantity: number) => {
         const currentItems = get().items;
@@ -80,13 +80,13 @@ const useCart = create(
           updatedItems[existingItemIndex].quantity = quantity;
           set({ items: updatedItems });
         } else {
-          toast.error("Sản phẩm không tồn tại.");
+          toast.error('Sản phẩm không tồn tại.');
         }
       },
       removeAll: () => set({ items: [] }),
     }),
     {
-      name: "cart-storage",
+      name: 'cart-storage',
       storage: createJSONStorage(() => localStorage),
     }
   )

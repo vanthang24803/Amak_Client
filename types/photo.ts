@@ -1,5 +1,5 @@
-import { Base } from "./base";
+import { Base } from './base';
 
 export type Photo = Base & {
-    url:string;
-}
+  url: string;
+};

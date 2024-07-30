@@ -1,5 +1,5 @@
-import _http from "@/utils/http";
-import { useEffect, useState } from "react";
+import _http from '@/utils/http';
+import { useEffect, useState } from 'react';
 
 type Props = {
   url: string;

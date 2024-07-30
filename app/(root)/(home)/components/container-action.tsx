@@ -1,18 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Navigation } from "../../components/navigation";
-import { Pagination, Product } from "@/types";
-import _http from "@/utils/http";
-import PaginationComponent from "../../components/pagination";
-import { Filter } from "../../components/filter";
-import useFilterProduct from "@/hooks/use-filter-product";
-import { SelectFilter } from "../../components/select-filter";
-import { ProductContainer } from "../../components/product-container";
-import { MobileFilter } from "../../components/mobile-filter";
+import { useEffect, useState } from 'react';
+import { ActionType, Pagination, Product } from '@/types';
+import _http from '@/utils/http';
+import useFilterProduct from '@/hooks/use-filter-product';
+import { Navigation } from '../collections/components/navigation';
+import PaginationComponent from '../collections/components/pagination';
+import { Filter } from '../collections/components/filter';
+import { SelectFilter } from '../collections/components/select-filter';
+import { MobileFilter } from '../collections/components/mobile-filter';
+import { ProductContainer } from '../collections/components/product-container';
 
-export const Handler = () => {
+type Props = {
+  action: ActionType;
+  thumbnail?: string;
+};
+
+export const Container = ({
+  action,
+  thumbnail = 'https://theme.hstatic.net/200000294254/1001077164/14/collection_banner.jpg?v=407',
+}: Props) => {
   const [data, setData] = useState<Pagination<Product[]>>();
 
   const [_, setCurrentPage] = useState(1);
@@ -27,6 +35,7 @@ export const Handler = () => {
           Page: page,
           OrderBy: filter,
           SortBy: price,
+          Action: action,
         },
       });
 
@@ -56,10 +65,7 @@ export const Handler = () => {
           <Filter price={price} handlePriceFilter={handlePriceFilter} />
         </div>
         <div className="flex flex-col space-y-4">
-          <img
-            src="https://theme.hstatic.net/200000294254/1001077164/14/collection_banner.jpg?v=323"
-            alt="billboard"
-          />
+          <img src={thumbnail} alt="billboard" />
           <div className="flex space-y-2 flex-col">
             <div className="flex items-center justify-between">
               <div className="flex lg:flex-row flex-col space-y-2 items-center justify-between lg:space-y-0 lg:space-x-6 w-full">

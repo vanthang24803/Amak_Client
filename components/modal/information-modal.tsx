@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import useCart from "@/hooks/use-cart";
-import { Option } from "@/types/options";
-import { Product } from "@/types/product";
-import { convertPrice, formatPrice } from "@/utils/price";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { Minus, Plus } from "lucide-react";
-import { DialogTitle } from "../ui/dialog";
-import { ShareModal } from "./share-modal";
+import useCart from '@/hooks/use-cart';
+import { Option } from '@/types/options';
+import { Product } from '@/types/product';
+import { convertPrice, formatPrice } from '@/utils/price';
+import { useState } from 'react';
+import { Button } from '../ui/button';
+import { Minus, Plus } from 'lucide-react';
+import { DialogTitle } from '../ui/dialog';
+import { ShareModal } from './share-modal';
 
 type Props = {
   product: Product;
@@ -34,7 +34,7 @@ export default function InformationModal({ product }: Props) {
 
       cart.addItem(productCopy, total);
     } else {
-      console.error("Data or option is undefined");
+      console.error('Data or option is undefined');
     }
   };
 
@@ -44,12 +44,12 @@ export default function InformationModal({ product }: Props) {
         {product?.name}
       </DialogTitle>
       <div className="text-[12px] tracking-tighter">
-        Mã sản phẩm:{" "}
+        Mã sản phẩm:{' '}
         <span className="text-[#417505] font-bold">{option?.id}</span>
       </div>
       <div className="flex items-center justify-between">
         <div className="text-[12px] tracking-tighter">
-          Tình trạng:{" "}
+          Tình trạng:{' '}
           {option?.isActive ? (
             <span className="text-[#417505] font-bold">Còn hàng</span>
           ) : (
@@ -57,7 +57,7 @@ export default function InformationModal({ product }: Props) {
           )}
         </div>
         <div className="text-[12px] tracking-tighter">
-          Thuơng Hiệu:{" "}
+          Thuơng Hiệu:{' '}
           <span className="text-[#417505] font-bold">{product.brand}</span>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function InformationModal({ product }: Props) {
         <div className="flex items-center space-x-2">
           {product?.options.map((item, index) => (
             <Button
-              variant={item.id === option?.id ? "primary" : "outline"}
+              variant={item.id === option?.id ? 'primary' : 'outline'}
               key={index}
               onClick={() => handleOptionChange(item.id)}
               className="rounded-sm h-8 px-3 py-4 text-[12px] tracking-tighter"

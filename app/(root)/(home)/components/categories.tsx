@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
-import { categories } from "@/constants";
+import Link from 'next/link';
+import { categories } from '@/constants';
 
 export const Categories = () => {
   return (

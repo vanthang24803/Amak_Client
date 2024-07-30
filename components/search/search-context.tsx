@@ -1,11 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-
-import Link from "next/link";
-import { Separator } from "../ui/separator";
-import { Spinner } from "../spinner";
-import { Product } from "@/types/product";
-import { convertPrice, formatPrice } from "@/utils/price";
-import { generateSlug } from "@/utils/slug";
+import Link from 'next/link';
+import { Separator } from '../ui/separator';
+import { Spinner } from '../spinner';
+import { Product } from '@/types/product';
+import { convertPrice, formatPrice } from '@/utils/price';
+import { generateSlug } from '@/utils/slug';
 
 export const SearchContent = ({
   content,
@@ -21,7 +20,7 @@ export const SearchContent = ({
   return (
     <div className="lg:w-[500px] md:w-[300px] lg:min-h-[20vh] min-h-[10vh] rounded-md bg-white dark:bg-neutral-700/90  p-4 md:absolute md:top-12 md:-right-2 shadow-lg">
       <p className="text-sm font-medium">Gợi ý cho bạn:</p>
-      {content != "" && (
+      {content != '' && (
         <>
           {loading ? (
             <div className="flex items-center justify-center">
@@ -39,7 +38,7 @@ export const SearchContent = ({
                           className="flex items-center justify-between"
                         >
                           <div className="flex flex-col space-y-1 lg:w-full w-2/3">
-                            <span className="hover:text-[#65b10d] font-medium lg:text-[14px] md:text-[13px]">
+                            <span className="hover:text-[#65b10d] font-semibold lg:text-[13px] md:text-[12px] tracking-tighter">
                               {item.name}
                             </span>
                             <div className="flex items-center space-x-3">
@@ -72,12 +71,16 @@ export const SearchContent = ({
                     >
                       Xem thêm {product.length - 5} sản phẩm
                     </Link>
-                  ): <span className="text-center text-[13.5px] font-medium pt-2">Có {product.length} kết quả tìm kiếm</span>}
+                  ) : (
+                    <span className="text-center text-[13.5px] font-medium pt-2">
+                      Có {product.length} kết quả tìm kiếm
+                    </span>
+                  )}
                 </div>
               ) : (
                 <div className="flex items-center justify-center p-8">
                   <p className="text-sm font-medium text-neutral-600">
-                    Không tìm thấy sản phẩm{" "}
+                    Không tìm thấy sản phẩm{' '}
                   </p>
                 </div>
               )}

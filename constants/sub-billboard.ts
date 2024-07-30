@@ -1,22 +1,22 @@
 export const subBillboard = [
   {
-    name: "Sale",
+    name: 'Sale',
     thumbnail:
-      "https://theme.hstatic.net/200000294254/1001077164/14/banner_top_1_img_large.jpg?v=320",
-    url: "/",
+      'https://theme.hstatic.net/200000294254/1001077164/14/banner_top_1_img_large.jpg?v=320',
+    url: '/',
   },
 
   {
-    name: "Product",
+    name: 'Product',
     thumbnail:
-      "https://theme.hstatic.net/200000294254/1001077164/14/banner_top_2_img_large.jpg?v=407",
-    url: "/",
+      'https://theme.hstatic.net/200000294254/1001077164/14/banner_top_2_img_large.jpg?v=407',
+    url: '/',
   },
 
   {
-    name: "Gift",
+    name: 'Gift',
     thumbnail:
-      "https://theme.hstatic.net/200000294254/1001077164/14/banner_top_3_img_large.jpg?v=407",
-    url: "/",
+      'https://theme.hstatic.net/200000294254/1001077164/14/banner_top_3_img_large.jpg?v=407',
+    url: '/',
   },
 ];

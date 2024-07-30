@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import useReview from "@/hooks/use-fetch-reviews";
-import { StarReview } from "./star-review";
-import Link from "next/link";
-import { Separator } from "@/components/ui/separator";
-import Image from "next/image";
-import { Spinner } from "@/components/spinner";
+import useReview from '@/hooks/use-fetch-reviews';
+import { StarReview } from './star-review';
+import Link from 'next/link';
+import { Separator } from '@/components/ui/separator';
+import Image from 'next/image';
+import { Spinner } from '@/components/spinner';
 
 type Props = {
   id: string | null;
