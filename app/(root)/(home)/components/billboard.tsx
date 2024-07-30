@@ -2,7 +2,7 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import useFetch from "@/hooks/use-fetch";
-import { Billboard } from "@/types/biilborad";
+import { Billboard } from "@/types";
 import { Slider } from "./slider";
 import { SubBillboard } from "./sub-billboard";
 

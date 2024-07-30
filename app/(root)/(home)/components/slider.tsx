@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Billboard } from "@/types/biilborad";
+import { Billboard } from "@/types";
 import {
   Carousel,
   CarouselContent,
