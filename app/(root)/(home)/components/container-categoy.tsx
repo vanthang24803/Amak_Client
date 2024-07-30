@@ -1,29 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Pagination, Product } from "@/types";
-import _http from "@/utils/http";
-import useFilterProduct from "@/hooks/use-filter-product";
-import { Navigation } from "../collections/components/navigation";
-import PaginationComponent from "../collections/components/pagination";
-import { Filter } from "../collections/components/filter";
-import { SelectFilter } from "../collections/components/select-filter";
-import { MobileFilter } from "../collections/components/mobile-filter";
-import { ProductContainer } from "../collections/components/product-container";
+import { useEffect, useState } from 'react';
+import { Pagination, Product } from '@/types';
+import _http from '@/utils/http';
+import useFilterProduct from '@/hooks/use-filter-product';
+import { Navigation } from '../collections/components/navigation';
+import PaginationComponent from '../collections/components/pagination';
+import { Filter } from '../collections/components/filter';
+import { SelectFilter } from '../collections/components/select-filter';
+import { MobileFilter } from '../collections/components/mobile-filter';
+import { ProductContainer } from '../collections/components/product-container';
 
 type Props = {
   category:
-    | "Sách mới"
-    | "Tiểu thuyết"
-    | "Kỹ năng"
-    | "Light novel"
-    | "Manga-Commic"
-    | "Phụ kiện";
-   thumbnail: string; 
+    | 'Sách mới'
+    | 'Tiểu thuyết'
+    | 'Kỹ năng'
+    | 'Light novel'
+    | 'Manga-Commic'
+    | 'Phụ kiện';
+  thumbnail: string;
 };
 
-export const Container = ({ category , thumbnail }: Props) => {
+export const Container = ({ category, thumbnail }: Props) => {
   const [data, setData] = useState<Pagination<Product[]>>();
 
   const [_, setCurrentPage] = useState(1);
@@ -68,10 +68,7 @@ export const Container = ({ category , thumbnail }: Props) => {
           <Filter price={price} handlePriceFilter={handlePriceFilter} />
         </div>
         <div className="flex flex-col space-y-4">
-          <img
-            src={thumbnail}
-            alt="billboard"
-          />
+          <img src={thumbnail} alt="billboard" />
           <div className="flex space-y-2 flex-col">
             <div className="flex items-center justify-between">
               <div className="flex lg:flex-row flex-col space-y-2 items-center justify-between lg:space-y-0 lg:space-x-6 w-full">

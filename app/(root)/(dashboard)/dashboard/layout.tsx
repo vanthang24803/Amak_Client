@@ -1,6 +1,6 @@
-import { Inter } from "next/font/google";
+import { Inter } from 'next/font/google';
 
-const font = Inter({ subsets: ["latin"] });
+const font = Inter({ subsets: ['latin'] });
 
 export default function DashboardLayout({
   children,

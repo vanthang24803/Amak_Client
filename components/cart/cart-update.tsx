@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import useCart from "@/hooks/use-cart";
-import { useState } from "react";
-import { Button } from "../ui/button";
+import useCart from '@/hooks/use-cart';
+import { useState } from 'react';
+import { Button } from '../ui/button';
 
 type Props = {
   productId: string;

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import useFetch from "@/hooks/use-fetch";
-import { ProductDetail } from "@/types/product";
+import useFetch from '@/hooks/use-fetch';
+import { ProductDetail } from '@/types/product';
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -10,11 +10,11 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { DetailCard } from "./card-detail";
-import { Introduce } from "./introduce";
-import { Reviews } from "./reviews";
-import { Suggest } from "./suggest";
+} from '@/components/ui/breadcrumb';
+import { DetailCard } from './card-detail';
+import { Introduce } from './introduce';
+import { Reviews } from './reviews';
+import { Suggest } from './suggest';
 
 type Props = {
   id: string | null;
@@ -24,7 +24,6 @@ export const Container = ({ id }: Props) => {
   const { data } = useFetch<ProductDetail>({
     url: `/Products/${id}`,
   });
-
 
   return (
     <div className="md:max-w-screen-xl mx-auto px-4 md:p-4 flex flex-col space-y-6 pb-8 md:pb-12">

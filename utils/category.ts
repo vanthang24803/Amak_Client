@@ -1,4 +1,4 @@
 export class Category {
-  static SachMoi: string = "Sách mới";
-  static Manga: string = "Manga-Commic";
+  static SachMoi: string = 'Sách mới';
+  static Manga: string = 'Manga-Commic';
 }

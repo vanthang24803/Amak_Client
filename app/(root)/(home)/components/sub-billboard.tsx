@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
+'use client';
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "@/components/ui/carousel";
-import { subBillboard } from "@/constants";
-import Link from "next/link";
-import Autoplay from "embla-carousel-autoplay";
-import { Card } from "@/components/ui/card";
+} from '@/components/ui/carousel';
+import { subBillboard } from '@/constants';
+import Link from 'next/link';
+import Autoplay from 'embla-carousel-autoplay';
+import { Card } from '@/components/ui/card';
 
 export const SubBillboard = () => {
   return (
@@ -32,7 +32,7 @@ export const SubBillboard = () => {
         <Carousel
           className="w-full"
           opts={{
-            align: "start",
+            align: 'start',
             loop: true,
           }}
           plugins={[

@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
+'use client';
 
-import { Billboard } from "@/types";
+import { Billboard } from '@/types';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import Link from "next/link";
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import Link from 'next/link';
 type Props = {
   billboards: Billboard[];
 };
@@ -18,7 +18,7 @@ export const Slider = ({ billboards }: Props) => {
     <Carousel
       className="w-full max-w-screen-md"
       opts={{
-        align: "start",
+        align: 'start',
         loop: true,
       }}
       plugins={[
@@ -36,7 +36,7 @@ export const Slider = ({ billboards }: Props) => {
                 alt={item.thumbnail}
                 loading="lazy"
                 width={500}
-                height={500}          
+                height={500}
                 className="object-cover w-full"
               />
             </Link>

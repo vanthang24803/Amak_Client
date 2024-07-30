@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
+'use client';
 
-import { Photo } from "@/types/photo";
-import * as React from "react";
+import { Photo } from '@/types/photo';
+import * as React from 'react';
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "@/components/ui/carousel";
+} from '@/components/ui/carousel';
 
 type Props = {
   photos?: Photo[];
@@ -19,7 +19,7 @@ export default function PhotoModal({ photos }: Props) {
     <Carousel
       className="w-full max-w-xs"
       opts={{
-        align: "start",
+        align: 'start',
         loop: true,
       }}
     >

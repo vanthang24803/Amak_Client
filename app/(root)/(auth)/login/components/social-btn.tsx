@@ -1,12 +1,12 @@
-import Image from "next/image";
+import Image from 'next/image';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
-type Providers = "google" | "facebook";
+type Providers = 'google' | 'facebook';
 
-import GoogleIcon from "@/public/google.svg";
-import FacebookIcon from "@/public/fb.png";
-import { Button } from "@/components/ui/button";
+import GoogleIcon from '@/public/google.svg';
+import FacebookIcon from '@/public/fb.png';
+import { Button } from '@/components/ui/button';
 
 const icons = {
   google: GoogleIcon,
@@ -35,7 +35,9 @@ export const SocialButton = ({ className, onClick, provider, size }: Props) => {
       <div className="w-16">
         <Image src={Icon} alt={provider} width={size} height={size} />
       </div>
-      <span className="text-[13.5px] tracking-tight">Sign In with {capitalizedProvider}</span>
+      <span className="text-[13.5px] tracking-tight">
+        Sign In with {capitalizedProvider}
+      </span>
     </Button>
   );
 };

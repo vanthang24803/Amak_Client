@@ -1,13 +1,9 @@
-"use client"
+'use client';
 
-import useAuth from "@/hooks/use-auth";
-
+import useAuth from '@/hooks/use-auth';
 
 export const Step = ({ isActive }: { isActive: boolean }) => {
-
-  const {
-    isLogin
-  } = useAuth();
+  const { isLogin } = useAuth();
 
   return (
     <ol className="flex items-center w-full mt-2 mb-3">

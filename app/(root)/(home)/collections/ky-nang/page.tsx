@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-import { Container } from "../../components/container-categoy";
+import { Metadata } from 'next';
+import { Container } from '../../components/container-categoy';
 
 export const metadata: Metadata = {
-  title: "Kỹ năng",
+  title: 'Kỹ năng',
 };
 
 export default function Collection() {

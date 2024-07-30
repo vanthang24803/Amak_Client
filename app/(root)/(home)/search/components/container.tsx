@@ -1,20 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
-"use client";
+'use client';
 
-import { Card } from "@/components/card/cart-item";
-import { Pagination, Product } from "@/types";
-import _http from "@/utils/http";
-import { Separator } from "@radix-ui/react-separator";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import PaginationComponent from "../../collections/components/pagination";
-import { Spinner } from "@/components/spinner";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Card } from '@/components/card/cart-item';
+import { Pagination, Product } from '@/types';
+import _http from '@/utils/http';
+import { Separator } from '@radix-ui/react-separator';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import PaginationComponent from '../../collections/components/pagination';
+import { Spinner } from '@/components/spinner';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export const Container = () => {
   const searchParams = useSearchParams();
-  const search = searchParams.get("product");
+  const search = searchParams.get('product');
 
   const [data, setData] = useState<Pagination<Product[]>>();
   const [_, setCurrentPage] = useState(1);
@@ -52,8 +52,13 @@ export const Container = () => {
           </span>
         ) : (
           <div className="flex items-center flex-col space-y-2 pt-4">
-            <h2 className="font-bold text-[14px]">Không tìm thấy nội dung bạn yêu cầu</h2>
-            <span className="text-[12px] font-medium text-gray-600 text-center">Không tìm thấy <b>`{search}`</b>. Vui lòng kiểm tra chính tả, sử dụng các từ tổng quát hơn và thử lại!</span>
+            <h2 className="font-bold text-[14px]">
+              Không tìm thấy nội dung bạn yêu cầu
+            </h2>
+            <span className="text-[12px] font-medium text-gray-600 text-center">
+              Không tìm thấy <b>`{search}`</b>. Vui lòng kiểm tra chính tả, sử
+              dụng các từ tổng quát hơn và thử lại!
+            </span>
           </div>
         )}
         <div className="py-4 w-[80px] ">
@@ -75,10 +80,7 @@ export const Container = () => {
               </div>
             ) : (
               <div className="flex items-center justify-center flex-col space-y-2">
-                <img
-                  src="/404.svg"
-                  className="w-[200px] my-4"
-                />
+                <img src="/404.svg" className="w-[200px] my-4" />
                 <span className="tracking-tight font-medium">
                   Không tìm thấy sản phẩm yêu cầu
                 </span>

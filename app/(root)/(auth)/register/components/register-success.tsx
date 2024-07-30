@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import React, { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
   setActive: Dispatch<SetStateAction<boolean>>;
@@ -25,7 +25,7 @@ export const RegisterSuccess = ({ setActive }: Props) => {
   const formatTime = () => {
     const minutes = Math.floor(counter / 60);
     const seconds = counter % 60;
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
   return (
@@ -33,7 +33,7 @@ export const RegisterSuccess = ({ setActive }: Props) => {
       <Image src="/email-send.svg" alt="email-send" width={250} height={250} />
       <h1 className="text-center font-bold md:text-lg">
         {counter === 0
-          ? "Mã xác nhận đã hết hạn!"
+          ? 'Mã xác nhận đã hết hạn!'
           : `Mã xác nhận sẽ hết hạn sau ${formatTime()}`}
       </h1>
 

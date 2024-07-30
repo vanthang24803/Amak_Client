@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FilterType, PriceType } from "@/types";
+import { useState } from 'react';
+import { FilterType, PriceType } from '@/types';
 
 export default function useFilterProduct() {
   const [price, setPrice] = useState<PriceType | null>(null);

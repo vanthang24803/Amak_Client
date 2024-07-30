@@ -1,20 +1,19 @@
-"use client";
+'use client';
 
-import { Card } from "@/components/card/cart-item";
+import { Card } from '@/components/card/cart-item';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Skeleton } from "@/components/ui/skeleton";
-import useFetch from "@/hooks/use-fetch";
-import { Product } from "@/types/product";
+} from '@/components/ui/carousel';
+import { Skeleton } from '@/components/ui/skeleton';
+import useFetch from '@/hooks/use-fetch';
+import { Product } from '@/types/product';
 
 export const BestSeller = () => {
-
-  const action = "Top-selling";
+  const action = 'Top-selling';
 
   const { data } = useFetch<Product[]>({
     url: `/Products?Action=${action}&Limit=6`,
@@ -29,7 +28,7 @@ export const BestSeller = () => {
       {data ? (
         <Carousel
           opts={{
-            align: "start",
+            align: 'start',
           }}
           className="w-full"
         >

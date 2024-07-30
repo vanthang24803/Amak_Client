@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Review } from "@/types/review";
-import { Stars } from "./list-star";
-import { ProcessStar } from "./process-star";
+import { Review } from '@/types/review';
+import { Stars } from './list-star';
+import { ProcessStar } from './process-star';
 
 type Props = {
   reviews: Review[];

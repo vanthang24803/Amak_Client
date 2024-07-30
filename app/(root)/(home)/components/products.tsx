@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Card } from "@/components/card/cart-item";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Product } from "@/types/product";
+import { Card } from '@/components/card/cart-item';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Product } from '@/types/product';
 
 type Props = {
   products: Product[];

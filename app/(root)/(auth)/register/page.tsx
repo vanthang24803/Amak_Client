@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-import { RegisterHandler } from "./components/register-handler";
+import { Metadata } from 'next';
+import { RegisterHandler } from './components/register-handler';
 
 export const metadata: Metadata = {
-  title: "Đăng ký",
+  title: 'Đăng ký',
 };
 
 export default function Register() {

@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-import { Container } from "./components/container";
+import { Metadata } from 'next';
+import { Container } from './components/container';
 
 export const metadata: Metadata = {
-  title: "Giỏ hàng",
+  title: 'Giỏ hàng',
 };
 
 export default function Cart() {

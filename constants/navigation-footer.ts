@@ -1,63 +1,63 @@
 export const navigationFooter = [
   {
-    title: "Hỗ trợ khách hàng",
+    title: 'Hỗ trợ khách hàng',
     data: [
       {
-        name: "Chính sách thanh toán",
-        url: "/",
+        name: 'Chính sách thanh toán',
+        url: '/',
       },
       {
-        name: "Chính sách vận chuyển",
-        url: "/",
-      },
-
-      {
-        name: "Chính sách bảo mật thông tin",
-        url: "/",
+        name: 'Chính sách vận chuyển',
+        url: '/',
       },
 
       {
-        name: "Chính sách xử lý Khiếu nại",
-        url: "/",
+        name: 'Chính sách bảo mật thông tin',
+        url: '/',
+      },
+
+      {
+        name: 'Chính sách xử lý Khiếu nại',
+        url: '/',
       },
       {
-        name: "Chính sách đổi trả",
-        url: "/",
+        name: 'Chính sách đổi trả',
+        url: '/',
       },
     ],
   },
   {
-    title: "Liên kết",
+    title: 'Liên kết',
     data: [
       {
-        name: "Sản phẩm khuyến mãi",
-        url: "/",
+        name: 'Sản phẩm khuyến mãi',
+        url: '/',
       },
       {
-        name: "Sản phẩm nổi bật",
-        url: "/",
+        name: 'Sản phẩm nổi bật',
+        url: '/',
       },
       {
-        name: "Tất cả sản phẩm",
-        url: "/",
+        name: 'Tất cả sản phẩm',
+        url: '/',
       },
     ],
   },
 
   {
-    title: "Blog",
+    title: 'Blog',
     data: [
       {
-        name: "Tin Tức",
-        url: "/",
+        name: 'Tin Tức',
+        url: '/',
       },
       {
-        name: "Thông báo bản quyền",
-        url: "/",
+        name: 'Thông báo bản quyền',
+        url: '/',
       },
       {
-        name: "Review",
-        url: "/",
+        name: 'Review',
+        url: '/',
       },
     ],
   },

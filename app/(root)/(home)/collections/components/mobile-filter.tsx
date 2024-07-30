@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { FilterType, PriceType } from "@/types";
+import { FilterType, PriceType } from '@/types';
 import {
   Sheet,
   SheetClose,
@@ -8,13 +8,13 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Check, ChevronDown, ChevronUp, Filter } from "lucide-react";
-import { useState } from "react";
-import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/sheet';
+import { Check, ChevronDown, ChevronUp, Filter } from 'lucide-react';
+import { useState } from 'react';
+import { Separator } from '@/components/ui/separator';
+import Link from 'next/link';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 
 type Props = {
   price: PriceType | null;
@@ -97,9 +97,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handleFilter("LowToHigh")}
+                      onClick={() => handleFilter('LowToHigh')}
                     >
-                      {filter === "LowToHigh" && <Check className="w-4 h-4" />}
+                      {filter === 'LowToHigh' && <Check className="w-4 h-4" />}
                     </div>
                     <Label>Giá: Tăng dần</Label>
                   </div>
@@ -107,9 +107,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handleFilter("HighToLow")}
+                      onClick={() => handleFilter('HighToLow')}
                     >
-                      {filter === "HighToLow" && <Check className="w-4 h-4" />}
+                      {filter === 'HighToLow' && <Check className="w-4 h-4" />}
                     </div>
                     <Label>Giá: Giảm dần</Label>
                   </div>
@@ -117,9 +117,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handleFilter("Alphabet")}
+                      onClick={() => handleFilter('Alphabet')}
                     >
-                      {filter === "Alphabet" && <Check className="w-4 h-4" />}
+                      {filter === 'Alphabet' && <Check className="w-4 h-4" />}
                     </div>
                     <Label>Tên: A - Z</Label>
                   </div>
@@ -127,9 +127,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handleFilter("ReverseAlphabet")}
+                      onClick={() => handleFilter('ReverseAlphabet')}
                     >
-                      {filter === "ReverseAlphabet" && (
+                      {filter === 'ReverseAlphabet' && (
                         <Check className="w-4 h-4" />
                       )}
                     </div>
@@ -139,9 +139,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handleFilter("Lasted")}
+                      onClick={() => handleFilter('Lasted')}
                     >
-                      {filter === "Lasted" && <Check className="w-4 h-4" />}
+                      {filter === 'Lasted' && <Check className="w-4 h-4" />}
                     </div>
                     <Label>Mới nhất</Label>
                   </div>
@@ -149,9 +149,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handleFilter("Oldest")}
+                      onClick={() => handleFilter('Oldest')}
                     >
-                      {filter === "Oldest" && <Check className="w-4 h-4" />}
+                      {filter === 'Oldest' && <Check className="w-4 h-4" />}
                     </div>
                     <Label>Cũ nhất</Label>
                   </div>
@@ -177,9 +177,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handlePriceFilter("Low")}
+                      onClick={() => handlePriceFilter('Low')}
                     >
-                      {price === "Low" && <Check className="w-4 h-4" />}
+                      {price === 'Low' && <Check className="w-4 h-4" />}
                     </div>
                     <Label>Dưới 100.000₫</Label>
                   </div>
@@ -187,9 +187,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handlePriceFilter("Medium")}
+                      onClick={() => handlePriceFilter('Medium')}
                     >
-                      {price === "Medium" && <Check className="w-4 h-4" />}
+                      {price === 'Medium' && <Check className="w-4 h-4" />}
                     </div>
                     <Label>100.000₫ - 200.000₫</Label>
                   </div>
@@ -197,9 +197,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handlePriceFilter("High")}
+                      onClick={() => handlePriceFilter('High')}
                     >
-                      {price === "High" && <Check className="w-4 h-4" />}
+                      {price === 'High' && <Check className="w-4 h-4" />}
                     </div>
                     <Label>200.000₫ - 300.000₫</Label>
                   </div>
@@ -207,9 +207,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handlePriceFilter("Highest")}
+                      onClick={() => handlePriceFilter('Highest')}
                     >
-                      {price === "Highest" && <Check className="w-4 h-4" />}
+                      {price === 'Highest' && <Check className="w-4 h-4" />}
                     </div>
                     <Label>300.000₫ - 400.000₫</Label>
                   </div>
@@ -217,9 +217,9 @@ export const MobileFilter = ({
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-4 h-4 rounded flex items-center justify-center border border-neutral-700"
-                      onClick={() => handlePriceFilter("Max")}
+                      onClick={() => handlePriceFilter('Max')}
                     >
-                      {price === "Max" && <Check className="w-4 h-4" />}
+                      {price === 'Max' && <Check className="w-4 h-4" />}
                     </div>
                     <Label>Trên 400.000₫</Label>
                   </div>
