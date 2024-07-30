@@ -6,3 +6,5 @@ export type FilterType =
   | "LowToHigh"
   | "Lasted"
   | "Oldest";
+
+export type ActionType = "Top-selling" | "OnSale";

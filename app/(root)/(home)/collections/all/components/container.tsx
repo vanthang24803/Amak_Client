@@ -12,7 +12,7 @@ import { SelectFilter } from "../../components/select-filter";
 import { ProductContainer } from "../../components/product-container";
 import { MobileFilter } from "../../components/mobile-filter";
 
-export const Handler = () => {
+export const Container = () => {
   const [data, setData] = useState<Pagination<Product[]>>();
 
   const [_, setCurrentPage] = useState(1);

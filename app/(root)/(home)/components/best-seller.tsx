@@ -13,8 +13,11 @@ import useFetch from "@/hooks/use-fetch";
 import { Product } from "@/types/product";
 
 export const BestSeller = () => {
-  const { data, loading } = useFetch<Product[]>({
-    url: `/Products?Limit=6`,
+
+  const action = "Top-selling";
+
+  const { data } = useFetch<Product[]>({
+    url: `/Products?Action=${action}&Limit=6`,
   });
 
   return (

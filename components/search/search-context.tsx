@@ -39,7 +39,7 @@ export const SearchContent = ({
                           className="flex items-center justify-between"
                         >
                           <div className="flex flex-col space-y-1 lg:w-full w-2/3">
-                            <span className="hover:text-[#65b10d] font-medium lg:text-[14px] md:text-[13px]">
+                            <span className="hover:text-[#65b10d] font-semibold lg:text-[13px] md:text-[12px] tracking-tighter">
                               {item.name}
                             </span>
                             <div className="flex items-center space-x-3">

@@ -7,6 +7,7 @@ import { Products } from "./products";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import _http from "@/utils/http";
+import { Category } from "@/utils/category";
 
 export const Manga = () => {
   const [data, setData] = useState<Product[]>([]);
@@ -17,8 +18,8 @@ export const Manga = () => {
       setLoading(true);
       const response = await _http.get(`/Products`, {
         params: {
-          Category: "Manga-Commic",
-          Limit: 10
+          Category: Category.Manga,
+          Limit: 10,
         },
       });
       if (response.status === 200) {
@@ -46,7 +47,7 @@ export const Manga = () => {
         </h2>
         <Button
           className="bg-[#417505] text-white font-medium  hover:bg-[#65b10d] h-8 rounded-sm"
-          onClick={() => router.push(`/collections/manga`)}
+          onClick={() => router.push(`/collections/manga-comic`)}
         >
           Manga-Commic
         </Button>
@@ -58,7 +59,7 @@ export const Manga = () => {
           <Button
             variant="outline"
             className="px-20 hover:text-white hover:bg-[#65b10d] font-medium"
-            onClick={() => router.push(`/collections/manga`)}
+            onClick={() => router.push(`/collections/manga-comic`)}
           >
             Xem tất cả
           </Button>
