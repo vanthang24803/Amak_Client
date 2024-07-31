@@ -26,7 +26,9 @@ import { Auth } from "./auth";
 export const Container = () => {
   const { profile } = useAuth();
   const { isClient } = useClient();
-  const [exitAddress, setAddress] = useState("");
+  const [exitAddress, setAddress] = useState(
+    profile?.addresses.filter((address) => address.isActive)[0].name || ""
+  );
 
   const {
     payment,
@@ -47,13 +49,13 @@ export const Container = () => {
   const { form, loading, onSubmit } = useFormCheckOut({
     email: profile?.email,
     name: `${profile?.firstName} ${profile?.lastName}`,
-    address: "",
+    address:
+      profile?.addresses.filter((address) => address.isActive)[0].name || "",
     storeChecked,
     exitAddress,
     payment,
     sendChecked,
     voucher: code,
-    userId: profile?.id,
     totalPrice: finalPrice,
   });
 

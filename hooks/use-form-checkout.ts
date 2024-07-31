@@ -18,7 +18,6 @@ type Props = {
   payment: string | null;
   sendChecked: boolean;
   voucher: string;
-  userId: string | undefined;
   totalPrice: number;
 };
 
@@ -32,7 +31,6 @@ export default function useFormCheckOut({
   exitAddress,
   payment,
   sendChecked,
-  userId,
   voucher,
   totalPrice,
 }: Props) {

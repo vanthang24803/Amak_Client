@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Spinner } from "@/components/spinner";
 import { convertPrice } from "@/utils/price";
+import axios from "axios";
 
 type PaymentType = "cod" | "bank" | "momo";
 
@@ -31,9 +32,43 @@ export const Payment = ({
   handleBankChange,
   finalPrice,
 }: PaymentTypeProp) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [_, setIsDialogOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState("");
+
+  const config = {
+    headers: {
+      "x-client-id": `${process.env.NEXT_PUBLIC_QR_ID}`,
+      "x-api-key": `${process.env.NEXT_PUBLIC_QR_KEY}`,
+    },
+  };
+
+  const handlerQr = async () => {
+    try {
+      const response = await axios.post(
+        "https://api.vietqr.io/v2/generate",
+        {
+          accountNo: `${process.env.NEXT_PUBLIC_QR_BANK_ID}`,
+          accountName: `${process.env.NEXT_PUBLIC_QR_BANK_NAME}`,
+          acqId: `${process.env.NEXT_PUBLIC_QR_BANK_BIN}`,
+          addInfo: `${orderId} - Thanh toan don hang -{" "}
+                          ${format(Date.now(), "dd/MM/yyyy")}`,
+          amount: `${finalPrice}`,
+          template: "compact",
+        },
+        config
+      );
+
+      if (response.status == 200) {
+        setImage(response.data.data.qrDataURL);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDialogChange = (open: boolean) => {
     setIsDialogOpen(open);
@@ -42,10 +77,14 @@ export const Payment = ({
       handleBankChange("cod");
     }
     if (open) {
-      setLoading(true);
-      setTimeout(() => {
+      try {
+        setLoading(true);
+        handlerQr();
+      } catch (error) {
+        console.log(error);
+      } finally {
         setLoading(false);
-      }, 500);
+      }
     }
   };
 
@@ -54,7 +93,6 @@ export const Payment = ({
     toast.success("Đã copy vào clipboard");
   };
 
-  const id = uuidv4();
   const orderId = uuidv4().substr(0, 6).toUpperCase();
 
   return (
@@ -96,20 +134,22 @@ export const Payment = ({
                 <Spinner />
               </div>
             ) : (
-              <ScrollArea className="h-[500px] md:h-[420px]">
+              <ScrollArea className="h-[500px] md:h-[460px]">
                 <div className="text-xs text-center my-8">
-                  <DialogTitle>
+                  <DialogTitle className="text-[14px]">
                     Mở App Ngân hàng bất kỳ <b>để quét mã VietQR</b> hoặc{" "}
                     <b>chuyển khoản</b> chính xác số tiền bên dưới
                   </DialogTitle>
                 </div>
                 <div className="flex md:flex-row flex-col items-start space-x-12">
-                  <div className="md:basis-1/2">
-                    <img
-                      src={process.env.NEXT_PUBLIC_QR_IMAGE}
-                      alt="qr"
-                      loading="lazy"
-                    />
+                  <div className="md:basis-1/2 w-full">
+                    {image ? (
+                      <img src={image} alt="qr" loading="lazy" />
+                    ) : (
+                      <div className="flex items-center justify-center">
+                        <Spinner />
+                      </div>
+                    )}
                   </div>
                   <div className="md:basis-1/2 flex-col space-y-3">
                     <div className="flex items-center space-x-2">
@@ -125,15 +165,21 @@ export const Payment = ({
                     </div>
                     <div className="flex flex-col">
                       <p className="text-xs">Chủ tài khoản:</p>
-                      <b className="text-sm uppercase">AMAK Store</b>
+                      <b className="text-sm uppercase">
+                        {process.env.NEXT_PUBLIC_QR_BANK_NAME}
+                      </b>
                     </div>
                     <div className="flex flex-col">
                       <p className="text-xs">Số tài khoản:</p>
                       <div className="flex items-center justify-between">
-                        <b className="text-sm">{id}</b>
+                        <b className="text-sm">
+                          {process.env.NEXT_PUBLIC_QR_BANK_ID}
+                        </b>
                         <Copy
                           className="w-4 h-4 hover:cursor-pointer"
-                          onClick={() => handleCopy(id)}
+                          onClick={() =>
+                            handleCopy(process.env.NEXT_PUBLIC_QR_BANK_ID!)
+                          }
                         />
                       </div>
                     </div>

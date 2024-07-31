@@ -9,4 +9,12 @@ export type Profile = Base & {
   roles: string[];
   cheatAt: string;
   addresses: Address[];
+  totalPrice: number;
+  totalOrder: number;
+  processOrder: number;
+  rank: Rank;
+  updateAt: string;
+  numberPhone:string;
 };
+
+export type Rank = "Bronze" | "Silver" | "Gold" | "Platinum" | "Diamond";
