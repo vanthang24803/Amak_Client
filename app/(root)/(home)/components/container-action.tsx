@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { ActionType, Pagination, Product } from '@/types';
-import _http from '@/utils/http';
-import useFilterProduct from '@/hooks/use-filter-product';
-import { Navigation } from '../collections/components/navigation';
-import PaginationComponent from '../collections/components/pagination';
-import { Filter } from '../collections/components/filter';
-import { SelectFilter } from '../collections/components/select-filter';
-import { MobileFilter } from '../collections/components/mobile-filter';
-import { ProductContainer } from '../collections/components/product-container';
+import { useEffect, useState } from "react";
+import { ActionType, Pagination, Product } from "@/types";
+import _http from "@/utils/http";
+import useFilterProduct from "@/hooks/use-filter-product";
+import { Navigation } from "../collections/components/navigation";
+import PaginationComponent from "../collections/components/pagination";
+import { Filter } from "../collections/components/filter";
+import { SelectFilter } from "../collections/components/select-filter";
+import { MobileFilter } from "../collections/components/mobile-filter";
+import { ProductContainer } from "../collections/components/product-container";
 
 type Props = {
   action: ActionType;
@@ -19,7 +19,7 @@ type Props = {
 
 export const Container = ({
   action,
-  thumbnail = 'https://theme.hstatic.net/200000294254/1001077164/14/collection_banner.jpg?v=407',
+  thumbnail = "https://theme.hstatic.net/200000294254/1001077164/14/collection_banner.jpg?v=407",
 }: Props) => {
   const [data, setData] = useState<Pagination<Product[]>>();
 

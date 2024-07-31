@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
-import VerifyAccountHandler from './components/verify-handler';
+import VerifyAccountHandler from "./components/verify-handler";
 
 export default function VerifyAccount() {
   return (

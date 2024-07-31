@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { User } from '@/components/svg';
-import CartAction from './cart/cart-action';
-import { MobileMenu } from './mobile/mobile-menu';
-import useAuth from '@/hooks/use-auth';
+import Link from "next/link";
+import { User } from "@/components/svg";
+import CartAction from "./cart/cart-action";
+import { MobileMenu } from "./mobile/mobile-menu";
+import useAuth from "@/hooks/use-auth";
 
 import {
   DropdownMenu,
@@ -14,11 +14,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
-import { AvatarImage, Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { useRouter } from 'next/navigation';
-import { LogOut, MapPinned, UserIcon } from 'lucide-react';
+import { AvatarImage, Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
+import { LogOut, MapPinned, UserIcon } from "lucide-react";
 
 export default function ActionMenu() {
   const { isLogin, profile, logout } = useAuth();
@@ -43,9 +43,9 @@ export default function ActionMenu() {
           <DropdownMenuContent className="w-56">
             <DropdownMenuLabel>
               {profile?.lastName} {profile?.firstName}
-              {profile?.roles.includes('ADMIN') && (
+              {profile?.roles.includes("ADMIN") && (
                 <b className="uppercase text-destructive tracking-tighter">
-                  {' '}
+                  {" "}
                   - Admin
                 </b>
               )}
@@ -53,13 +53,13 @@ export default function ActionMenu() {
             <DropdownMenuSeparator className="h-[1.5px]" />
 
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => router.push('/profile')}>
+              <DropdownMenuItem onClick={() => router.push("/profile")}>
                 <UserIcon className="mr-2 h-4 w-4" />
                 <span className="text-[13px] font-medium tracking-tighter">
                   Trang cá nhân
                 </span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push('/profile/address')}>
+              <DropdownMenuItem onClick={() => router.push("/profile/address")}>
                 <MapPinned className="mr-2 h-4 w-4" />
                 <span className="text-[13px] font-medium tracking-tighter">
                   Địa chỉ

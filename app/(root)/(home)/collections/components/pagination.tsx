@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
-} from '@/components/ui/pagination';
+} from "@/components/ui/pagination";
 
 type Props = {
   currentPage: number;

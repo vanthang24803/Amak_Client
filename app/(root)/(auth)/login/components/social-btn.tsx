@@ -1,12 +1,12 @@
-import Image from 'next/image';
+import Image from "next/image";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
-type Providers = 'google' | 'facebook';
+type Providers = "google" | "facebook";
 
-import GoogleIcon from '@/public/google.svg';
-import FacebookIcon from '@/public/fb.png';
-import { Button } from '@/components/ui/button';
+import GoogleIcon from "@/public/google.svg";
+import FacebookIcon from "@/public/fb.png";
+import { Button } from "@/components/ui/button";
 
 const icons = {
   google: GoogleIcon,

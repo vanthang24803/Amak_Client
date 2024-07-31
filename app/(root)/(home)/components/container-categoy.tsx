@@ -1,25 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Pagination, Product } from '@/types';
-import _http from '@/utils/http';
-import useFilterProduct from '@/hooks/use-filter-product';
-import { Navigation } from '../collections/components/navigation';
-import PaginationComponent from '../collections/components/pagination';
-import { Filter } from '../collections/components/filter';
-import { SelectFilter } from '../collections/components/select-filter';
-import { MobileFilter } from '../collections/components/mobile-filter';
-import { ProductContainer } from '../collections/components/product-container';
+import { useEffect, useState } from "react";
+import { Pagination, Product } from "@/types";
+import _http from "@/utils/http";
+import useFilterProduct from "@/hooks/use-filter-product";
+import { Navigation } from "../collections/components/navigation";
+import PaginationComponent from "../collections/components/pagination";
+import { Filter } from "../collections/components/filter";
+import { SelectFilter } from "../collections/components/select-filter";
+import { MobileFilter } from "../collections/components/mobile-filter";
+import { ProductContainer } from "../collections/components/product-container";
 
 type Props = {
   category:
-    | 'Sách mới'
-    | 'Tiểu thuyết'
-    | 'Kỹ năng'
-    | 'Light novel'
-    | 'Manga-Commic'
-    | 'Phụ kiện';
+    | "Sách mới"
+    | "Tiểu thuyết"
+    | "Kỹ năng"
+    | "Light novel"
+    | "Manga-Commic"
+    | "Phụ kiện";
   thumbnail: string;
 };
 

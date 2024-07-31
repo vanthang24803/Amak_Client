@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Minus, Plus } from 'lucide-react';
-import useCart from '@/hooks/use-cart';
-import { ProductDetail } from '@/types/product';
-import { Option } from '@/types/options';
-import { convertPrice, formatPrice } from '@/utils/price';
-import { ShareModal } from '@/components/modal/share-modal';
-import { Thumbnail } from './thumbnail';
-import { Policy } from './policy';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Minus, Plus } from "lucide-react";
+import useCart from "@/hooks/use-cart";
+import { ProductDetail } from "@/types/product";
+import { Option } from "@/types/options";
+import { convertPrice, formatPrice } from "@/utils/price";
+import { ShareModal } from "@/components/modal/share-modal";
+import { Thumbnail } from "./thumbnail";
+import { Policy } from "./policy";
 
 type Props = {
   product: ProductDetail;
@@ -36,7 +36,7 @@ export const DetailCard = ({ product }: Props) => {
 
       cart.addItem(productCopy, total);
     } else {
-      console.error('Data or option is undefined');
+      console.error("Data or option is undefined");
     }
   };
 
@@ -50,12 +50,12 @@ export const DetailCard = ({ product }: Props) => {
             {product?.name}
           </h2>
           <div className="text-sm">
-            Mã sản phẩm:{' '}
+            Mã sản phẩm:{" "}
             <span className="text-[#417505] font-bold">{option?.id}</span>
           </div>
           <div className="flex items-center space-x-4">
             <div className="text-sm">
-              Tình trạng:{' '}
+              Tình trạng:{" "}
               {option?.isActive ? (
                 <span className="text-[#417505] font-bold">Còn hàng</span>
               ) : (
@@ -63,21 +63,21 @@ export const DetailCard = ({ product }: Props) => {
               )}
             </div>
             <div className="text-sm">
-              Thuơng Hiệu:{' '}
+              Thuơng Hiệu:{" "}
               <span className="text-[#417505] font-bold">{product?.brand}</span>
             </div>
             {product && product?.sold > 0 && (
               <div className="text-sm hidden lg:block">
-                Đã bán:{' '}
-                <span className="text-[#417505] font-bold">{product.sold}</span>{' '}
+                Đã bán:{" "}
+                <span className="text-[#417505] font-bold">{product.sold}</span>{" "}
                 sản phẩm
               </div>
             )}
           </div>
           {product && product?.sold > 0 && (
             <div className="text-sm block lg:hidden">
-              Đã bán:{' '}
-              <span className="text-[#417505] font-bold">{product.sold}</span>{' '}
+              Đã bán:{" "}
+              <span className="text-[#417505] font-bold">{product.sold}</span>{" "}
               sản phẩm
             </div>
           )}
@@ -115,9 +115,9 @@ export const DetailCard = ({ product }: Props) => {
                       variant={
                         item.quantity > 0
                           ? item.id === option?.id
-                            ? 'primary'
-                            : 'outline'
-                          : 'outline'
+                            ? "primary"
+                            : "outline"
+                          : "outline"
                       }
                       key={index}
                       disabled={item.quantity == 0}

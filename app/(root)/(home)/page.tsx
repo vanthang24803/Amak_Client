@@ -1,9 +1,9 @@
-import { Skeleton } from '@/components/ui/skeleton';
-import { BestSeller } from './components/best-seller';
-import { BillboardComponent } from './components/billboard';
-import { Categories } from './components/categories';
-import { NewBook } from './components/new-book';
-import { Manga } from './components/manga';
+import { Skeleton } from "@/components/ui/skeleton";
+import { BestSeller } from "./components/best-seller";
+import { BillboardComponent } from "./components/billboard";
+import { Categories } from "./components/categories";
+import { NewBook } from "./components/new-book";
+import { Manga } from "./components/manga";
 
 export default function Home() {
   return (

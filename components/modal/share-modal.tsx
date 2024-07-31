@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { env } from '@/configs/env';
-import { generateSlug } from '@/utils/slug';
-import { Link, LoaderCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
+import { env } from "@/configs/env";
+import { generateSlug } from "@/utils/slug";
+import { Link, LoaderCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 type Props = {
   id: string;
@@ -24,7 +24,7 @@ export const ShareModal = ({ id, name, isActive = false }: Props) => {
         `${process.env.NEXT_PUBLIC_URL}/products/${generateSlug(name, id)}`
       );
 
-      toast.success('Copy thành công!');
+      toast.success("Copy thành công!");
 
       setTimeout(() => {
         setIsCopying(false);
@@ -41,8 +41,8 @@ export const ShareModal = ({ id, name, isActive = false }: Props) => {
         <div
           className={`w-8 h-8 flex items-center justify-center rounded-full text-white ${
             isCopying
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-500 hover:cursor-pointer'
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-500 hover:cursor-pointer"
           }`}
           onClick={onCopy}
         >

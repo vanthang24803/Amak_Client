@@ -1,6 +1,6 @@
-import { Inter } from 'next/font/google';
+import { Inter } from "next/font/google";
 
-const font = Inter({ subsets: ['latin'] });
+const font = Inter({ subsets: ["latin"] });
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (

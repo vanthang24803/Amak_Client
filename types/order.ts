@@ -4,7 +4,7 @@ export type Order = Base & {
   customer: string;
   email: string;
   address: string;
-  numberPhone:string;
+  numberPhone: string;
   payment: string;
   status: string;
   quantity: number;
@@ -18,7 +18,7 @@ type OrderDetails = {
   thumbnail: string;
   name: string;
   optionName: string;
-  quantity:number;
+  quantity: number;
   price: number;
   sale: number;
 };

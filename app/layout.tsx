@@ -1,8 +1,8 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import { siteConfig } from '@/configs/site';
-import { ToasterProvider } from '@/components/providers/toaster-provider';
-import { ModalProvider } from '@/components/providers/modal-provider';
+import type { Metadata } from "next";
+import "./globals.css";
+import { siteConfig } from "@/configs/site";
+import { ToasterProvider } from "@/components/providers/toaster-provider";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   icons: [
     {
-      url: '/logo.png',
-      href: '/logo.png',
+      url: "/logo.png",
+      href: "/logo.png",
     },
   ],
 };

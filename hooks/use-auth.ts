@@ -1,11 +1,11 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import Cookies from 'js-cookie';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import Cookies from "js-cookie";
 
-import _http from '@/utils/http';
-import { Profile } from '@/types/profile';
-import toast from 'react-hot-toast';
-import { LoginFromValue } from '@/app/(root)/(auth)/login/components/login-handler';
+import _http from "@/utils/http";
+import { Profile } from "@/types/profile";
+import toast from "react-hot-toast";
+import { LoginFromValue } from "@/app/(root)/(auth)/login/components/login-handler";
 
 type Store = {
   profile: Profile | null;
@@ -31,27 +31,27 @@ const useAuth = create(
               isLogin: true,
             });
 
-            Cookies.set('ac_token', response.data.result.accessToken);
-            Cookies.set('rf_token', response.data.result.refreshToken);
+            Cookies.set("ac_token", response.data.result.accessToken);
+            Cookies.set("rf_token", response.data.result.refreshToken);
           }
         } catch (error: any) {
-          console.error('Login failed:', error);
+          console.error("Login failed:", error);
           if (error.response && error.response.status === 401) {
-            toast.error('Tài khoản hoặc mật khẩu không chính xác', {
+            toast.error("Tài khoản hoặc mật khẩu không chính xác", {
               style: {
-                fontSize: '14px',
-                fontWeight: '500',
+                fontSize: "14px",
+                fontWeight: "500",
               },
             });
           }
 
           if (error.response && error.response.status === 403) {
-            toast('Tài khoản của bạn chưa được xác thực!', {
+            toast("Tài khoản của bạn chưa được xác thực!", {
               style: {
-                fontSize: '14px',
-                fontWeight: '500',
+                fontSize: "14px",
+                fontWeight: "500",
               },
-              icon: '🔒',
+              icon: "🔒",
             });
           }
           throw error;
@@ -88,8 +88,8 @@ const useAuth = create(
                 isLogin: true,
               });
 
-              Cookies.set('ac_token', response.data.result.accessToken);
-              Cookies.set('rf_token', response.data.result.refreshToken);
+              Cookies.set("ac_token", response.data.result.accessToken);
+              Cookies.set("rf_token", response.data.result.refreshToken);
               console.log(response);
             })
             .catch((error) => {
@@ -99,13 +99,13 @@ const useAuth = create(
       },
       logout: async () => {
         try {
-          const response = await _http.post('/Authentication/Logout', {
-            token: Cookies.get('ac_token'),
+          const response = await _http.post("/Authentication/Logout", {
+            token: Cookies.get("ac_token"),
           });
           if (response.status === 200) {
             set({ profile: null, isLogin: false });
-            Cookies.set('ac_token', '');
-            Cookies.set('rf_token', '');
+            Cookies.set("ac_token", "");
+            Cookies.set("rf_token", "");
 
             window.location.reload();
           }
@@ -121,7 +121,7 @@ const useAuth = create(
       },
     }),
     {
-      name: 'amak-authentication',
+      name: "amak-authentication",
       storage: createJSONStorage(() => localStorage),
     }
   )

@@ -4,8 +4,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { FilterType } from '@/types';
+} from "@/components/ui/select";
+import { FilterType } from "@/types";
 
 interface SelectFilter {
   handleFilter: (filterType: FilterType) => void;

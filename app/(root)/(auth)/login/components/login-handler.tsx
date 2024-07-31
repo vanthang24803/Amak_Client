@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import { AuthModal } from '@/components/auth-model';
-import { redirect, useRouter } from 'next/navigation';
-import * as z from 'zod';
+import { AuthModal } from "@/components/auth-model";
+import { redirect, useRouter } from "next/navigation";
+import * as z from "zod";
 
-import { zodResolver } from '@hookform/resolvers/zod';
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/ui/form';
-import { loginValidation } from '@/validations';
-import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { SocialButton } from './social-btn';
-import toast from 'react-hot-toast';
-import _http from '@/utils/http';
-import useAuth from '@/hooks/use-auth';
-import useSocialLogin from '@/hooks/use-social-login';
+} from "@/components/ui/form";
+import { loginValidation } from "@/validations";
+import { useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { SocialButton } from "./social-btn";
+import toast from "react-hot-toast";
+import _http from "@/utils/http";
+import useAuth from "@/hooks/use-auth";
+import useSocialLogin from "@/hooks/use-social-login";
 
 export type LoginFromValue = z.infer<typeof loginValidation>;
 
@@ -36,8 +36,8 @@ export const LoginHandler = () => {
   const form = useForm({
     resolver: zodResolver(loginValidation),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
@@ -55,7 +55,7 @@ export const LoginHandler = () => {
 
   useEffect(() => {
     if (isLogin) {
-      redirect('/');
+      redirect("/");
     }
   }, [isLogin]);
 
@@ -138,7 +138,7 @@ export const LoginHandler = () => {
         <span className="mt-4 text-neutral-600">No account?</span>
         <span
           className="mt-4 text-blue-600 hover:cursor-pointer"
-          onClick={() => router.push('/register')}
+          onClick={() => router.push("/register")}
         >
           Create now
         </span>

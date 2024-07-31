@@ -2,9 +2,9 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   FacebookAuthProvider,
-} from 'firebase/auth';
-import { auth } from '@/utils/firebase';
-import useAuth from '@/hooks/use-auth';
+} from "firebase/auth";
+import { auth } from "@/utils/firebase";
+import useAuth from "@/hooks/use-auth";
 
 export default function useSocialLogin() {
   const { signInWithSocial } = useAuth();

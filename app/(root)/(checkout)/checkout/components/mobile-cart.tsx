@@ -83,7 +83,9 @@ export const MobileCart = ({
                   />
                   <div className="flex justify-between w-full">
                     <div className="flex flex-col text-sm w-[180px] space-y-1">
-                      <span className="text-[12px] line-clamp-2 font-medium">{item.product.name}</span>
+                      <span className="text-[12px] line-clamp-2 font-medium">
+                        {item.product.name}
+                      </span>
                       <span className="text-xs text-neutral-500">
                         {item.product.options[0].name}
                       </span>

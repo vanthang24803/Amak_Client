@@ -1,14 +1,14 @@
-import Link from 'next/link';
-import { Mail, MapPin, Phone } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
-import { address, navigationFooter } from '@/constants';
+import Link from "next/link";
+import { Mail, MapPin, Phone } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { address, navigationFooter } from "@/constants";
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
+} from "@/components/ui/accordion";
 
 export const Footer = () => {
   return (

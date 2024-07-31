@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-'use client';
+"use client";
 
-import { Photo } from '@/types/photo';
-import * as React from 'react';
+import { Photo } from "@/types/photo";
+import * as React from "react";
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from '@/components/ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 type Props = {
   sale: number | undefined;
@@ -22,7 +22,7 @@ export const Thumbnail = ({ sale, data }: Props) => {
       <Carousel
         className="w-full max-w-xs"
         opts={{
-          align: 'start',
+          align: "start",
           loop: true,
         }}
         plugins={[

@@ -1,10 +1,10 @@
-import slugify from 'slugify';
-import { uuidValidation } from '@/validations/uuid';
+import slugify from "slugify";
+import { uuidValidation } from "@/validations/uuid";
 
 export const generateSlug = (name: string, id: string) => {
   const path = slugify(name, {
     lower: true,
-    locale: 'vi',
+    locale: "vi",
   });
 
   return `${path}-${id}.html`;

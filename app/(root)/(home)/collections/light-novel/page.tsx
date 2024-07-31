@@ -1,8 +1,8 @@
-import { Metadata } from 'next';
-import { Container } from '../../components/container-categoy';
+import { Metadata } from "next";
+import { Container } from "../../components/container-categoy";
 
 export const metadata: Metadata = {
-  title: 'Light novel',
+  title: "Light novel",
 };
 
 export default function Collection() {

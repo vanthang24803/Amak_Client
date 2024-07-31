@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Product } from '@/types/product';
-import { Products } from './products';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import _http from '@/utils/http';
-import { Category } from '@/utils/category';
+import { Button } from "@/components/ui/button";
+import { Product } from "@/types/product";
+import { Products } from "./products";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import _http from "@/utils/http";
+import { Category } from "@/utils/category";
 
 export const Manga = () => {
   const [data, setData] = useState<Product[]>([]);
