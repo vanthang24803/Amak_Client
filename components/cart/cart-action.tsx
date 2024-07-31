@@ -21,16 +21,22 @@ import { Separator } from '../ui/separator';
 import { convertPrice, formatPrice } from '@/utils/price';
 import { Button } from '../ui/button';
 import { UpdateCart } from './cart-update';
+import { useState } from 'react';
 
 export default function CartAction() {
   const { isClient } = useClient();
   const router = useRouter();
   const cart = useCart();
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  };
 
   if (!isClient) return <Cart />;
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={handleOpen}>
       <SheetTrigger>
         <div className="flex items-center space-x-2 hover:cursor-pointer">
           <div className="relative">
@@ -47,9 +53,15 @@ export default function CartAction() {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <Link href={`/cart`}>
+          <h2
+            className="cursor-pointer"
+            onClick={() => {
+              router.push(`/cart`);
+              handleOpen();
+            }}
+          >
             <SheetTitle>Giỏ Hàng</SheetTitle>
-          </Link>
+          </h2>
           <SheetDescription>
             Số sản phẩm trong giỏ hàng: {cart.totalItems()}
           </SheetDescription>
@@ -69,17 +81,19 @@ export default function CartAction() {
                           src={item.product.thumbnail}
                           alt="thumbnail"
                           className="w-1/4 object-fill"
-                          onClick={() =>
-                            router.push(`/products/${item.product.id}`)
-                          }
+                          onClick={() => {
+                            router.push(`/products/${item.product.id}`);
+                            handleOpen();
+                          }}
                         />
                         <div className="flex flex-col">
                           <div className="relative w-[250px]">
                             <span
                               className="font-semibold text-[12px] md:w-[160px] line-clamp-2"
-                              onClick={() =>
-                                router.push(`/products/${item.product.id}`)
-                              }
+                              onClick={() => {
+                                router.push(`/products/${item.product.id}`);
+                                handleOpen();
+                              }}
                             >
                               {item.product.name}
                             </span>
@@ -141,7 +155,10 @@ export default function CartAction() {
           </div>
           <Button
             className="w-full bg-[#417505] hover:bg-[#65b10d]"
-            onClick={() => router.push('/checkout')}
+            onClick={() => {
+              router.push('/checkout');
+              handleOpen();
+            }}
             disabled={cart.totalItems() == 0}
           >
             Thanh toán
