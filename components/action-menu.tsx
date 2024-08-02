@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
@@ -29,6 +28,7 @@ import {
 import { statusRank, statusRankIcon } from "@/constants";
 import { convertPrice } from "@/utils/price";
 import { calculatePercentage } from "@/utils/calculator-rank";
+import Image from "next/image";
 
 export default function ActionMenu() {
   const { isLogin, profile, logout } = useAuth();
@@ -53,10 +53,12 @@ export default function ActionMenu() {
                 </AvatarFallback>
               </Avatar>
               {profile?.roles.includes("ADMIN") && (
-                <img
-                  className="absolute -top-1 -right-3 w-4 h-4 rotate-45"
+                <Image
+                  className="absolute -top-1 -right-3  rotate-45"
                   src="/crown.png"
                   alt="admin"
+                  width={14}
+                  height={14}
                 />
               )}
             </div>
@@ -73,7 +75,7 @@ export default function ActionMenu() {
                 )}
               </div>
               {profile?.roles.includes("ADMIN") && (
-                <img className="w-4 h-4" src="/verify.png" alt="admin" />
+                <Image width={16} height={16} src="/verify.png" alt="admin" />
               )}
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="h-[1.5px]" />
@@ -84,10 +86,11 @@ export default function ActionMenu() {
                     Cấp bậc: {profile?.rank ? statusRank[profile.rank] : ""}
                   </span>
                   {profile?.rank && (
-                    <img
+                    <Image
                       src={statusRankIcon[profile?.rank]}
                       alt="icon-rank"
-                      className="w-5 h-5 object-cover"
+                      width={20}
+                      height={20}
                     />
                   )}
                 </div>

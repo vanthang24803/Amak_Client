@@ -14,7 +14,7 @@ export type Profile = Base & {
   processOrder: number;
   rank: Rank;
   updateAt: string;
-  numberPhone:string;
+  numberPhone: string;
 };
 
 export type Rank = "Bronze" | "Silver" | "Gold" | "Platinum" | "Diamond";

@@ -52,7 +52,11 @@ export const Method = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Địa chỉ" {...field} className="text-[13px]" />
+                    <Input
+                      placeholder="Địa chỉ"
+                      {...field}
+                      className="text-[13px]"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
