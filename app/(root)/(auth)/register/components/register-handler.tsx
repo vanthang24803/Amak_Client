@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import * as z from 'zod';
-import { AuthModal } from '@/components/auth-model';
-import useAuth from '@/hooks/use-auth';
-import { registerValidation } from '@/validations';
-import { redirect, useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import _http from '@/utils/http';
-import toast from 'react-hot-toast';
+import * as z from "zod";
+import { AuthModal } from "@/components/auth-model";
+import useAuth from "@/hooks/use-auth";
+import { registerValidation } from "@/validations";
+import { redirect, useRouter } from "next/navigation";
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import _http from "@/utils/http";
+import toast from "react-hot-toast";
 
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { RegisterSuccess } from './register-success';
-import { Step } from './Step';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { RegisterSuccess } from "./register-success";
+import { Step } from "./Step";
 
 type LoginFormValue = z.infer<typeof registerValidation>;
 
@@ -37,32 +37,32 @@ export const RegisterHandler = () => {
   const form = useForm({
     resolver: zodResolver(registerValidation),
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
     },
   });
 
   const onSubmit = async (data: LoginFormValue) => {
     try {
-      toast.loading('Đang xử lý dữ liệu!');
+      toast.loading("Đang xử lý dữ liệu!");
       setLoading(true);
       const response = await _http.post(`/Authentication/Register`, data);
 
       if (response.status == 200) {
         toast.dismiss();
-        toast.success('Check your email !');
+        toast.success("Check your email !");
         setActive(true);
       }
     } catch (error: any) {
       setLoading(false);
       toast.dismiss();
       if (error.response && error.response.status === 400) {
-        if (error.response.data.message == 'Email existed!') {
-          toast.error('Email đã được sử dụng');
+        if (error.response.data.message == "Email existed!") {
+          toast.error("Email đã được sử dụng");
         } else {
-          toast.error('Dữ liệu không chính xác !');
+          toast.error("Dữ liệu không chính xác !");
         }
       }
     } finally {
@@ -71,7 +71,7 @@ export const RegisterHandler = () => {
   };
 
   if (isLogin) {
-    redirect('/');
+    redirect("/");
   }
 
   return (
@@ -83,8 +83,8 @@ export const RegisterHandler = () => {
         <Step isActive={active} />
         <span className="text-neutral-800 text-[12px]">
           {active
-            ? 'Xác thực tài khoản của bạn'
-            : 'Hoàn thiện các thông tin sau'}
+            ? "Xác thực tài khoản của bạn"
+            : "Hoàn thiện các thông tin sau"}
         </span>
       </div>
       {active ? (
@@ -188,7 +188,7 @@ export const RegisterHandler = () => {
             <span className="mt-4 text-neutral-600">Have account?</span>
             <span
               className="mt-4 text-blue-600 hover:cursor-pointer"
-              onClick={() => router.push('/login')}
+              onClick={() => router.push("/login")}
             >
               Login now
             </span>

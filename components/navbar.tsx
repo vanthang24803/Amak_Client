@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Logo } from '@/components/logo';
-import SearchComponent from '@/components/search/search';
-import { Menubar } from '@/components/menu-bar';
-import ActionMenu from '@/components/action-menu';
-import { Suspense } from 'react';
+import { Logo } from "@/components/logo";
+import SearchComponent from "@/components/search/search";
+import { Menubar } from "@/components/menu-bar";
+import ActionMenu from "@/components/action-menu";
+import { Suspense } from "react";
 
 export const Navbar = () => {
   return (

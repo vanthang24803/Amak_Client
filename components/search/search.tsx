@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { useState, useEffect, useRef } from 'react';
-import useSearch from '@/hooks/use-search';
-import { SearchContent } from './search-context';
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { useState, useEffect, useRef } from "react";
+import useSearch from "@/hooks/use-search";
+import { SearchContent } from "./search-context";
 
 const SearchComponent = () => {
   const [open, setOpen] = useState(false);
@@ -13,7 +13,7 @@ const SearchComponent = () => {
     useSearch();
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       router.push(`/search/?product=${content}`);
     }
@@ -26,10 +26,10 @@ const SearchComponent = () => {
       }
     };
 
-    document.addEventListener('mousedown', checkIfClickedOutside);
+    document.addEventListener("mousedown", checkIfClickedOutside);
 
     return () => {
-      document.removeEventListener('mousedown', checkIfClickedOutside);
+      document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, [open]);
 

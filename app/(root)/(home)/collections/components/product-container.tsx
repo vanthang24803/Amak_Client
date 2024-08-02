@@ -1,7 +1,7 @@
-import { Card } from '@/components/card/cart-item';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Product } from '@/types';
-import { Package2 } from 'lucide-react';
+import { Card } from "@/components/card/cart-item";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Product } from "@/types";
+import { Package2 } from "lucide-react";
 
 type Props = {
   products: Product[] | undefined;

@@ -18,7 +18,6 @@ type Props = {
   payment: string | null;
   sendChecked: boolean;
   voucher: string;
-  userId: string | undefined;
   totalPrice: number;
 };
 
@@ -32,7 +31,6 @@ export default function useFormCheckOut({
   exitAddress,
   payment,
   sendChecked,
-  userId,
   voucher,
   totalPrice,
 }: Props) {
@@ -69,7 +67,7 @@ export default function useFormCheckOut({
         optionId: item.product.options[0].id,
         productId: item.product.id,
         productName: item.product.name,
-        thumbnail:item.product.thumbnail,
+        thumbnail: item.product.thumbnail,
         optionName: item.product.options[0].name,
         price: item.product.options[0].price,
         sale: item.product.options[0].sale,

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import qs from 'query-string';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { useDebounce } from './use-debounce';
-import { Product } from '@/types/product';
-import _http from '@/utils/http';
+import qs from "query-string";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDebounce } from "./use-debounce";
+import { Product } from "@/types/product";
+import _http from "@/utils/http";
 
 export default function useSearch() {
   const router = useRouter();
@@ -13,9 +13,9 @@ export default function useSearch() {
 
   const [searchLoading, setLoading] = useState(false);
 
-  const search = searchParams.get('search');
+  const search = searchParams.get("search");
 
-  const [content, setContent] = useState(search || '');
+  const [content, setContent] = useState(search || "");
 
   const [product, setProduct] = useState<Product[]>([]);
 

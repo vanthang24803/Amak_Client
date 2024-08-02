@@ -1,20 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
-'use client';
+"use client";
 
-import { Card } from '@/components/card/cart-item';
-import { Pagination, Product } from '@/types';
-import _http from '@/utils/http';
-import { Separator } from '@radix-ui/react-separator';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import PaginationComponent from '../../collections/components/pagination';
-import { Spinner } from '@/components/spinner';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Card } from "@/components/card/cart-item";
+import { Pagination, Product } from "@/types";
+import _http from "@/utils/http";
+import { Separator } from "@radix-ui/react-separator";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import PaginationComponent from "../../collections/components/pagination";
+import { Spinner } from "@/components/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Container = () => {
   const searchParams = useSearchParams();
-  const search = searchParams.get('product');
+  const search = searchParams.get("product");
 
   const [data, setData] = useState<Pagination<Product[]>>();
   const [_, setCurrentPage] = useState(1);

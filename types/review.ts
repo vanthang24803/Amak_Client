@@ -1,5 +1,5 @@
-import { Base } from './base';
-import { Photo } from './photo';
+import { Base } from "./base";
+import { Photo } from "./photo";
 
 export type Review = Base & {
   content: string;

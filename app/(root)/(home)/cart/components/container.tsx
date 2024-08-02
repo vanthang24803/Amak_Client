@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-'use client';
+"use client";
 
-import useCart from '@/hooks/use-cart';
-import { useRouter } from 'next/navigation';
+import useCart from "@/hooks/use-cart";
+import { useRouter } from "next/navigation";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,16 +10,16 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import useClient from '@/hooks/use-client';
-import { Separator } from '@/components/ui/separator';
-import Link from 'next/link';
-import { UpdateCart } from '@/components/cart/cart-update';
-import { convertPrice, formatPrice } from '@/utils/price';
-import { Dot, ShoppingCart, X } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/breadcrumb";
+import useClient from "@/hooks/use-client";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
+import { UpdateCart } from "@/components/cart/cart-update";
+import { convertPrice, formatPrice } from "@/utils/price";
+import { Dot, ShoppingCart, X } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 export const Container = () => {
   const cart = useCart();
@@ -147,7 +147,7 @@ export const Container = () => {
           <Separator />
           <div className="text-[13px] tracking-tighter text-neutral-600 space-y-1 pb-4">
             <p className="flex items-center space-x-2">
-              {' '}
+              {" "}
               <Dot /> Đổi trả sản phẩm trong 7 ngày do lỗi sản xuất.
             </p>
             <p className="flex items-center space-x-2">

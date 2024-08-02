@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from 'next/link';
-import { Separator } from '../ui/separator';
-import { Spinner } from '../spinner';
-import { Product } from '@/types/product';
-import { convertPrice, formatPrice } from '@/utils/price';
-import { generateSlug } from '@/utils/slug';
+import Link from "next/link";
+import { Separator } from "../ui/separator";
+import { Spinner } from "../spinner";
+import { Product } from "@/types/product";
+import { convertPrice, formatPrice } from "@/utils/price";
+import { generateSlug } from "@/utils/slug";
 
 export const SearchContent = ({
   content,
@@ -20,7 +20,7 @@ export const SearchContent = ({
   return (
     <div className="lg:w-[500px] md:w-[300px] lg:min-h-[20vh] min-h-[10vh] rounded-md bg-white dark:bg-neutral-700/90  p-4 md:absolute md:top-12 md:-right-2 shadow-lg">
       <p className="text-sm font-medium">Gợi ý cho bạn:</p>
-      {content != '' && (
+      {content != "" && (
         <>
           {loading ? (
             <div className="flex items-center justify-center">
@@ -80,7 +80,7 @@ export const SearchContent = ({
               ) : (
                 <div className="flex items-center justify-center p-8">
                   <p className="text-sm font-medium text-neutral-600">
-                    Không tìm thấy sản phẩm{' '}
+                    Không tìm thấy sản phẩm{" "}
                   </p>
                 </div>
               )}

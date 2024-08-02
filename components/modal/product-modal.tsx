@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import useFetch from '@/hooks/use-fetch';
-import { Product } from '@/types/product';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { Eye } from 'lucide-react';
-import { Spinner } from '../spinner';
-import PhotoModal from './photo-modal';
-import InformationModal from './information-modal';
+import useFetch from "@/hooks/use-fetch";
+import { Product } from "@/types/product";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Eye } from "lucide-react";
+import { Spinner } from "../spinner";
+import PhotoModal from "./photo-modal";
+import InformationModal from "./information-modal";
 
 type Props = {
   id: string;

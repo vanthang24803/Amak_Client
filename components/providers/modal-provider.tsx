@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import useAuth from '@/hooks/use-auth';
-import useClient from '@/hooks/use-client';
-import { profile } from 'console';
-import { useEffect } from 'react';
+import useAuth from "@/hooks/use-auth";
+import useClient from "@/hooks/use-client";
+import { profile } from "console";
+import { useEffect } from "react";
 
 export const ModalProvider = () => {
   const { isClient } = useClient();

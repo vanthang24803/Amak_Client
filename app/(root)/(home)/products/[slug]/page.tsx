@@ -1,5 +1,5 @@
-import { decodeSlug } from '@/utils/slug';
-import { Container } from './components/container';
+import { decodeSlug } from "@/utils/slug";
+import { Container } from "./components/container";
 
 type Props = {
   params: {
@@ -18,7 +18,7 @@ export async function generateMetadata({
   );
 
   return {
-    title: product.result.name || 'Product',
+    title: product.result.name || "Product",
   };
 }
 

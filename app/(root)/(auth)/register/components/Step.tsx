@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import useAuth from '@/hooks/use-auth';
+import useAuth from "@/hooks/use-auth";
 
 export const Step = ({ isActive }: { isActive: boolean }) => {
   const { isLogin } = useAuth();

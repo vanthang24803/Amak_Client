@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
-import _http from '@/utils/http';
-import { Card } from '@/components/card/cart-item';
-import { Product } from '@/types/product';
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import _http from "@/utils/http";
+import { Card } from "@/components/card/cart-item";
+import { Product } from "@/types/product";
 
 interface SuggestProps {
   category: string;
@@ -42,7 +42,7 @@ export const Suggest = ({ category }: SuggestProps) => {
       <span className="text-2xl font-bold">Sản phẩm liên quan</span>
       <Carousel
         opts={{
-          align: 'start',
+          align: "start",
           loop: true,
         }}
         plugins={[

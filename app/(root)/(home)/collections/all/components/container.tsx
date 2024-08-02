@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Navigation } from '../../components/navigation';
-import { Pagination, Product } from '@/types';
-import _http from '@/utils/http';
-import PaginationComponent from '../../components/pagination';
-import { Filter } from '../../components/filter';
-import useFilterProduct from '@/hooks/use-filter-product';
-import { SelectFilter } from '../../components/select-filter';
-import { ProductContainer } from '../../components/product-container';
-import { MobileFilter } from '../../components/mobile-filter';
+import { useEffect, useState } from "react";
+import { Navigation } from "../../components/navigation";
+import { Pagination, Product } from "@/types";
+import _http from "@/utils/http";
+import PaginationComponent from "../../components/pagination";
+import { Filter } from "../../components/filter";
+import useFilterProduct from "@/hooks/use-filter-product";
+import { SelectFilter } from "../../components/select-filter";
+import { ProductContainer } from "../../components/product-container";
+import { MobileFilter } from "../../components/mobile-filter";
 
 export const Container = () => {
   const [data, setData] = useState<Pagination<Product[]>>();

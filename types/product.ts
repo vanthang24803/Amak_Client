@@ -1,8 +1,8 @@
-import { Base } from './base';
-import { Category } from './category';
-import { Option } from './options';
-import { Photo } from './photo';
-import { Review } from './review';
+import { Base } from "./base";
+import { Category } from "./category";
+import { Option } from "./options";
+import { Photo } from "./photo";
+import { Review } from "./review";
 
 export type Product = Base & {
   name: string;

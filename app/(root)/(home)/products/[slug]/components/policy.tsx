@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { Package, Phone, Truck } from 'lucide-react';
+import { useRouter } from "next/navigation";
+import { Package, Phone, Truck } from "lucide-react";
 
 export const Policy = () => {
   const router = useRouter();
@@ -30,7 +30,7 @@ export const Policy = () => {
         src="https://theme.hstatic.net/200000294254/1001077164/14/product_banner.jpg?v=323"
         alt="img"
         className="w-full md:w-1/2 hover:cursor-pointer"
-        onClick={() => router.push('/')}
+        onClick={() => router.push("/")}
       />
     </div>
   );

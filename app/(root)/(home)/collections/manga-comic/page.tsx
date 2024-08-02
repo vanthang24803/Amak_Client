@@ -1,8 +1,8 @@
-import { Metadata } from 'next';
-import { Container } from '../../components/container-categoy';
+import { Metadata } from "next";
+import { Container } from "../../components/container-categoy";
 
 export const metadata: Metadata = {
-  title: 'Manga - Commic',
+  title: "Manga - Commic",
 };
 
 export default function Collection() {

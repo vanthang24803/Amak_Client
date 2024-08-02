@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import OutlineStar from '@/public/star-outline.png';
-import GoldenStar from '@/public/gold-star.png';
+import Image from "next/image";
+import OutlineStar from "@/public/star-outline.png";
+import GoldenStar from "@/public/gold-star.png";
 
 type Props = {
   stars: number;

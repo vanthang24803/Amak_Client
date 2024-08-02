@@ -1,3 +1,7 @@
+echo "Running prettier ✨✨✨✨✨✨"
+
+pnpm prettier
+
 echo "Running lint 🧨🧨🧨🧨🧨"
 pnpm lint
 

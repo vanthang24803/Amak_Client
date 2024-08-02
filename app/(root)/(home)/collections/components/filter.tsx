@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { PriceType } from '@/types';
-import { Check, ChevronDown, ChevronUp } from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { PriceType } from "@/types";
+import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 interface FilterProp {
   price: PriceType | null;
@@ -58,9 +58,9 @@ export const Filter = ({ price, handlePriceFilter }: FilterProp) => {
             <div className="flex items-center space-x-2">
               <div
                 className="w-4 h-4 flex items-center justify-center border border-neutral-500"
-                onClick={() => handlePriceFilter('Low')}
+                onClick={() => handlePriceFilter("Low")}
               >
-                {price === 'Low' && <Check className="w-4 h-4" />}
+                {price === "Low" && <Check className="w-4 h-4" />}
               </div>
               <Label>Dưới 100.000₫</Label>
             </div>
@@ -68,9 +68,9 @@ export const Filter = ({ price, handlePriceFilter }: FilterProp) => {
             <div className="flex items-center space-x-2">
               <div
                 className="w-4 h-4  flex items-center justify-center border border-neutral-500"
-                onClick={() => handlePriceFilter('Medium')}
+                onClick={() => handlePriceFilter("Medium")}
               >
-                {price === 'Medium' && <Check className="w-4 h-4" />}
+                {price === "Medium" && <Check className="w-4 h-4" />}
               </div>
               <Label>100.000₫ - 200.000₫</Label>
             </div>
@@ -78,9 +78,9 @@ export const Filter = ({ price, handlePriceFilter }: FilterProp) => {
             <div className="flex items-center space-x-2">
               <div
                 className="w-4 h-4 flex items-center justify-center border border-neutral-500"
-                onClick={() => handlePriceFilter('High')}
+                onClick={() => handlePriceFilter("High")}
               >
-                {price === 'High' && <Check className="w-4 h-4" />}
+                {price === "High" && <Check className="w-4 h-4" />}
               </div>
               <Label>200.000₫ - 300.000₫</Label>
             </div>
@@ -88,9 +88,9 @@ export const Filter = ({ price, handlePriceFilter }: FilterProp) => {
             <div className="flex items-center space-x-2">
               <div
                 className="w-4 h-4 flex items-center justify-center border border-neutral-500"
-                onClick={() => handlePriceFilter('Highest')}
+                onClick={() => handlePriceFilter("Highest")}
               >
-                {price === 'Highest' && <Check className="w-4 h-4" />}
+                {price === "Highest" && <Check className="w-4 h-4" />}
               </div>
               <Label>300.000₫ - 400.000₫</Label>
             </div>
@@ -98,9 +98,9 @@ export const Filter = ({ price, handlePriceFilter }: FilterProp) => {
             <div className="flex items-center space-x-2">
               <div
                 className="w-4 h-4 flex items-center justify-center border border-neutral-500"
-                onClick={() => handlePriceFilter('Max')}
+                onClick={() => handlePriceFilter("Max")}
               >
-                {price === 'Max' && <Check className="w-4 h-4" />}
+                {price === "Max" && <Check className="w-4 h-4" />}
               </div>
               <Label>Trên 400.000₫</Label>
             </div>
