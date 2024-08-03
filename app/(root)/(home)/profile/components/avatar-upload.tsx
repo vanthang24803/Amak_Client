@@ -20,7 +20,7 @@ import toast from "react-hot-toast";
 import _http from "@/utils/http";
 
 export const AvatarProfile = () => {
-  const { profile } = useAuth();
+  const { profile, getProfile } = useAuth();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -32,6 +32,10 @@ export const AvatarProfile = () => {
 
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
+  };
+
+  const handlerOpen = () => {
+    setOpen(!open);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,36 +52,40 @@ export const AvatarProfile = () => {
       formData.append("avatar", fileInputRef.current.files[0]);
     }
 
-    setLoading(true);
-    toast.loading("Waiting...");
-
-    _http
-      .post(`/Authentication/Avatar`, formData, {
+    try {
+      setLoading(true);
+      toast.loading("Đang xử lý...", {
+        className: "text-[14px] tracking  tracking-tighter",
+      });
+      const response = await _http.post(`/Me/Avatar`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      })
-      .then((response) => {
-        if (response.status == 200) {
-          setOpen(false);
-          toast.dismiss();
-          toast.success("Cập nhập avatar thành công!");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.dismiss();
-        toast.error("Có lỗi xảy ra!");
-      })
-      .finally(() => {
-        setLoading(false);
       });
+
+      if (response.status === 200) {
+        getProfile();
+        handlerOpen();
+        toast.dismiss();
+        toast.success("Cập nhập avatar thành công!", {
+          className: "text-[14px] tracking  tracking-tighter",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.dismiss();
+      toast.error("Có lỗi xảy ra", {
+        className: "text-[14px] tracking  tracking-tighter",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handlerOpen}>
       <DialogTrigger asChild>
-        <Avatar className="w-24 h-24 md:w-36 md:h-36 hover:cursor-pointer">
+        <Avatar className="w-24 h-24 md:w-40 md:h-40 hover:cursor-pointer">
           <AvatarImage src={profile?.avatar} />
           <AvatarFallback>{profile?.lastName[0].toUpperCase()}</AvatarFallback>
         </Avatar>

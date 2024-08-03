@@ -4,6 +4,18 @@ import { Button } from "@/components/ui/button";
 import useAuth from "@/hooks/use-auth";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Inter } from "next/font/google";
 
 const menu = [
   {
@@ -20,6 +32,11 @@ const menu = [
   },
 ];
 
+const font = Inter({
+  weight: "400",
+  subsets: ["latin"],
+});
+
 export const Sidebar = () => {
   const { profile, logout } = useAuth();
 
@@ -35,7 +52,7 @@ export const Sidebar = () => {
         <Link href={item.url} key={_}>
           <Button
             variant={pathname === item.url ? "primary" : "ghost"}
-            className="w-full md:w-[160px] justify-start tracking-tighter font-semibold"
+            className="w-full md:w-[160px] rounded-sm justify-start tracking-tighter font-semibold"
           >
             {item.name}
           </Button>
@@ -50,13 +67,32 @@ export const Sidebar = () => {
           Bài viết
         </Button>
       )}
-      <Button
-        variant="ghost"
-        className="hover:text-green-700 font-semibold text-sm hover:cursor-pointer justify-normal"
-        onClick={() => logout()}
-      >
-        Đăng xuất
-      </Button>
+      <AlertDialog>
+        <AlertDialogTrigger>
+         <div className="flex justify-start">
+         <Button
+            variant="ghost"
+            className="hover:text-green-700 font-semibold text-sm hover:cursor-pointer justify-normal"
+          >
+            Đăng xuất
+          </Button>
+         </div>
+        </AlertDialogTrigger>
+        <AlertDialogContent className={`${font.className}`}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Bạn có muốn đăng xuất không?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Hành động này không thể quay trở lại!
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Thoát</AlertDialogCancel>
+            <AlertDialogAction onClick={() => logout()}>
+              Xác nhận
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

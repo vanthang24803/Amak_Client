@@ -4,15 +4,20 @@ import { AvatarProfile } from "./avatar-upload";
 import Image from "next/image";
 import { statusRank, statusRankIcon } from "@/constants";
 import { convertPrice } from "@/utils/price";
-import { Label } from "@/components/ui/label";
-import { Inter, Poppins, Roboto } from "next/font/google";
+import { Inter } from "next/font/google";
+import { Button } from "@/components/ui/button";
+import { Dispatch, SetStateAction } from "react";
 
 const font = Inter({
   weight: "400",
   subsets: ["latin"],
 });
 
-export const Information = () => {
+type Props = {
+  setActive: Dispatch<SetStateAction<boolean>>;
+};
+
+export const Information = ({ setActive }: Props) => {
   const { profile } = useAuth();
 
   return (
@@ -78,6 +83,13 @@ export const Information = () => {
           <b className="text-[18px]">{convertPrice(profile?.totalPrice)}₫</b>
         </p>
       </div>
+      <Button
+        className="w-[200px]"
+        variant="mix"
+        onClick={() => setActive(true)}
+      >
+        Cập nhật thông tin
+      </Button>
     </div>
   );
 };

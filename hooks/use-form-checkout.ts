@@ -19,6 +19,7 @@ type Props = {
   sendChecked: boolean;
   voucher: string;
   totalPrice: number;
+  numberPhone: string | undefined;
 };
 
 type CreateFormValue = z.infer<typeof checkOutValidation>;
@@ -33,6 +34,7 @@ export default function useFormCheckOut({
   sendChecked,
   voucher,
   totalPrice,
+  numberPhone,
 }: Props) {
   const cart = useCart();
   const router = useRouter();
@@ -56,7 +58,8 @@ export default function useFormCheckOut({
     form.setValue("email", email || "");
     form.setValue("name", name || "");
     form.setValue("address", (storeChecked ? address : exitAddress) || "");
-  }, [address, email, exitAddress, form, name, storeChecked]);
+    form.setValue("numberPhone", numberPhone || "");
+  }, [address, email, exitAddress, form, name, numberPhone, storeChecked]);
 
   const onSubmit = async (data: CreateFormValue) => {
     const dataSend = {
