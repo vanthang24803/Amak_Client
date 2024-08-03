@@ -49,6 +49,7 @@ export const Container = () => {
   const { form, loading, onSubmit } = useFormCheckOut({
     email: profile?.email,
     name: `${profile?.firstName} ${profile?.lastName}`,
+    numberPhone: `${profile?.numberPhone}`,
     address:
       profile?.addresses.filter((address) => address.isActive)[0].name || "",
     storeChecked,

@@ -22,4 +22,10 @@ export const updateProfileValidation = z.object({
     .min(1, { message: "Email không được bỏ trống" })
     .email({ message: "Email của bạn không hợp lệ" })
     .max(255, { message: "Email quá dài hãy sử 1 email khác" }),
+  numberPhone: z
+    .string()
+    .min(1, { message: "Số điện không được bỏ trống" })
+    .max(12, {
+      message: "Số điện thoại của bạn không hợp lệ",
+    }),
 });

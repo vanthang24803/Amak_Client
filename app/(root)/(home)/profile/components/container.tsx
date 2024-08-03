@@ -3,6 +3,7 @@
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { Information } from "./information";
+import { UpdateInformation } from "./update-information";
 
 export const Container = () => {
   const [isActive, setActive] = useState(false);
@@ -18,7 +19,11 @@ export const Container = () => {
         <h2 className="uppercase font-bold tracking-tight">
           THÔNG TIN TÀI KHOẢN
         </h2>
-        {isActive ? <></> : <Information />}
+        {isActive ? (
+          <UpdateInformation setActive={setActive} />
+        ) : (
+          <Information setActive={setActive} />
+        )}
       </div>
     </div>
   );
