@@ -16,6 +16,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Inter } from "next/font/google";
+import useClient from "@/hooks/use-client";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const menu = [
   {
@@ -40,8 +42,21 @@ const font = Inter({
 export const Sidebar = () => {
   const { profile, logout } = useAuth();
 
+  const { isClient } = useClient();
+
   const pathname = usePathname();
   const router = useRouter();
+
+  if (!isClient)
+    return (
+      <div className="hidden md:flex items-center justify-between mx-3">
+        <div className="flex flex-col space-y-3 h-[30vh] lg:h-[50vh] basis-1/3">
+          {[...Array(5)].map((_, index) => (
+            <Skeleton key={index} className=" md:w-[200px] h-12 bg-white " />
+          ))}
+        </div>
+      </div>
+    );
 
   return (
     <div className="lg:flex flex-col space-y-4 md:mt-20 m-4 hidden lg:w-1/6">
@@ -69,14 +84,14 @@ export const Sidebar = () => {
       )}
       <AlertDialog>
         <AlertDialogTrigger>
-         <div className="flex justify-start">
-         <Button
-            variant="ghost"
-            className="hover:text-green-700 font-semibold text-sm hover:cursor-pointer justify-normal"
-          >
-            Đăng xuất
-          </Button>
-         </div>
+          <div className="flex justify-start">
+            <Button
+              variant="ghost"
+              className="hover:text-green-700 font-semibold text-sm hover:cursor-pointer justify-normal"
+            >
+              Đăng xuất
+            </Button>
+          </div>
         </AlertDialogTrigger>
         <AlertDialogContent className={`${font.className}`}>
           <AlertDialogHeader>

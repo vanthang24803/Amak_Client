@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { Information } from "./information";
 import { UpdateInformation } from "./update-information";
+import { Modal } from "./modal";
 
 export const Container = () => {
   const [isActive, setActive] = useState(false);
@@ -15,7 +16,7 @@ export const Container = () => {
         <Separator className="w-[100px] h-1 bg-black rounded" />
       </div>
 
-      <div className="flex flex-col space-y-4 w-full bg-white p-4 rounded-md">
+      <Modal>
         <h2 className="uppercase font-bold tracking-tight">
           THÔNG TIN TÀI KHOẢN
         </h2>
@@ -24,7 +25,7 @@ export const Container = () => {
         ) : (
           <Information setActive={setActive} />
         )}
-      </div>
+      </Modal>
     </div>
   );
 };

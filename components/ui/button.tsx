@@ -20,8 +20,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         primary:
           "bg-green-600 text-primary-foreground hover:bg-green-600/90 dark:bg-green-500 dark:hover:bg-green-500/90 dark:text-primary",
-        mix:
-          "bg-sky-700 text-primary-foreground hover:bg-sky-700/90 dark:bg-sky-600 dark:hover:bg-sky-600/90 dark:text-primary",
+        mix: "bg-sky-700 text-primary-foreground hover:bg-sky-700/90 dark:bg-sky-600 dark:hover:bg-sky-600/90 dark:text-primary",
       },
       size: {
         default: "h-10 px-4 py-2",
