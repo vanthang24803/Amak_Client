@@ -52,7 +52,7 @@ export const Container = () => {
 
   const { form, loading, onSubmit } = useFormCheckOut({
     email: profile?.email,
-    name: `${active?.firstName ?? ""} ${active?.lastName ?? ""}`,
+    name: active ? `${active?.firstName} ${active?.lastName}` : "",
     numberPhone: active?.numberPhone ?? "",
     address: active?.addressName ?? "",
     storeChecked,
