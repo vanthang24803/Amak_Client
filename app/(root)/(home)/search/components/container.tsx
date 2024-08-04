@@ -8,7 +8,7 @@ import _http from "@/utils/http";
 import { Separator } from "@radix-ui/react-separator";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import PaginationComponent from "../../collections/components/pagination";
+import PaginationComponent from "../../collections/_components/pagination";
 import { Spinner } from "@/components/spinner";
 import { Skeleton } from "@/components/ui/skeleton";
 

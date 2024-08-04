@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { Container } from "../../components/container-categoy";
+import { Container } from "../../_components/container-categoy";
 
 export const metadata: Metadata = {
   title: "Sách mới",

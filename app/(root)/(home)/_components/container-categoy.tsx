@@ -2,25 +2,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ActionType, Pagination, Product } from "@/types";
+import { Pagination, Product } from "@/types";
 import _http from "@/utils/http";
 import useFilterProduct from "@/hooks/use-filter-product";
-import { Navigation } from "../collections/components/navigation";
-import PaginationComponent from "../collections/components/pagination";
-import { Filter } from "../collections/components/filter";
-import { SelectFilter } from "../collections/components/select-filter";
-import { MobileFilter } from "../collections/components/mobile-filter";
-import { ProductContainer } from "../collections/components/product-container";
+import { Navigation } from "../collections/_components/navigation";
+import PaginationComponent from "../collections/_components/pagination";
+import { Filter } from "../collections/_components/filter";
+import { SelectFilter } from "../collections/_components/select-filter";
+import { MobileFilter } from "../collections/_components/mobile-filter";
+import { ProductContainer } from "../collections/_components/product-container";
 
 type Props = {
-  action: ActionType;
-  thumbnail?: string;
+  category:
+    | "Sách mới"
+    | "Tiểu thuyết"
+    | "Kỹ năng"
+    | "Light novel"
+    | "Manga-Commic"
+    | "Phụ kiện";
+  thumbnail: string;
 };
 
-export const Container = ({
-  action,
-  thumbnail = "https://theme.hstatic.net/200000294254/1001077164/14/collection_banner.jpg?v=407",
-}: Props) => {
+export const Container = ({ category, thumbnail }: Props) => {
   const [data, setData] = useState<Pagination<Product[]>>();
 
   const [_, setCurrentPage] = useState(1);
@@ -35,7 +38,7 @@ export const Container = ({
           Page: page,
           OrderBy: filter,
           SortBy: price,
-          Action: action,
+          Category: category,
         },
       });
 
