@@ -24,22 +24,28 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+
 import useAuth from "@/hooks/use-auth";
-import { Inter } from "next/font/google";
+import { Address } from "@/types";
+import { addressValidation } from "@/validations/address";
+import { LoaderCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { Inter } from "next/font/google";
 import _http from "@/utils/http";
 import toast from "react-hot-toast";
-import { LoaderCircle, Plus } from "lucide-react";
-import { addressValidation } from "@/validations/address";
+
+type Props = {
+  address: Address;
+};
+
+type CreateFormValue = z.infer<typeof addressValidation>;
 
 const font = Inter({
   weight: "400",
   subsets: ["latin"],
 });
 
-type CreateFormValue = z.infer<typeof addressValidation>;
-
-export const CreateAddress = () => {
+export const Update = ({ address }: Props) => {
   const [open, setOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -49,11 +55,11 @@ export const CreateAddress = () => {
   const form = useForm({
     resolver: zodResolver(addressValidation),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      numberPhone: "",
-      address: "",
-      isActive: false,
+      firstName: address.firstName,
+      lastName: address.lastName,
+      numberPhone: address.numberPhone,
+      address: address.addressName,
+      isActive: address.isActive,
     },
   });
 
@@ -73,14 +79,13 @@ export const CreateAddress = () => {
         className: "text-[14px] tracking  tracking-tighter",
       });
 
-      const response = await _http.post(`/Addresses`, dataSend);
-      if (response.status === 201) {
+      const response = await _http.put(`/Addresses/${address.id}`, dataSend);
+      if (response.status === 200) {
         getProfile();
         toast.dismiss();
-        toast.success("Tạo địa chỉ thành công!", {
+        toast.success("Cập nhật địa chỉ thành công!", {
           className: "text-[14px] tracking font-medium tracking-tighter",
         });
-        form.reset();
         handlerOpen();
       }
     } catch (error) {
@@ -97,9 +102,11 @@ export const CreateAddress = () => {
   return (
     <Dialog open={open} onOpenChange={handlerOpen}>
       <DialogTrigger>
-        <Button variant="mix" className="rounded-none tracking-tighter h-10">
-          <Plus className="w-5 h-5 mx-1" />
-          <p className="hidden md:block">Thêm địa chỉ mới</p>
+        <Button
+          variant="ghost"
+          className="text-sky-700 font-medium hover:text-sky-700/90"
+        >
+          Cập nhật
         </Button>
       </DialogTrigger>
       <DialogContent className={font.className}>

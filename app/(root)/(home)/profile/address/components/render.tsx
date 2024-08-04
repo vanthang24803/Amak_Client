@@ -1,11 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import useAuth from "@/hooks/use-auth";
 import { Address } from "@/types";
 import { Inter } from "next/font/google";
 import Image from "next/image";
+import { Remove } from "./remove";
+import { Update } from "./update";
 
 const font = Inter({
   weight: "400",
@@ -13,7 +14,7 @@ const font = Inter({
 });
 
 export const Render = () => {
-  const { profile } = useAuth();
+  const { profile, getProfile } = useAuth();
 
   const address: Address[] | undefined = profile?.addresses.filter(
     (a) => !a.isActive
@@ -34,12 +35,7 @@ export const Render = () => {
               </p>
               <Image width={16} height={16} alt="active" src="/check.png" />
             </div>
-            <Button
-              variant="ghost"
-              className="text-sky-700 font-medium hover:text-sky-700/90"
-            >
-              Cập nhật
-            </Button>
+            <Update address={activeAddress} />
           </div>
           <div className="flex flex-col text-[13px]">
             <div className="flex items-center space-x-1">
@@ -64,18 +60,9 @@ export const Render = () => {
                 {item?.firstName} {item?.lastName}
               </p>
               <div className="flex items-center">
-                <Button
-                  variant="ghost"
-                  className="text-sky-700 font-medium hover:text-sky-700/90"
-                >
-                  Cập nhật
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="text-destructive font-medium hover:text-destructive/90"
-                >
-                  Xoá
-                </Button>
+                <Update address={item} />
+
+                <Remove id={item.id} />
               </div>
             </div>
             <div className="flex flex-col text-[13px]">

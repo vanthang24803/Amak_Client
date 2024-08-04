@@ -22,14 +22,17 @@ import { Method } from "./method";
 import { Payment } from "./payment";
 import { Button } from "@/components/ui/button";
 import { Auth } from "./auth";
+import { Address } from "@/types";
 
 export const Container = () => {
   const { profile } = useAuth();
   const { isClient } = useClient();
-  const [exitAddress, setAddress] = useState(
-    profile?.addresses?.filter((address) => address.isActive)[0]?.addressName ??
-      ""
-  );
+
+  const active: Address | undefined = profile?.addresses?.filter(
+    (address) => address.isActive
+  )[0];
+
+  const [exitAddress, setAddress] = useState(active?.addressName ?? "");
 
   const {
     payment,
@@ -49,11 +52,9 @@ export const Container = () => {
 
   const { form, loading, onSubmit } = useFormCheckOut({
     email: profile?.email,
-    name: `${profile?.firstName} ${profile?.lastName}`,
-    numberPhone: profile?.numberPhone ?? "",
-    address:
-      profile?.addresses?.filter((address) => address.isActive)[0]
-        ?.addressName ?? "",
+    name: `${active?.firstName} ${active?.lastName}`,
+    numberPhone: active?.numberPhone ?? "",
+    address: active?.addressName ?? "",
     storeChecked,
     exitAddress,
     payment,

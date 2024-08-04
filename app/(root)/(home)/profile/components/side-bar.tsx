@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Inter } from "next/font/google";
 import useClient from "@/hooks/use-client";
-import { Spinner } from "@/components/spinner";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const menu = [
