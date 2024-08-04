@@ -27,7 +27,8 @@ export const Container = () => {
   const { profile } = useAuth();
   const { isClient } = useClient();
   const [exitAddress, setAddress] = useState(
-    profile?.addresses.filter((address) => address.isActive)[0].name || ""
+    profile?.addresses?.filter((address) => address.isActive)[0]?.addressName ??
+      ""
   );
 
   const {
@@ -49,9 +50,10 @@ export const Container = () => {
   const { form, loading, onSubmit } = useFormCheckOut({
     email: profile?.email,
     name: `${profile?.firstName} ${profile?.lastName}`,
-    numberPhone: `${profile?.numberPhone}`,
+    numberPhone: profile?.numberPhone ?? "",
     address:
-      profile?.addresses.filter((address) => address.isActive)[0].name || "",
+      profile?.addresses?.filter((address) => address.isActive)[0]
+        ?.addressName ?? "",
     storeChecked,
     exitAddress,
     payment,
