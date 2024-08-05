@@ -1,5 +1,5 @@
 import { Profile, Response } from "@/types";
-import { Sidebar } from "./components/side-bar";
+import { Sidebar } from "./_components/side-bar";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 

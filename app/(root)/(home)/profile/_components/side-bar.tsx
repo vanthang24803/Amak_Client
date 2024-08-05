@@ -49,7 +49,7 @@ export const Sidebar = () => {
 
   if (!isClient)
     return (
-      <div className="hidden md:flex items-center justify-between mx-3">
+      <div className="hidden lg:flex items-center justify-between mx-3">
         <div className="flex flex-col space-y-3 h-[30vh] lg:h-[50vh] basis-1/3">
           {[...Array(5)].map((_, index) => (
             <Skeleton key={index} className=" md:w-[200px] h-12 bg-white " />

@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { Pagination, Product } from "@/types";
 import _http from "@/utils/http";
 import useFilterProduct from "@/hooks/use-filter-product";
-import { Navigation } from "../collections/components/navigation";
-import PaginationComponent from "../collections/components/pagination";
-import { Filter } from "../collections/components/filter";
-import { SelectFilter } from "../collections/components/select-filter";
-import { MobileFilter } from "../collections/components/mobile-filter";
-import { ProductContainer } from "../collections/components/product-container";
+import { Navigation } from "../collections/_components/navigation";
+import PaginationComponent from "../../../../components/pagination";
+import { Filter } from "../collections/_components/filter";
+import { SelectFilter } from "../collections/_components/select-filter";
+import { MobileFilter } from "../collections/_components/mobile-filter";
+import { ProductContainer } from "../collections/_components/product-container";
 
 type Props = {
   category:

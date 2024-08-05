@@ -2,15 +2,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Navigation } from "../../components/navigation";
+import { Navigation } from "../../_components/navigation";
 import { Pagination, Product } from "@/types";
 import _http from "@/utils/http";
-import PaginationComponent from "../../components/pagination";
-import { Filter } from "../../components/filter";
+import PaginationComponent from "@/components/pagination";
+import { Filter } from "../../_components/filter";
 import useFilterProduct from "@/hooks/use-filter-product";
-import { SelectFilter } from "../../components/select-filter";
-import { ProductContainer } from "../../components/product-container";
-import { MobileFilter } from "../../components/mobile-filter";
+import { SelectFilter } from "../../_components/select-filter";
+import { ProductContainer } from "../../_components/product-container";
+import { MobileFilter } from "../../_components/mobile-filter";
 
 export const Container = () => {
   const [data, setData] = useState<Pagination<Product[]>>();
