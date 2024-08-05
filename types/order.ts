@@ -10,6 +10,7 @@ export type Order = Base & {
   quantity: number;
   totalPrice: number;
   updateAt: string;
+  isReviewed: boolean;
   orderDetails: OrderDetails[];
 };
 

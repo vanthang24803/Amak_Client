@@ -16,8 +16,8 @@ export const Wrapper = () => {
         <h2 className="uppercase font-bold tracking-tight">
           Danh sách đơn hàng
         </h2>
-        <Render />
         <Separator />
+        <Render />
       </Modal>
     </div>
   );

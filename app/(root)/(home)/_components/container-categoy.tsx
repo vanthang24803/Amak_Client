@@ -6,7 +6,7 @@ import { Pagination, Product } from "@/types";
 import _http from "@/utils/http";
 import useFilterProduct from "@/hooks/use-filter-product";
 import { Navigation } from "../collections/_components/navigation";
-import PaginationComponent from "../collections/_components/pagination";
+import PaginationComponent from "../../../../components/pagination";
 import { Filter } from "../collections/_components/filter";
 import { SelectFilter } from "../collections/_components/select-filter";
 import { MobileFilter } from "../collections/_components/mobile-filter";
