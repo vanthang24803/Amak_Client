@@ -30,7 +30,7 @@ export default function ProfileLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex mt-14 bg-[#f2f3f5] md:p-8 p-4">
+    <div className="flex mt-14 bg-[#f2f3f5] md:py-8 py-4 md:max-w-screen-xl mx-auto">
       <Sidebar />
       <div className="w-full">{children}</div>
     </div>

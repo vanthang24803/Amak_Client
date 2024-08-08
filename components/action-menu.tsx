@@ -6,156 +6,35 @@ import CartAction from "./cart/cart-action";
 import { MobileMenu } from "./mobile/mobile-menu";
 import useAuth from "@/hooks/use-auth";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import { AvatarImage, Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useRouter } from "next/navigation";
-import {
-  LogOut,
-  MapPinned,
-  Settings,
-  ShoppingBasket,
-  UserIcon,
-} from "lucide-react";
-import { statusRank, statusRankIcon } from "@/constants";
-import { convertPrice } from "@/utils/price";
-import { calculatePercentage } from "@/utils/calculator-rank";
-import Image from "next/image";
+import { UserMenu } from "./user-menu";
+import { NotificationComponent } from "./notification";
+import useClient from "@/hooks/use-client";
 
 export default function ActionMenu() {
-  const { isLogin, profile, logout } = useAuth();
+  const { isLogin } = useAuth();
 
-  const router = useRouter();
-
-  let { percentage } = calculatePercentage(profile?.totalPrice);
+  const { isClient } = useClient();
 
   return (
-    <div className="flex items-center space-x-8">
-      {isLogin ? (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <div className="relative">
-              <Avatar>
-                <AvatarImage
-                  src={profile?.avatar}
-                  className="hover:cursor-pointer"
-                />
-                <AvatarFallback>
-                  {profile?.lastName[0].toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              {profile?.roles.includes("ADMIN") && (
-                <Image
-                  className="absolute -top-1 -right-3  rotate-45"
-                  src="/crown.png"
-                  alt="admin"
-                  width={14}
-                  height={14}
-                />
-              )}
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel className="flex items-center space-x-2">
-              <div>
-                {profile?.lastName} {profile?.firstName}
-                {profile?.roles.includes("ADMIN") && (
-                  <b className="uppercase text-destructive tracking-tighter">
-                    {" "}
-                    - Admin
-                  </b>
-                )}
-              </div>
-              {profile?.roles.includes("ADMIN") && (
-                <Image width={16} height={16} src="/verify.png" alt="admin" />
-              )}
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator className="h-[1.5px]" />
-            <div className="flex flex-col text-[12px] p-2 space-y-1">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <span>
-                    Cấp bậc: {profile?.rank ? statusRank[profile.rank] : ""}
-                  </span>
-                  {profile?.rank && (
-                    <Image
-                      src={statusRankIcon[profile?.rank]}
-                      alt="icon-rank"
-                      width={20}
-                      height={20}
-                    />
-                  )}
-                </div>
-                {convertPrice(profile?.totalPrice)}₫
-              </div>
-              <div className="w-full rounded h-[3px] bg-neutral-200">
-                <div
-                  className={`rounded h-[3px] ${
-                    percentage > 0 ? "bg-green-500" : "bg-neutral-100"
-                  }`}
-                  style={{ width: `${percentage}%` }}
-                />
-              </div>
-            </div>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => router.push("/profile")}>
-                <UserIcon className="mr-2 h-4 w-4" />
-                <span className="text-[13.25px] font-medium tracking-tighter">
-                  Trang cá nhân
-                </span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push("/profile/address")}>
-                <MapPinned className="mr-2 h-4 w-4" />
-                <span className="text-[13.25px] font-medium tracking-tighter">
-                  Địa chỉ
-                </span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push("/profile/order")}>
-                <ShoppingBasket className="mr-2 h-4 w-4" />
-                <div className="flex items-center space-x-2">
-                  <span className="text-[13.25px] font-medium tracking-tighter">
-                    Đơn hàng
-                  </span>
-                  {profile && profile.processOrder > 0 && (
-                    <div className="flex items-center justify-center w-5 h-5 rounded-full text-white bg-red-500 text-[12px]">
-                      {profile?.processOrder}
-                    </div>
-                  )}
-                </div>
-              </DropdownMenuItem>
-              {profile?.roles.includes("ADMIN") && (
-                <DropdownMenuItem onClick={() => router.push("/dashboard")}>
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span className="text-[13.25px] font-medium tracking-tighter">
-                    Dashboard
-                  </span>
-                </DropdownMenuItem>
-              )}
-              <DropdownMenuItem onClick={() => logout()}>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span className="text-[13.25px] font-medium tracking-tighter">
-                  Đăng xuất
-                </span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      ) : (
-        <Link href="/login">
-          <User />
-        </Link>
-      )}
-
+    <div className="flex items-center space-x-4">
       <CartAction />
+
+      {isClient && (
+        <>
+          {isLogin ? (
+            <div className="flex items-center space-x-4">
+              <NotificationComponent />
+              <UserMenu />
+            </div>
+          ) : (
+            <Link href="/login">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-neutral-200">
+                <User />
+              </div>
+            </Link>
+          )}
+        </>
+      )}
       <MobileMenu />
     </div>
   );
