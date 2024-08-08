@@ -3,15 +3,17 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import Cookies from "js-cookie";
 
 import _http from "@/utils/http";
-import { Profile } from "@/types/profile";
+import { Profile, Notification } from "@/types";
 import toast from "react-hot-toast";
 import { LoginFromValue } from "@/app/(root)/(auth)/login/components/login-handler";
 
 type Store = {
   profile: Profile | null;
+  notifications: Notification[] | null;
   isLogin: boolean;
   login: (data: LoginFromValue) => Promise<void>;
   getProfile: () => Promise<void>;
+  getNotification: () => Promise<void>;
   signInWithSocial: (token: string | undefined) => void;
   logout: () => Promise<void>;
   verifyEmail: () => void;
@@ -22,6 +24,7 @@ const useAuth = create(
     (set, get) => ({
       profile: null,
       isLogin: false,
+      notifications: null,
       login: async (data: LoginFromValue) => {
         try {
           const response = await _http.post(`/Authentication/Login`, data);
@@ -74,6 +77,20 @@ const useAuth = create(
               isLogin: false,
             });
           }
+        }
+      },
+
+      getNotification: async () => {
+        try {
+          const response = await _http.get(`/Notifications/Me`);
+
+          if (response.status === 200) {
+            set({
+              notifications: response.data.result,
+            });
+          }
+        } catch (error) {
+          console.log(error);
         }
       },
 

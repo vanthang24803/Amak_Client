@@ -12,7 +12,7 @@ import { Category } from "@/utils/category";
 export const NewBook = () => {
   const [data, setData] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
-
+  
   const fetchData = async () => {
     try {
       setLoading(true);

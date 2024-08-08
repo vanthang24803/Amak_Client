@@ -12,7 +12,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Cart } from "../svg";
-import Link from "next/link";
 import useCart from "@/hooks/use-cart";
 import { ScrollArea } from "../ui/scroll-area";
 import { useRouter } from "next/navigation";
@@ -33,16 +32,26 @@ export default function CartAction() {
     setOpen(!open);
   };
 
-  if (!isClient) return <Cart />;
+  if (!isClient)
+    return (
+      <div className="flex items-center space-x-2">
+        {[...Array(3)].map((_, index) => (
+          <Separator
+            key={index}
+            className="w-10 h-10 rounded-full flex items-center justify-center"
+          />
+        ))}
+      </div>
+    );
 
   return (
     <Sheet open={open} onOpenChange={handleOpen}>
       <SheetTrigger>
-        <div className="flex items-center space-x-2 hover:cursor-pointer">
+        <div className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-neutral-200">
           <div className="relative">
             <Cart />
             {cart.totalItems() > 0 && (
-              <div className="w-5 h-5 flex items-center justify-center rounded-full bg-red-500 absolute -top-2 -right-2">
+              <div className="w-5 h-5 flex items-center justify-center rounded-full bg-red-500 absolute -top-3 -right-3">
                 <span className="text-white text-[12px]">
                   {cart.totalItems()}
                 </span>

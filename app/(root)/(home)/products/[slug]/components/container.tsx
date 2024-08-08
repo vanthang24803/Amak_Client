@@ -4,7 +4,6 @@ import useFetch from "@/hooks/use-fetch";
 import { ProductDetail } from "@/types/product";
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
