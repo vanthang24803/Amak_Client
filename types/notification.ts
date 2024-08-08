@@ -1,7 +1,7 @@
 import { Base } from "./base";
 
 export type Notification = Base & {
-  title: string;
+  url: string;
   content: string;
   isOpened: boolean;
   isSeen: boolean;

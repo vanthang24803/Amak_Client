@@ -7,9 +7,8 @@ import { MobileMenu } from "./mobile/mobile-menu";
 import useAuth from "@/hooks/use-auth";
 
 import { UserMenu } from "./user-menu";
-import { Notification } from "./notification";
+import { NotificationComponent } from "./notification";
 import useClient from "@/hooks/use-client";
-import { Separator } from "@radix-ui/react-separator";
 
 export default function ActionMenu() {
   const { isLogin } = useAuth();
@@ -24,7 +23,7 @@ export default function ActionMenu() {
         <>
           {isLogin ? (
             <div className="flex items-center space-x-4">
-              <Notification />
+              <NotificationComponent />
               <UserMenu />
             </div>
           ) : (

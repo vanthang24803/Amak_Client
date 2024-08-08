@@ -18,12 +18,16 @@ import { Inter } from "next/font/google";
 import { useState } from "react";
 import { AvatarFallback, Avatar } from "./ui/avatar";
 import _http from "@/utils/http";
+import { useRouter } from "next/navigation";
+import { Notification } from "@/types";
 import toast from "react-hot-toast";
 
-const font = Inter({ subsets: ["latin"] });
+const font = Inter({ weight: "400", subsets: ["latin"] });
 
-export const Notification = () => {
+export const NotificationComponent = () => {
   const { notifications, getNotification } = useAuth();
+
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
 
@@ -46,6 +50,20 @@ export const Notification = () => {
       const response = await _http.post(`/Notifications/Seen`);
       if (response.status == 200) {
         getNotification();
+        toast.success("Đã đọc hết thông báo!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlerPushLink = async (item: Notification) => {
+    try {
+      const response = await _http.post(`/Notifications/Seen/${item.id}`);
+
+      if (response.status === 200) {
+        handlerOpen();
+        router.push(item.url);
       }
     } catch (error) {
       console.log(error);
@@ -84,31 +102,40 @@ export const Notification = () => {
         </div>
         <DropdownMenuSeparator />
         <ScrollArea className="min-h-52 h-60 mt-2">
-          <div className="flex flex-col space-y-1">
-            {notifications?.map((item) => (
-              <div
-                key={item.id}
-                className={`flex items-center p-3 rounded-md ${item.isSeen ? "hover:bg-neutral-100/90" : "hover:cursor-pointer bg-green-50"} `}
-              >
-                <div className="flex items-center w-1/5 justify-center">
-                  <Avatar>
-                    <AvatarFallback>A</AvatarFallback>
-                  </Avatar>
+          {notifications && notifications?.length > 0 ? (
+            <div className="flex flex-col space-y-1">
+              {notifications?.map((item) => (
+                <div
+                  key={item.id}
+                  className={`flex items-center p-3 rounded-md ${item.isSeen ? "hover:bg-neutral-100/90" : "hover:cursor-pointer bg-green-50"} `}
+                  onClick={() => handlerPushLink(item)}
+                >
+                  <div className="flex items-center w-1/5 justify-center">
+                    <Avatar>
+                      <AvatarFallback>A</AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <div className="flex flex-col ml-3 w-[75%]">
+                    <p
+                      className={`${font.className} text-[13px] line-clamp-3 leading-4`}
+                      dangerouslySetInnerHTML={{
+                        __html: item.content || "",
+                      }}
+                    />
+                    <p className="font-bold text-[13px] text-green-700 mt-1">
+                      {formatDateToNow(item.createAt)}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex flex-col ml-3 w-[75%]">
-                  <p
-                    className={`${font.className} text-[13px] line-clamp-3`}
-                    dangerouslySetInnerHTML={{
-                      __html: item.content || "",
-                    }}
-                  />
-                  <p className="font-bold text-[13px] text-green-700">
-                    {formatDateToNow(item.createAt)}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center">
+              <p className="text-[13px] tracking-tighter">
+                Bạn hiện không có thông báo nào!
+              </p>
+            </div>
+          )}
         </ScrollArea>
       </DropdownMenuContent>
     </DropdownMenu>

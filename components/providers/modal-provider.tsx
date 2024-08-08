@@ -8,7 +8,7 @@ import { useEffect } from "react";
 export const ModalProvider = () => {
   const { isClient } = useClient();
 
-  const { isLogin, getProfile , getNotification } = useAuth();
+  const { isLogin, getProfile, getNotification } = useAuth();
 
   useEffect(() => {
     if (isLogin) {
