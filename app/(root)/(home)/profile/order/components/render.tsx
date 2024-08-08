@@ -57,9 +57,9 @@ export const Render = () => {
     <Tabs
       defaultValue={select}
       onValueChange={(value) => setSelect(value)}
-      className={`w-full hidden md:block ${font.className}`}
+      className={`w-full  ${font.className}`}
     >
-      <TabsList className="grid w-full grid-cols-7 ">
+      <TabsList className="md:grid hidden w-full grid-cols-7">
         <TabsTrigger value="All">Tất cả</TabsTrigger>
         <TabsTrigger value="Pending">Đang xử lý</TabsTrigger>
         <TabsTrigger value="Create">Xác nhận</TabsTrigger>

@@ -87,10 +87,16 @@ export const OrderData = ({ order }: Props) => {
 
   return (
     <div className="flex flex-col space-y-2">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center lg:space-x-2">
+      <div className="flex md:flex-row flex-col md:items-center justify-between space-y-1 md:space-y-0">
+        <div className="hidden  md:flex items-center lg:space-x-2">
           <h1 className="tracking-tighter font-medium">Mã vận đơn:</h1>
           <span className="font-semibold text-[13px] text-green-700/90">
+            {order.id}
+          </span>
+        </div>
+        <div className="flex md:hidden items-center space-x-2 line-clamp-1 w-full">
+          <h1 className="basis-1/3">Mã vận đơn</h1>
+          <span className="font-semibold text-[13px] text-green-700/90 line-clamp-1">
             {order.id}
           </span>
         </div>
@@ -122,7 +128,7 @@ export const OrderData = ({ order }: Props) => {
                 <div className="flex flex-col w-full">
                   <div className="flex items-center justify-between">
                     <span
-                      className="font-medium line-clamp-2 text-sm md:text-md"
+                      className="font-medium line-clamp-2 text-[12px] md:text-md"
                       onClick={() => router.push(`/products/${item.productId}`)}
                     >
                       {item.name}

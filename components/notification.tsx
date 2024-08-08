@@ -95,7 +95,7 @@ export const NotificationComponent = () => {
           <Button
             variant="ghost"
             onClick={handlerSeenAll}
-            className="text-green-700 hover:text-green-700 tracking-tighter"
+            className={`${font.className} text-green-700 hover:text-green-700 tracking-tighter`}
           >
             Đánh dấu đã đọc
           </Button>
