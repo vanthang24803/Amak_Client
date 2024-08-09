@@ -7,11 +7,11 @@ import useCart from "@/hooks/use-cart";
 import { Order, Product, Response } from "@/types";
 import _http from "@/utils/http";
 import { convertPrice } from "@/utils/price";
-import { Check, LoaderCircle, Settings, Truck, X } from "lucide-react";
+import { Check, LoaderCircle, Settings, Trash, Truck, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import { ModalReview } from "./review";
+import { SettingOrder } from "./settings";
 
 type Props = {
   order: Order;
@@ -102,9 +102,19 @@ export const OrderData = ({ order }: Props) => {
         </div>
         <div className="flex items-center space-x-3 text-[12px] font-medium">
           {statusList[order.status]}
+          {order.status === "PENDING" && <SettingOrder data={order} />  }
           <>
             {order.status === "SUCCESS" && (
-              <ModalReview isReviewed={order.isReviewed} />
+              <div className="flex items-center space-x-2">
+                <ModalReview isReviewed={order.isReviewed} />
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  className="w-8 h-8 rounded-sm"
+                >
+                  <Trash className="w-4 h-4" />
+                </Button>
+              </div>
             )}
           </>
         </div>
