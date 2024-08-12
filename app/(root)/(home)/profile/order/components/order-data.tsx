@@ -102,7 +102,7 @@ export const OrderData = ({ order }: Props) => {
         </div>
         <div className="flex items-center space-x-3 text-[12px] font-medium">
           {statusList[order.status]}
-          {order.status === "PENDING" && <SettingOrder data={order} />  }
+          {order.status === "PENDING" && <SettingOrder data={order} />}
           <>
             {order.status === "SUCCESS" && (
               <div className="flex items-center space-x-2">
