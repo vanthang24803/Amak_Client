@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import _http from "@/utils/http";
 import { checkOutValidation } from "@/validations/checkout";
+import { PaymentType } from "@/app/(root)/(checkout)/checkout/components/payment";
+import { Momo } from "@/types";
 
 type Props = {
   email: string | undefined;
@@ -15,7 +17,7 @@ type Props = {
   storeChecked: boolean;
   address: string | null;
   exitAddress: string | null;
-  payment: string | null;
+  payment: PaymentType | null;
   sendChecked: boolean;
   voucher: string;
   totalPrice: number;
@@ -83,21 +85,40 @@ export default function useFormCheckOut({
       totalPrice: totalPrice,
     };
 
-    try {
-      setLoading(true);
-      const response = await _http.post(`/Orders`, dataSend);
-
-      if (response.status == 201) {
-        toast.success("Thành công");
-        router.push(`/checkout/${uuid}`);
-        cart.removeAll();
-      } else {
-        toast.error("Thất bại");
+    if (payment == "cod") {
+      try {
+        setLoading(true);
+        const response = await _http.post(`/Orders`, dataSend);
+        if (response.status == 201) {
+          toast.success("Thành công");
+          router.push(`/checkout/${uuid}`);
+          cart.removeAll();
+        } else {
+          toast.error("Thất bại");
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+    }
+
+    if (payment == "momo") {
+      try {
+        setLoading(true);
+        const response = await _http.post(`/Payment/Momo`, dataSend);
+        if (response.status == 201) {
+          toast.success("Thành công");
+          const data = JSON.parse(response.data.result) as Momo;
+          router.push(`${data.payUrl}`);
+        } else {
+          toast.error("Thất bại");
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

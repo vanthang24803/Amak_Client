@@ -19,7 +19,7 @@ import { Spinner } from "@/components/spinner";
 import { convertPrice } from "@/utils/price";
 import axios from "axios";
 
-type PaymentType = "cod" | "bank" | "momo";
+export type PaymentType = "cod" | "bank" | "momo";
 
 interface PaymentTypeProp {
   payment: PaymentType | null;
@@ -240,7 +240,9 @@ export const Payment = ({
 
         <div
           className="flex items-center justify-between"
-          onClick={() => handleBankChange("momo")}
+          onClick={() => {
+            handleBankChange("momo");
+          }}
         >
           <div className="flex items-center space-x-2">
             <img src="/momo.webp" alt="icon-momo" className="w-10 h-10" />

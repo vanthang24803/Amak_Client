@@ -19,7 +19,6 @@ export default function VerifyAccountHandler() {
 
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(true);
-  const [active, setActive] = useState(false);
   const [error, setError] = useState(false);
 
   const token = searchParams.get("token");

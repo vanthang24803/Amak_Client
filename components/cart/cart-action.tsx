@@ -98,7 +98,7 @@ export default function CartAction() {
                         <div className="flex flex-col">
                           <div className="relative w-[250px]">
                             <span
-                              className="font-semibold text-[12px] md:w-[160px] line-clamp-2"
+                              className="font-semibold text-[12px] md:w-[160px] line-clamp-1 md:line-clamp-2"
                               onClick={() => {
                                 router.push(`/products/${item.product.id}`);
                                 handleOpen();

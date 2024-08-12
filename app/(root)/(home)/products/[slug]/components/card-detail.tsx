@@ -133,7 +133,11 @@ export const DetailCard = ({ product }: Props) => {
                 <span className="font-semibold">Số lượng:</span>
                 <div className="flex items-center space-x-2">
                   {total > 0 ? (
-                    <Button size="icon" onClick={() => setTotal(total - 1)}>
+                    <Button
+                      size="icon"
+                      variant="secondary"
+                      onClick={() => setTotal(total - 1)}
+                    >
                       <Minus />
                     </Button>
                   ) : (
@@ -149,7 +153,11 @@ export const DetailCard = ({ product }: Props) => {
                   <Button disabled variant="outline" size="icon">
                     {total}
                   </Button>
-                  <Button size="icon" onClick={() => setTotal(total + 1)}>
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    onClick={() => setTotal(total + 1)}
+                  >
                     <Plus />
                   </Button>
                 </div>

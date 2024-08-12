@@ -28,7 +28,6 @@ export const RegisterHandler = () => {
   const router = useRouter();
 
   const { isLogin } = useAuth();
-  let [step, setStep] = useState(1);
 
   const [loading, setLoading] = useState(false);
 
