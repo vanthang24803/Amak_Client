@@ -12,7 +12,7 @@ export const ModalReview = ({ isReviewed }: Props) => {
     <>
       {isReviewed ? (
         // TODO: Create Review
-        <>Hello</>
+        <>Review</>
       ) : (
         <Button
           size="sm"
