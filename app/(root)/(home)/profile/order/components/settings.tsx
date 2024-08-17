@@ -26,6 +26,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import _http from "@/utils/http";
+import useFetchOrder from "@/hooks/use-fetch-order";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ type Props = {
 type FormValue = z.infer<typeof updateOrderValidation>;
 
 export const SettingOrder = ({ data }: Props) => {
+  const { fetchData } = useFetchOrder();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -71,6 +73,7 @@ export const SettingOrder = ({ data }: Props) => {
         toast.success("Cập nhập thông tin thành công!", {
           className: "text-[14px] tracking font-medium tracking-tighter",
         });
+        fetchData();
       }
     } catch (error) {
       console.log(error);
