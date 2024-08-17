@@ -38,6 +38,7 @@ export const Container = ({ category, thumbnail }: Props) => {
           Page: page,
           OrderBy: filter,
           SortBy: price,
+          Limit: 20,
           Category: category,
         },
       });
@@ -99,8 +100,8 @@ export const Container = ({ category, thumbnail }: Props) => {
             <ProductContainer products={data?.result} />
             {data && (
               <PaginationComponent
-                currentPage={data.currentPage}
-                totalPage={data.totalPage}
+                currentPage={data._currentPage}
+                totalPage={data._totalPage}
                 onPageChange={handlePageChange}
               />
             )}

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import { Spinner } from "@/components/spinner";
+import { ReviewFilter } from "./review-filter";
 
 type Props = {
   id: string | null;
@@ -18,10 +19,11 @@ export const Reviews = ({ id }: Props) => {
   return (
     <div className="w-full p-4 md:p-6 rounded-md bg-white flex flex-col">
       <h2 className="font-bold tracking-wide">Khách hàng đánh giá</h2>
+      <Separator className="mt-4" />
       <>
         {!loading && reviews ? (
           <div className="py-4">
-            {reviews.length > 0 ? (
+            {reviews.result.length > 0 ? (
               <div className="flex flex-col space-y-8 md:space-y-10">
                 <div className="flex flex-col md:flex-row w-full space-y-4">
                   <StarReview reviews={reviews} />
@@ -46,7 +48,7 @@ export const Reviews = ({ id }: Props) => {
                   </div>
                 </div>
                 <Separator />
-                {/* <ReviewFilter id={productId} /> */}
+                <ReviewFilter id={id} />
               </div>
             ) : (
               <div className="flex items-center justify-center flex-col space-y-3 ">

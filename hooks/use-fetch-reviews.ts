@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Review } from "@/types/review";
+import { ListReview, Review } from "@/types/review";
 import _http from "@/utils/http";
 import { useEffect, useState } from "react";
 
@@ -8,13 +8,13 @@ type Props = {
 };
 
 export default function useReview({ productId }: Props) {
-  const [reviews, setReviews] = useState<Review[] | null>(null);
+  const [reviews, setReviews] = useState<ListReview | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchReviews = async () => {
       if (productId) {
-        const URL = `/api/product/${productId}/review`;
+        const URL = `/Reviews/Product/${productId}`;
 
         try {
           setLoading(true);
@@ -34,7 +34,7 @@ export default function useReview({ productId }: Props) {
     fetchReviews();
   }, [productId]);
 
-  const images = reviews?.flatMap((review) => review.photos);
+  const images = reviews?.result?.flatMap((review) => review.photos);
 
   return {
     reviews,

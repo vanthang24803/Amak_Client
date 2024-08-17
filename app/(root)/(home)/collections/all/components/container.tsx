@@ -90,8 +90,8 @@ export const Container = () => {
             <ProductContainer products={data?.result} />
             {data && (
               <PaginationComponent
-                currentPage={data.currentPage}
-                totalPage={data.totalPage}
+                currentPage={data._currentPage}
+                totalPage={data._totalPage}
                 onPageChange={handlePageChange}
               />
             )}

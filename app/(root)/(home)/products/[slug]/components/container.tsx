@@ -62,11 +62,10 @@ export const Container = ({ id }: Props) => {
         <>
           <DetailCard product={data} />
           <Introduce data={data} />
+          <Reviews id={id} />
           <Suggest category={data?.categories[0].name} />
         </>
       )}
-
-      {/* <Reviews id={id} /> */}
     </div>
   );
 };

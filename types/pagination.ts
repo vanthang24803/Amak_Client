@@ -1,7 +1,7 @@
 export type Pagination<T> = {
-  currentPage: number;
-  items: number;
-  totalItems: number;
-  totalPage: number;
+  _currentPage: number;
+  _totalPage: number;
+  _limit: number;
+  _totalItems: number;
   result: T;
 };
