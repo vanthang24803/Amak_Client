@@ -106,9 +106,9 @@ const AlertDialogAction = React.forwardRef<
     ref={ref}
     className={cn(
       buttonVariants({
-        variant: "primary",
+        variant: "destructive",
       }),
-      "rounded-sm",
+      "rounded-sm font-medium",
       className
     )}
     {...props}

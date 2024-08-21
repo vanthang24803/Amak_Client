@@ -15,12 +15,13 @@ import { Cart } from "../svg";
 import useCart from "@/hooks/use-cart";
 import { ScrollArea } from "../ui/scroll-area";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { convertPrice, formatPrice } from "@/utils/price";
 import { Button } from "../ui/button";
 import { UpdateCart } from "./cart-update";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function CartAction() {
   const { isClient } = useClient();
@@ -147,7 +148,7 @@ export default function CartAction() {
                 </>
               ) : (
                 <div className="flex items-center justify-center flex-col space-y-4 my-8">
-                  <ShoppingCart className="w-20 h-20" />
+                  <Image src="/box.png" alt="box" width={120} height={120} />
                   <span className="tracking-tighter font-medium text-sm">
                     Hiện chưa có sản phẩm
                   </span>
