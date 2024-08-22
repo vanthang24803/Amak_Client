@@ -6,14 +6,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "../ui/input";
-import { Plus } from "lucide-react";
 import { useSocket } from "../providers/socket-provider";
+import { EmojiPicker } from "./emoji-picker";
+import { Uploads } from "./uploads";
 
 const formSchema = z.object({
   content: z.string().min(1),
 });
 
-export const InputChat = () => {
+type Props = {
+  channelId: string | null;
+};
+
+export const InputChat = ({ channelId }: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -26,7 +31,14 @@ export const InputChat = () => {
   const { socket } = useSocket();
 
   const onSubmit = async (value: z.infer<typeof formSchema>) => {
-    socket.emit("message", value);
+    socket.emit(`message`, {
+      user: {
+        avatar:
+          "https://i.pinimg.com/564x/29/f8/e0/29f8e0398171290d487617bf043e89bd.jpg",
+      },
+      channelId,
+      ...value,
+    });
     form.reset();
   };
 
@@ -34,7 +46,7 @@ export const InputChat = () => {
     <FormProvider {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="absolute bottom-0 w-[95%]"
+        className="absolute bottom-0 w-full px-1"
       >
         <FormField
           control={form.control}
@@ -42,14 +54,8 @@ export const InputChat = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <div className="relative p-4 pb-6">
-                  <button
-                    type="button"
-                    onClick={() => {}}
-                    className="absolute top-7 left-8 w-[24px] h-[24px] bg-zinc-500 hover:bg-zinc-600 rounded-full p-1 flex items-center justify-center"
-                  >
-                    <Plus className="text-white" />
-                  </button>
+                <div className="relative p-4">
+                  <Uploads />
                   <Input
                     disabled={isLoading}
                     autoComplete="off"
@@ -57,6 +63,13 @@ export const InputChat = () => {
                     placeholder="Tin nhắn"
                     {...field}
                   />
+                  <div className="absolute right-8 top-7 hover:cursor-pointer">
+                    <EmojiPicker
+                      onChange={(emoji: string) =>
+                        field.onChange(`${field.value} ${emoji}`)
+                      }
+                    />
+                  </div>
                 </div>
               </FormControl>
             </FormItem>

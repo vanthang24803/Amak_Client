@@ -16,7 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { UpdateCart } from "@/components/cart/cart-update";
 import { convertPrice, formatPrice } from "@/utils/price";
-import { Dot,  X } from "lucide-react";
+import { Dot, X } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -122,7 +122,7 @@ export const Container = () => {
                 </div>
               ) : (
                 <div className="flex items-center justify-center flex-col space-y-4 h-[45vh]">
-                 <Image src="/box.png" alt="box" width={120} height={120} />
+                  <Image src="/box.png" alt="box" width={120} height={120} />
                   <Label>Giỏ hàng của bạn đang trống!</Label>
                 </div>
               )}
