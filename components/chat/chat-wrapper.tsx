@@ -12,12 +12,18 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Inter } from "next/font/google";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageSquareText } from "lucide-react";
 import { ChatContainer } from "../chat/chat-container";
 import { InputChat } from "../chat/input-chat";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Channel } from "../chat/channel";
+import { AdminChat } from "@/types/admin-chat";
+import _http from "@/utils/http";
+import { Response } from "@/types";
+import { useSocket } from "../providers/socket-provider";
+import useAuth from "@/hooks/use-auth";
+import { Channel as ChannelType } from "@/types/channel";
 
 const font = Inter({ subsets: ["latin"], weight: "400" });
 
@@ -26,7 +32,13 @@ export const ChatWrapper = () => {
   const channelId = searchParams.get("channelId");
   const router = useRouter();
   const [activeChannel, setActiveChannel] = useState<string | null>(channelId);
+  const { socket } = useSocket();
+  const [data, setData] = useState<Response<AdminChat[]>>();
+  const [channels, setChannels] = useState<ChannelType[]>();
+
   const [open, setOpen] = useState(false);
+
+  const { profile } = useAuth();
 
   const handleChannelClick = (channelId: string) => {
     setActiveChannel(channelId);
@@ -40,6 +52,32 @@ export const ChatWrapper = () => {
     }
     setOpen(!open);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await _http.get(`/Authentication/Admins`);
+
+        if (response.status === 200) {
+          setData(response.data);
+          socket.emit(`channels`, {
+            accounts: response.data?.result.filter(
+              (item: AdminChat) => item.id !== profile?.id
+            ),
+            id: profile?.id,
+          });
+
+          socket.on(`channels`, (data: any) => {
+            setChannels(data);
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [socket, profile, data?.result]);
 
   return (
     <Dialog open={open} onOpenChange={handlerOpen}>
@@ -57,10 +95,13 @@ export const ChatWrapper = () => {
         <div className="max-h-[75vh] min-h-[50vh] hidden md:block">
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel defaultSize={30}>
-              <Channel
-                handleChannelClick={handleChannelClick}
-                active={activeChannel}
-              />
+              {channels && (
+                <Channel
+                  data={channels}
+                  handleChannelClick={handleChannelClick}
+                  active={activeChannel}
+                />
+              )}
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel defaultSize={70}>

@@ -9,6 +9,7 @@ import { Input } from "../ui/input";
 import { useSocket } from "../providers/socket-provider";
 import { EmojiPicker } from "./emoji-picker";
 import { Uploads } from "./uploads";
+import useAuth from "@/hooks/use-auth";
 
 const formSchema = z.object({
   content: z.string().min(1),
@@ -19,6 +20,8 @@ type Props = {
 };
 
 export const InputChat = ({ channelId }: Props) => {
+  const { profile } = useAuth();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,10 +35,7 @@ export const InputChat = ({ channelId }: Props) => {
 
   const onSubmit = async (value: z.infer<typeof formSchema>) => {
     socket.emit(`message`, {
-      user: {
-        avatar:
-          "https://i.pinimg.com/564x/29/f8/e0/29f8e0398171290d487617bf043e89bd.jpg",
-      },
+      ...profile,
       channelId,
       ...value,
     });

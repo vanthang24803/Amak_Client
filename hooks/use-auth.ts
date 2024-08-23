@@ -6,6 +6,7 @@ import _http from "@/utils/http";
 import { Profile, Notification } from "@/types";
 import toast from "react-hot-toast";
 import { LoginFromValue } from "@/app/(root)/(auth)/login/components/login-handler";
+import { AdminChat } from "@/types/admin-chat";
 
 type Store = {
   profile: Profile | null;
