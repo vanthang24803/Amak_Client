@@ -7,7 +7,7 @@ import useCart from "@/hooks/use-cart";
 import { Order, Product, Response } from "@/types";
 import _http from "@/utils/http";
 import { convertPrice } from "@/utils/price";
-import { Check, LoaderCircle, Settings, Trash, Truck, X } from "lucide-react";
+import { Check, LoaderCircle, Settings, Truck, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ModalReview } from "./review";
@@ -103,20 +103,6 @@ export const OrderData = ({ order }: Props) => {
         <div className="flex items-center space-x-3 text-[12px] font-medium">
           {statusList[order.status]}
           {order.status === "PENDING" && <SettingOrder data={order} />}
-          <>
-            {order.status === "SUCCESS" && (
-              <div className="flex items-center space-x-2">
-                <ModalReview isReviewed={order.isReviewed} />
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  className="w-8 h-8 rounded-sm"
-                >
-                  <Trash className="w-4 h-4" />
-                </Button>
-              </div>
-            )}
-          </>
         </div>
       </div>
       <Separator className="h-[0.5px] " />
@@ -160,7 +146,7 @@ export const OrderData = ({ order }: Props) => {
           ))}
           <div className="flex items-center justify-end text-sm pb-4">
             <div className="flex items-center space-x-3 mt-2">
-              {order.status === "SUCCESS" && (
+              {order.status === "SUCCESS" && order.isReviewed ? (
                 <Button
                   variant="mix"
                   className="rounded-sm"
@@ -168,6 +154,8 @@ export const OrderData = ({ order }: Props) => {
                 >
                   Mua lại
                 </Button>
+              ) : (
+                <ModalReview orderId={order.id} />
               )}
               <span>
                 Thành tiền:{" "}

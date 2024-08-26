@@ -14,7 +14,7 @@ const font = Inter({
 });
 
 export const Render = () => {
-  const { profile, getProfile } = useAuth();
+  const { profile } = useAuth();
 
   const address: Address[] | undefined = profile?.addresses.filter(
     (a) => !a.isActive
@@ -50,7 +50,7 @@ export const Render = () => {
         </div>
       )}
 
-      <Separator />
+      {address && address?.length > 0 && <Separator />}
 
       {address?.map((item) => (
         <>

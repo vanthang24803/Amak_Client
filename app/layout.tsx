@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { siteConfig } from "@/configs/site";
 import { ToasterProvider } from "@/components/providers/toaster-provider";
-import { ModalProvider } from "@/components/providers/modal-provider";
+import { SocketProvider } from "@/components/providers/socket-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -25,9 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <ToasterProvider />
-      <ModalProvider />
-      <body>{children}</body>
+      <SocketProvider>
+        <ToasterProvider />
+        <body>{children}</body>
+      </SocketProvider>
     </html>
   );
 }
