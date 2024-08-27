@@ -22,6 +22,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Header } from "./header";
 import useClient from "@/hooks/use-client";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = {
   defaultLayout?: number[];
@@ -150,7 +151,9 @@ export const SidebarWrapper = ({
         className="text-sm font-base leading-none scroll-m-20"
       >
         <Header />
-        <div className="bg-zinc-50 dark:bg-primary-foreground h-full">{children}</div>
+        <ScrollArea className="bg-zinc-100 dark:bg-primary-foreground h-full">
+          {children}
+        </ScrollArea>
       </ResizablePanel>
     </ResizablePanelGroup>
   );

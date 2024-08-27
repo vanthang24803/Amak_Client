@@ -19,4 +19,5 @@ export type ProductDetail = Product & {
   specifications?: string;
   reviews: Review[];
   updateAt: string;
+  isDeleted: boolean;
 };
