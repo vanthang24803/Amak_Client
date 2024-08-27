@@ -22,7 +22,7 @@ export const Header = () => {
 
   const router = useRouter();
   return (
-    <header className="flex items-center justify-between border-b-[1px] py-2 px-4 mb-2">
+    <header className="flex items-center justify-between border-b-[1px] py-2 px-4">
       <SearchHeader
         data={[
           {

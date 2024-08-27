@@ -78,7 +78,7 @@ export const SidebarWrapper = ({
       >
         <div
           className={cn(
-            "flex h-[52px] items-center justify-center",
+            "flex h-[52px] items-center justify-center mb-4",
             isCollapsed ? "h-[52px]" : "px-2"
           )}
         >
@@ -97,35 +97,30 @@ export const SidebarWrapper = ({
               title: "Tổng quát",
               icon: ChartNoAxesColumnIncreasing,
               path: "/dashboard",
-              variant: "default",
             },
             {
               title: "Đơn hàng",
               label: "9",
               path: "/dashboard/orders",
               icon: ShoppingCart,
-              variant: "ghost",
             },
             {
               title: "Sản phẩm",
               label: "100",
               path: "/dashboard/products",
               icon: Package,
-              variant: "ghost",
             },
             {
               title: "Danh mục",
               label: "6",
               path: "/dashboard/categories",
               icon: ClipboardEdit,
-              variant: "ghost",
             },
             {
               title: "Thùng rác",
               label: "10",
               path: "/dashboard/product-deleted",
               icon: Trash2,
-              variant: "ghost",
             },
           ]}
         />
@@ -138,14 +133,12 @@ export const SidebarWrapper = ({
               label: "972",
               path: "",
               icon: Users2,
-              variant: "ghost",
             },
             {
               title: "Tin nhắn",
               label: "128",
               icon: MessagesSquare,
               path: "",
-              variant: "ghost",
             },
           ]}
         />
@@ -154,10 +147,10 @@ export const SidebarWrapper = ({
       <ResizablePanel
         defaultSize={defaultLayout[1]}
         minSize={60}
-        className="text-sm font-base leading-none scroll-m-20 "
+        className="text-sm font-base leading-none scroll-m-20"
       >
         <Header />
-        {children}
+        <div className="bg-zinc-50 dark:bg-primary-foreground h-full">{children}</div>
       </ResizablePanel>
     </ResizablePanelGroup>
   );

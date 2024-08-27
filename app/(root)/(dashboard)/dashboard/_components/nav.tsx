@@ -19,7 +19,6 @@ type Props = {
     label?: string;
     icon: LucideIcon;
     path: string;
-    variant: "default" | "ghost";
   }[];
 };
 
@@ -70,7 +69,7 @@ export const Nav = ({ isCollapsed, links }: Props) => {
           ) : (
             <Link
               key={index}
-              href="#"
+              href={link.path}
               className={cn(
                 buttonVariants({
                   variant: pathname === link.path ? "default" : "ghost",
