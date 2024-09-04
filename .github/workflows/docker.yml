@@ -7,12 +7,44 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      NEXT_PUBLIC_API_SOCKET: ${{ secrets.NEXT_PUBLIC_API_SOCKET }}
+      NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL }}
+      NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+      NEXT_PUBLIC_FIREBASE_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_DOMAIN }}
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+      NEXT_PUBLIC_FIREBASE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_BUCKET }}
+      NEXT_PUBLIC_FIREBASE_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_SENDER_ID }}
+      NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+      NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
+      API_URL: ${{ secrets.API_URL }}
+      NEXT_PUBLIC_QR_IMAGE: ${{ secrets.NEXT_PUBLIC_QR_IMAGE }}
+      NEXT_PUBLIC_QR_KEY: ${{ secrets.NEXT_PUBLIC_QR_KEY }}
+      NEXT_PUBLIC_QR_ID: ${{ secrets.NEXT_PUBLIC_QR_ID }}
+      NEXT_PUBLIC_QR_BANK_BIN: ${{ secrets.NEXT_PUBLIC_QR_BANK_BIN }}
+      NEXT_PUBLIC_QR_BANK_NAME: ${{ secrets.NEXT_PUBLIC_QR_BANK_NAME }}
+      NEXT_PUBLIC_QR_BANK_ID: ${{ secrets.NEXT_PUBLIC_QR_BANK_ID }}
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      id: build
+      run: |
+        IMAGE_TAG=$(date +%s)
+        docker build . --file Dockerfile --tag amak-client:${IMAGE_TAG}
+        echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push the Docker image to Docker Hub
+      run: |
+        docker tag amak-client:${{ env.IMAGE_TAG }} vanthang24803/amak-client:latest
+        docker push vanthang24803/amak-client:latest
