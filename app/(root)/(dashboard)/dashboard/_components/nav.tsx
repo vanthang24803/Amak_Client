@@ -58,7 +58,7 @@ export const Nav = ({ isCollapsed, links }: Props) => {
                   <span className="text-[13px] font-medium leading-none scroll-m-20">
                     {link.title}
                   </span>
-                  {link.label && (
+                  {link.label && Number(link.label) > 0 && (
                     <span className="ml-auto text-[12px] text-muted-foreground">
                       {link.label}
                     </span>
@@ -84,7 +84,7 @@ export const Nav = ({ isCollapsed, links }: Props) => {
               <p className="scroll-m-20 text-[13px] font-medium tracking-tight">
                 {link.title}
               </p>
-              {link.label && (
+              {link.label && Number(link.label) > 0 && (
                 <span
                   className={cn(
                     "ml-auto text-xs  tracking-tight scroll-m-20",

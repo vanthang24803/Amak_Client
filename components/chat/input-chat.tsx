@@ -31,14 +31,22 @@ export const InputChat = ({ channelId }: Props) => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const { socket } = useSocket();
+  const { connection } = useSocket();
 
   const onSubmit = async (value: z.infer<typeof formSchema>) => {
-    socket.emit(`message`, {
-      ...profile,
-      channelId,
-      ...value,
-    });
+    const dataSend = {
+      content: value.content,
+      fromUserId: profile?.id,
+      toUserId: channelId,
+    };
+
+    try {
+      await connection.invoke("CreateMessage", dataSend);
+      form.reset();
+    } catch (error) {
+      console.log("Error sending message:", error);
+    }
+
     form.reset();
   };
 

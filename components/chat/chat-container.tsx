@@ -2,17 +2,22 @@
 
 import { useEffect, useState, useRef, ElementRef } from "react";
 import { useSocket } from "../providers/socket-provider";
-import { Avatar, AvatarImage } from "../ui/avatar";
 import { ScrollArea } from "../ui/scroll-area";
+import useAuth from "@/hooks/use-auth";
+import { ChatAction } from "./chat-action";
+import { Separator } from "../ui/separator";
+import { AdminChat } from "@/types/admin-chat";
+import { Avatar, AvatarImage } from "../ui/avatar";
 
 type Props = {
-  channelId: string | null;
+  channel: AdminChat | undefined;
 };
 
-export const ChatContainer = ({ channelId }: Props) => {
-  const { socket } = useSocket();
+export const ChatContainer = ({ channel }: Props) => {
+  const { connection } = useSocket();
   const [messages, setMessages] = useState<any[]>([]);
   const [isAtBottom, setIsAtBottom] = useState(true);
+  const { profile } = useAuth();
 
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
@@ -31,18 +36,38 @@ export const ChatContainer = ({ channelId }: Props) => {
   };
 
   useEffect(() => {
-    setMessages([]); // Clear messages when channelId changes
+    if (connection && channel?.id && profile?.id) {
+      const handleReceiveMessage = (message: any) => {
+        setMessages((prevMessages) => [...prevMessages, message]);
+      };
 
-    socket.emit("channel-detail", { channelId });
+      const handleMessages = (messages: any[]) => {
+        setMessages(messages);
+      };
 
-    socket.on(`channel-${channelId}`, (messages: any[]) => {
-      setMessages(messages); // Replace the entire message list with new data
-    });
+      const handleMessageDeleted = (messageId: string) => {
+        setMessages((prevMessages) =>
+          prevMessages.map((msg) =>
+            msg.id === messageId ? { ...msg, isDeleted: true } : msg
+          )
+        );
+      };
 
-    return () => {
-      socket.off(`channel-${channelId}`); // Clean up event listener when channelId changes or component unmounts
-    };
-  }, [socket, channelId]);
+      connection.on("ReceiveMessage", handleReceiveMessage);
+      connection.on("Messages", handleMessages);
+      connection.on("MessageDeleted", handleMessageDeleted);
+
+      connection
+        .invoke("JoinChat", profile.id, channel.id)
+        .catch((error: any) => console.log("Error joining chat:", error));
+
+      return () => {
+        connection.off("ReceiveMessage", handleReceiveMessage);
+        connection.off("Messages", handleMessages);
+        connection.off("MessageDeleted", handleMessageDeleted);
+      };
+    }
+  }, [connection, channel?.id, profile?.id]);
 
   useEffect(() => {
     scrollToBottom();
@@ -51,18 +76,35 @@ export const ChatContainer = ({ channelId }: Props) => {
 
   return (
     <ScrollArea
-      className="h-[60vh] overflow-y-auto"
+      className="relative h-[60vh] overflow-y-auto z-10"
       ref={chatRef}
+      scrollHideDelay={150}
+      type="scroll"
       onScroll={handleScroll}
     >
-      {messages.map((message, index) => (
-        <div key={index} className="flex items-start space-x-2 mb-4">
+      <div className="bg-white z-20 h-8 sticky -top-0.5 flex flex-col gap-2">
+        <div className="flex items-center space-x-3">
           <Avatar>
-            <AvatarImage src={message.avatar} />
+            <AvatarImage src={channel?.avatar} />
           </Avatar>
-          <div className="rounded-lg text-white text-[12px] flex items-center justify-center bg-sky-500 p-2 max-w-[300px]">
-            {message.content}
+          <h4 className="text-sm font-semibold tracking-tight scroll-m-20">
+            {channel?.name}
+          </h4>
+        </div>
+      </div>
+      {messages.map((message, index) => (
+        <div
+          key={index}
+          className={`relative flex space-x-2 mb-4 group ${message.fromUserId === profile?.id ? "justify-end" : "justify-start"}`}
+        >
+          <div
+            className={`rounded-lg text-[12px] flex items-center justify-center p-2 max-w-[300px] ${message.isDeleted ? "italic text-muted bg-sky-500/90" : "text-white bg-sky-500"} z-10`}
+          >
+            {message.isDeleted ? "Tin nhắn này đã bị xóa" : message.content}
           </div>
+          {message.fromUserId === profile?.id && !message.isDeleted && (
+            <ChatAction id={message.id} />
+          )}
         </div>
       ))}
       <div ref={bottomRef} />

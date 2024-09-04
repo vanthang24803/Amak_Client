@@ -50,7 +50,13 @@ export const CellAction = ({ data }: CellActionProps) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Đã sao chép id sản phẩm");
+    toast.success("Đã sao chép id sản phẩm!", {
+      style: {
+        fontSize: 13,
+        fontWeight: 500,
+      },
+      duration: 800,
+    });
   };
 
   return (
