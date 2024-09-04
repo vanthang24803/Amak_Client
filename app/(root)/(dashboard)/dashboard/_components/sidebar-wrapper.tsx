@@ -6,7 +6,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MessagesSquare,
   ChartNoAxesColumnIncreasing,
@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { Header } from "./header";
 import useClient from "@/hooks/use-client";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import useAnalytic from "@/hooks/use-analytic";
 
 type Props = {
   defaultLayout?: number[];
@@ -42,6 +43,12 @@ export const SidebarWrapper = ({
   const router = useRouter();
 
   const { isClient } = useClient();
+
+  const { getAnalytic, analytic } = useAnalytic();
+
+  useEffect(() => {
+    getAnalytic();
+  }, [getAnalytic]);
 
   if (!isClient) return null;
 
@@ -101,26 +108,26 @@ export const SidebarWrapper = ({
             },
             {
               title: "Đơn hàng",
-              label: "9",
+              label: `${analytic?.orders}`,
               path: "/dashboard/orders",
               icon: ShoppingCart,
             },
             {
               title: "Sản phẩm",
-              label: "100",
+              label: `${analytic?.active}`,
               path: "/dashboard/products",
               icon: Package,
             },
             {
               title: "Danh mục",
-              label: "6",
+              label: `${analytic?.categories}`,
               path: "/dashboard/categories",
               icon: ClipboardEdit,
             },
             {
               title: "Thùng rác",
-              label: "10",
-              path: "/dashboard/product-deleted",
+              label: `${analytic?.archive}`,
+              path: "/dashboard/trash",
               icon: Trash2,
             },
           ]}
@@ -131,7 +138,7 @@ export const SidebarWrapper = ({
           links={[
             {
               title: "Khách hàng",
-              label: "972",
+              label: `${analytic?.customers}`,
               path: "",
               icon: Users2,
             },

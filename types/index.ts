@@ -13,3 +13,4 @@ export * from "./order";
 export * from "./response";
 export * from "./notification";
 export * from "./momo";
+export * from "./analytic";
