@@ -1,5 +1,5 @@
 import { Wrapper } from "./components/wrapper";
 
-export default function ProductDashboard() {
+export default function OrderDashboard() {
   return <Wrapper />;
 }

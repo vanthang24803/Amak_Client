@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 
+export const config = {
+  runtime: "nodejs",
+  matcher: ["/profile/:path*", "/dashboard/:path*", "/new-post"],
+};
+
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("ac_token")?.value;
 
@@ -33,7 +38,3 @@ export function middleware(request: NextRequest) {
 
   return NextResponse.next();
 }
-
-export const config = {
-  matcher: ["/profile/:path*", "/dashboard/:path*", "/new-post"],
-};

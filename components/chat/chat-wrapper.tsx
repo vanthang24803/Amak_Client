@@ -1,11 +1,7 @@
 "use client";
+
 import Image from "next/image";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -23,7 +19,7 @@ import _http from "@/utils/http";
 import { Response } from "@/types";
 import { useSocket } from "../providers/socket-provider";
 import useAuth from "@/hooks/use-auth";
-import { Channel as ChannelType } from "@/types/channel";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 const font = Inter({ subsets: ["latin"], weight: "400" });
 
@@ -32,11 +28,12 @@ export const ChatWrapper = () => {
   const channelId = searchParams.get("channelId");
   const router = useRouter();
   const [activeChannel, setActiveChannel] = useState<string | null>(channelId);
-  const { socket } = useSocket();
+  const { connection, isConnected } = useSocket();
   const [data, setData] = useState<Response<AdminChat[]>>();
-  const [channels, setChannels] = useState<ChannelType[]>();
 
   const [open, setOpen] = useState(false);
+
+  const { isLogin } = useAuth();
 
   const { profile } = useAuth();
 
@@ -54,30 +51,30 @@ export const ChatWrapper = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await _http.get(`/Authentication/Admins`);
+    if (isConnected && isLogin) {
+      const userId = profile?.id;
 
-        if (response.status === 200) {
-          setData(response.data);
-          socket.emit(`channels`, {
-            accounts: response.data?.result.filter(
-              (item: AdminChat) => item.id !== profile?.id
-            ),
-            id: profile?.id,
-          });
+      if (userId) {
+        connection
+          .invoke("GetAccounts", userId)
+          .catch((error: any) =>
+            console.log("Error fetching accounts:", error)
+          );
 
-          socket.on(`channels`, (data: any) => {
-            setChannels(data);
-          });
-        }
-      } catch (error) {
-        console.log(error);
+        connection.on(`Users-${userId}`, (data: any) => {
+          setData(data);
+        });
+
+        return () => {
+          connection.off(`Users-${userId}`);
+        };
       }
-    };
+    }
+  }, [connection, isLogin, isConnected, profile?.id]);
 
-    fetchData();
-  }, [socket, profile, data?.result]);
+  const channelActiveData = data?.result.filter(
+    (x) => x.id === activeChannel
+  )[0];
 
   return (
     <Dialog open={open} onOpenChange={handlerOpen}>
@@ -89,15 +86,15 @@ export const ChatWrapper = () => {
       <DialogContent
         className={`${font.className} md:rounded-2xl lg:max-w-4xl`}
       >
-        <DialogHeader className="font-bold text-xl tracking-tighter">
+        <DialogTitle className="font-bold text-xl tracking-tighter">
           Tin nhắn
-        </DialogHeader>
+        </DialogTitle>
         <div className="max-h-[75vh] min-h-[50vh] hidden md:block">
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel defaultSize={30}>
-              {channels && (
+              {data && (
                 <Channel
-                  data={channels}
+                  data={data.result}
                   handleChannelClick={handleChannelClick}
                   active={activeChannel}
                 />
@@ -108,7 +105,7 @@ export const ChatWrapper = () => {
               <div className="h-[75vh] w-full relative overflow-hidden">
                 {activeChannel ? (
                   <div className="mx-4">
-                    <ChatContainer channelId={channelId} />
+                    <ChatContainer channel={channelActiveData} />
                     <InputChat channelId={channelId} />
                   </div>
                 ) : (

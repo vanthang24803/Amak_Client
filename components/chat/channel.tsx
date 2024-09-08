@@ -1,18 +1,23 @@
 "use client";
 import { ScrollArea } from "../ui/scroll-area";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { Channel as Type } from "@/types/channel";
+import { AdminChat } from "@/types/admin-chat";
+import useAuth from "@/hooks/use-auth";
 
 type Props = {
   handleChannelClick: (id: string) => void;
   active: string | null;
-  data: Type[];
+  data: AdminChat[];
 };
 
 export const Channel = ({ handleChannelClick, active, data }: Props) => {
+  const { profile } = useAuth();
+
+  const channelFilter = data.filter((x) => x.id != profile?.id);
+
   return (
     <ScrollArea className="h-[75vh]">
-      {data.map((item) => (
+      {channelFilter.map((item) => (
         <div
           className="flex flex-col space-y-4 hover:cursor-pointer"
           onClick={() => handleChannelClick(item.id)}
@@ -24,12 +29,14 @@ export const Channel = ({ handleChannelClick, active, data }: Props) => {
             }`}
           >
             <Avatar className="w-12 h-12">
-              <AvatarImage src={item.thumbnail} />
+              <AvatarImage src={item.avatar} />
             </Avatar>
             <div className="flex flex-col">
-              <p className="font-medium text-sm">{item.name}</p>
+              <p className="font-medium text-[12px] tracking-tight">
+                {item.name}
+              </p>
               <span className="text-[11px] italic w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">
-                Something...
+                {item.lastMessage}
               </span>
             </div>
           </div>

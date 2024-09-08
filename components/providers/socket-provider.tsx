@@ -1,15 +1,21 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import io from "socket.io-client";
+import {
+  HttpTransportType,
+  HubConnectionBuilder,
+  HubConnectionState,
+  LogLevel,
+} from "@microsoft/signalr";
+import useAuth from "@/hooks/use-auth";
 
 type SocketContextType = {
-  socket: any | null;
+  connection: any | null;
   isConnected: boolean;
 };
 
 const SocketContext = createContext<SocketContextType>({
-  socket: null,
+  connection: null,
   isConnected: false,
 });
 
@@ -22,29 +28,55 @@ export const SocketProvider = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const [socket, setSocket] = useState<any | null>(null);
+  const { isLogin } = useAuth();
+  const [connection, setConnection] = useState<any | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const socketInstance = io(process.env.NEXT_PUBLIC_API_SOCKET!);
+    const hubConnection = new HubConnectionBuilder()
+      .withUrl(process.env.NEXT_PUBLIC_API_SOCKET!, {
+        transport:
+          HttpTransportType.WebSockets |
+          HttpTransportType.ServerSentEvents |
+          HttpTransportType.LongPolling,
+        logger: LogLevel.Information,
+      })
+      .build();
 
-    setSocket(socketInstance);
+    setConnection(hubConnection);
 
-    socketInstance.on("connect", () => {
+    const startConnection = async () => {
+      try {
+        await hubConnection.start();
+        setIsConnected(hubConnection.state === HubConnectionState.Connected);
+      } catch (err) {
+        console.error("Error starting connection: ", err);
+      }
+    };
+
+    if (isLogin) {
+      startConnection();
+    }
+
+    hubConnection.on("connect", () => {
       setIsConnected(true);
     });
 
-    socketInstance.on("disconnect", () => {
+    hubConnection.on("disconnect", () => {
+      setIsConnected(false);
+    });
+
+    hubConnection.onclose(() => {
       setIsConnected(false);
     });
 
     return () => {
-      socketInstance.disconnect();
+      hubConnection.stop();
     };
-  }, []);
+  }, [isLogin]);
 
   return (
-    <SocketContext.Provider value={{ socket, isConnected }}>
+    <SocketContext.Provider value={{ connection, isConnected }}>
       {children}
     </SocketContext.Provider>
   );

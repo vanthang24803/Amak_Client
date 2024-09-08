@@ -59,10 +59,10 @@ export const SearchHeader = ({ data }: Props) => {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group p-2 rounded-md flex items-center gap-x-2 w-[300px] hover:bg-zinc-700/10 dark:bg-zinc-700/50 transition"
+        className="group p-2 rounded-md border flex items-center gap-x-2 w-[300px] hover:bg-zinc-700/10 dark:bg-zinc-700/50 transition"
       >
         <Search className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
-        <span className="font-medium text-sm text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition">
+        <span className="font-medium text-[12px] text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition">
           Tìm kiếm
         </span>
         <kbd className="pointer-events-auto inline-flex h-5 select-none items-center border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground ml-auto">

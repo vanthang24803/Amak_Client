@@ -6,7 +6,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MessagesSquare,
   ChartNoAxesColumnIncreasing,
@@ -22,6 +22,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Header } from "./header";
 import useClient from "@/hooks/use-client";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import useAnalytic from "@/hooks/use-analytic";
 
 type Props = {
   defaultLayout?: number[];
@@ -41,6 +43,12 @@ export const SidebarWrapper = ({
   const router = useRouter();
 
   const { isClient } = useClient();
+
+  const { getAnalytic, analytic } = useAnalytic();
+
+  useEffect(() => {
+    getAnalytic();
+  }, [getAnalytic]);
 
   if (!isClient) return null;
 
@@ -78,7 +86,7 @@ export const SidebarWrapper = ({
       >
         <div
           className={cn(
-            "flex h-[52px] items-center justify-center",
+            "flex h-[52px] items-center justify-center mb-4",
             isCollapsed ? "h-[52px]" : "px-2"
           )}
         >
@@ -97,35 +105,30 @@ export const SidebarWrapper = ({
               title: "Tổng quát",
               icon: ChartNoAxesColumnIncreasing,
               path: "/dashboard",
-              variant: "default",
             },
             {
               title: "Đơn hàng",
-              label: "9",
+              label: `${analytic?.orders}`,
               path: "/dashboard/orders",
               icon: ShoppingCart,
-              variant: "ghost",
             },
             {
               title: "Sản phẩm",
-              label: "100",
+              label: `${analytic?.active}`,
               path: "/dashboard/products",
               icon: Package,
-              variant: "ghost",
             },
             {
               title: "Danh mục",
-              label: "6",
+              label: `${analytic?.categories}`,
               path: "/dashboard/categories",
               icon: ClipboardEdit,
-              variant: "ghost",
             },
             {
               title: "Thùng rác",
-              label: "10",
-              path: "/dashboard/product-deleted",
+              label: `${analytic?.archive}`,
+              path: "/dashboard/trash",
               icon: Trash2,
-              variant: "ghost",
             },
           ]}
         />
@@ -135,17 +138,15 @@ export const SidebarWrapper = ({
           links={[
             {
               title: "Khách hàng",
-              label: "972",
+              label: `${analytic?.customers}`,
               path: "",
               icon: Users2,
-              variant: "ghost",
             },
             {
               title: "Tin nhắn",
               label: "128",
               icon: MessagesSquare,
               path: "",
-              variant: "ghost",
             },
           ]}
         />
@@ -154,10 +155,12 @@ export const SidebarWrapper = ({
       <ResizablePanel
         defaultSize={defaultLayout[1]}
         minSize={60}
-        className="text-sm font-base leading-none scroll-m-20 "
+        className="text-sm font-base leading-none scroll-m-20"
       >
         <Header />
-        {children}
+        <ScrollArea className="bg-zinc-100 dark:bg-primary-foreground h-full">
+          {children}
+        </ScrollArea>
       </ResizablePanel>
     </ResizablePanelGroup>
   );
