@@ -1,5 +1,7 @@
+import { Wrapper } from "./_components/overview/wrapper";
+
 const Dashboard = () => {
-  return <div>Overview Page</div>;
+  return <Wrapper />;
 };
 
 export default Dashboard;
