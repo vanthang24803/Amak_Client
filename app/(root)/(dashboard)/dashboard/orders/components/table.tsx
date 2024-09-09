@@ -36,7 +36,7 @@ export const OrderTable = () => {
   const orderColumns: OrderColumn[] =
     data?.result.map((order) => ({
       id: order.id,
-      customer: order.customer,
+      customer: order.email,
       address: order.address,
       email: order.email,
       payment: order.payment,

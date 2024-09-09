@@ -144,7 +144,6 @@ export const SidebarWrapper = ({
             },
             {
               title: "Tin nhắn",
-              label: "128",
               icon: MessagesSquare,
               path: "",
             },

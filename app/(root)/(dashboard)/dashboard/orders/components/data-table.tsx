@@ -12,16 +12,13 @@ import {
 } from "@tanstack/react-table";
 
 import {
-  subDays,
-  startOfDay,
-  endOfDay,
-  startOfWeek,
-  endOfWeek,
-  startOfMonth,
-  endOfMonth,
-  subMonths,
-} from "date-fns";
-
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -151,6 +148,13 @@ export function DataTable<TData, TValue>({
   const [payment, setPayment] = useState<string | null>(null);
   const [timeFilter, setTimeFilter] = useState<string | null>(null);
   const [clear, setClear] = useState(true);
+  const [row, setRow] = useState(10);
+
+  const handleRowChange = (value: string) => {
+    const newRow = Number(value);
+    setRow(newRow);
+    table.setPageSize(newRow);
+  };
 
   const table = useReactTable({
     data,
@@ -164,7 +168,7 @@ export function DataTable<TData, TValue>({
     },
     initialState: {
       pagination: {
-        pageSize: 5,
+        pageSize: row,
       },
     },
   });
@@ -392,9 +396,32 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-[12.5px] text-muted-foreground">
-          {table.getState().pagination.pageIndex + 1} trên{" "}
-          {table.getPageCount()} trang
+        <div className="flex-1 text-[12px] text-muted-foreground flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
+            {table.getState().pagination.pageIndex + 1} trên{" "}
+            {table.getPageCount()} trang
+          </div>
+          <div className="flex items-center space-x-2">
+            <span>Số hàng:</span>
+            <Select
+              defaultValue={row.toString()}
+              onValueChange={handleRowChange}
+            >
+              <SelectTrigger className="w-16">
+                <SelectValue placeholder={row.toString()} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup className="w-30">
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="20">20</SelectItem>
+                  <SelectItem value="30">30</SelectItem>
+                  <SelectItem value="40">40</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                  <SelectItem value="100">100</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <div className="flex items-center space-x-2">
           <Button
