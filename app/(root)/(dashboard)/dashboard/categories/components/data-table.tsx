@@ -74,7 +74,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-between">
         <div className="flex items-center py-4 w-full justify-end">
           <Input
-            placeholder="Tìm kiếm theo tên sản phẩm"
+            placeholder="Tìm kiếm theo tên danh mục"
             value={
               (table.getColumn(searchKey)?.getFilterValue() as string) ?? ""
             }

@@ -41,73 +41,59 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  BadgeDollarSign,
   Check,
   Clock,
   Clock1,
   Clock2,
   Clock4,
   Clock8,
-  CreditCard,
   Filter,
+  KeyRound,
   Link2,
   RotateCcw,
-  Store,
-  Truck,
+  ShieldCheck,
+  UserRound,
 } from "lucide-react";
+import Image from "next/image";
 
 const statusList: {
   [key: string]: {
-    color: string;
     name: string;
+    image: string;
   };
 } = {
-  PENDING: {
-    color: "#dc2626",
-    name: "Đang chờ xử lý",
+  Bronze: {
+    image: "/3.png",
+    name: "Đồng",
   },
-  CREATE: {
-    color: "#f59e0b",
-    name: "Khởi tạo",
+  Silver: {
+    image: "/2.png",
+    name: "Bạc",
   },
-  SHIPPING: {
-    color: "#0284c7",
-    name: "Đang giao hàng",
+  Gold: {
+    image: "/1.png",
+    name: "Vàng",
   },
-  SUCCESS: {
-    name: "Giao hàng thành công",
-    color: "#16a34a",
+  Platinum: {
+    name: "Bạch kim",
+    image: "/4.png",
   },
-  RETURN: {
-    name: "Trả hàng",
-    color: "#573875",
-  },
-  CANCEL: {
-    name: "Đơn hàng hủy",
-    color: "#d44f48",
+  Diamond: {
+    name: "Kim cương",
+    image: "/5.png",
   },
 };
 
-const paymentType = [
+const roleType = [
   {
-    name: "Giao hàng",
-    type: "COD",
-    icon: <Truck className="w-3.5 h-3.5" />,
+    name: "Khách hàng",
+    icon: <UserRound className="w-3.5 h-3.5" />,
+    type: false,
   },
   {
-    name: "MoMo",
-    type: "MOMO",
-    icon: <BadgeDollarSign className="w-3.5 h-3.5" />,
-  },
-  {
-    name: "Ngân hàng",
-    type: "BANK",
-    icon: <CreditCard className="w-3.5 h-3.5" />,
-  },
-  {
-    name: "Nhận tại cửa hàng",
-    type: "STORE",
-    icon: <Store className="w-3.5 h-3.5" />,
+    name: "Quản trị viên",
+    icon: <ShieldCheck className="w-3.5 h-3.5" />,
+    type: true,
   },
 ];
 
@@ -145,8 +131,8 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [filter, setFilter] = useState<string | null>(null);
-  const [payment, setPayment] = useState<string | null>(null);
   const [timeFilter, setTimeFilter] = useState<string | null>(null);
+  const [role, setRole] = useState<string | null>(null);
   const [clear, setClear] = useState(true);
   const [row, setRow] = useState(10);
 
@@ -173,27 +159,14 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const handleStatusFilter = (status: string) => {
-    if (filter == status) {
-      setFilter(null), table.getColumn("status")?.setFilterValue(null);
+  const handleStatusFilter = (rank: string) => {
+    if (filter == rank) {
+      setFilter(null), table.getColumn("rank")?.setFilterValue(null);
     } else {
       if (clear) {
         setClear(false);
       }
-      setFilter(status), table.getColumn("status")?.setFilterValue(status);
-    }
-  };
-
-  const handlePaymentFilter = (type: string) => {
-    if (payment == type) {
-      setPayment(null);
-      table.getColumn("payment")?.setFilterValue(null);
-    } else {
-      setPayment(type);
-      table.getColumn("payment")?.setFilterValue(type);
-      if (clear) {
-        setClear(false);
-      }
+      setFilter(rank), table.getColumn("rank")?.setFilterValue(rank);
     }
   };
 
@@ -214,13 +187,18 @@ export function DataTable<TData, TValue>({
     return rowDate >= startDate && rowDate <= endDate;
   };
 
+  const handleRoleFilter = (isManager: boolean, name: string) => {
+    table.getColumn("isManager")?.setFilterValue(isManager);
+    setRole(name);
+  };
+
   const handlerResetFilter = () => {
-    setPayment(null);
+    setRole(null);
     setFilter(null);
     setClear(true);
     setTimeFilter(null);
-    table.getColumn("payment")?.setFilterValue(null);
-    setFilter(null), table.getColumn("status")?.setFilterValue(null);
+    table.getColumn("isManager")?.setFilterValue(null);
+    setFilter(null), table.getColumn("rank")?.setFilterValue(null);
   };
 
   return (
@@ -228,7 +206,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-between">
         <div className="flex items-center py-4 w-full">
           <Input
-            placeholder="Tìm kiếm theo mã đơn hàng"
+            placeholder="Email"
             value={
               (table.getColumn(searchKey)?.getFilterValue() as string) ?? ""
             }
@@ -246,7 +224,7 @@ export function DataTable<TData, TValue>({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[200px]">
             <DropdownMenuLabel className="text-sm font-semibold tracking-tight scroll-m-20">
-              Lọc đơn hàng
+              Lọc tài khoản
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuSub>
@@ -254,7 +232,7 @@ export function DataTable<TData, TValue>({
                 <div className="flex space-x-2 items-center">
                   <Link2 className="w-3.5 h-3.5" />
                   <span className="text-[13px] font-semibold tracking-tight scroll-m-20">
-                    Trạng thái
+                    Hạng
                   </span>
                 </div>
               </DropdownMenuSubTrigger>
@@ -266,12 +244,12 @@ export function DataTable<TData, TValue>({
                     onSelect={() => handleStatusFilter(status)}
                   >
                     <div className="flex items-center space-x-3">
-                      <div
-                        className="w-2.5 h-2.5 rounded-full"
-                        style={{
-                          backgroundColor: action.color,
-                        }}
-                      ></div>
+                      <Image
+                        src={action.image}
+                        alt="icon-rank"
+                        width={20}
+                        height={20}
+                      />
                       <span className="text-[12px]">{action.name}</span>
                     </div>
                     {filter == status && <Check className="w-4 h-4" />}
@@ -283,24 +261,24 @@ export function DataTable<TData, TValue>({
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
                 <div className="flex space-x-2 items-center">
-                  <CreditCard className="w-3.5 h-3.5" />
+                  <KeyRound className="w-3.5 h-3.5" />
                   <span className="text-[13px] font-semibold tracking-tight scroll-m-20">
-                    Thanh toán
+                    Role
                   </span>
                 </div>
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent className="w-48">
-                {paymentType.map((item, index) => (
+                {roleType.map((item, index) => (
                   <DropdownMenuItem
                     key={index}
                     className="flex items-center justify-between cursor-pointer"
-                    onSelect={() => handlePaymentFilter(item.type)}
+                    onSelect={() => handleRoleFilter(item.type, item.name)}
                   >
                     <div className="flex items-center space-x-3">
                       {item.icon}
                       <span className="text-[12.5px]">{item.name}</span>
                     </div>
-                    {payment == item.type && <Check className="w-4 h-4" />}
+                      {role === item.name && <Check className="w-4 h-4" />}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuSubContent>

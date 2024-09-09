@@ -54,7 +54,7 @@ export const columns: ColumnDef<OrderColumn>[] = [
     accessorKey: "customer",
     header: "Khách hàng",
     cell: ({ row }) => (
-      <span className="line-clamp-1 w-[120px]">{row.original.customer}</span>
+      <span className=" w-[200px] line-clamp-1">{row.original.customer}</span>
     ),
   },
   {
