@@ -11,6 +11,8 @@ export type Analytic = {
 export type UserAnalytic = Base & {
   fullName: string;
   avatar: string;
+  email:string;
+  rank:string;
   isAdmin: boolean;
   isManager: boolean;
   updateAt: string;

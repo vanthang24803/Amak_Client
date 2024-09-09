@@ -7,7 +7,7 @@ import { Order, Pagination } from "@/types";
 import { DataTable } from "./data-table";
 import { columns, OrderColumn } from "./columns";
 
-export const OrderTable = () => {
+export const CategoriesTable = () => {
   const [data, setData] = useState<Pagination<Order[]>>();
   const [loading, setLoading] = useState<boolean>(false);
 

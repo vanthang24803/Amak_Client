@@ -139,7 +139,7 @@ export const SidebarWrapper = ({
             {
               title: "Khách hàng",
               label: `${analytic?.customers}`,
-              path: "",
+              path: "/dashboard/accounts",
               icon: Users2,
             },
             {

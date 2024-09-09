@@ -144,7 +144,10 @@ export function DataTable<TData, TValue>({
           </div>
           <div className="flex items-center space-x-2">
             <span>Số hàng:</span>
-            <Select defaultValue={row.toString()} onValueChange={handleRowChange}>
+            <Select
+              defaultValue={row.toString()}
+              onValueChange={handleRowChange}
+            >
               <SelectTrigger className="w-16">
                 <SelectValue placeholder={row.toString()} />
               </SelectTrigger>
