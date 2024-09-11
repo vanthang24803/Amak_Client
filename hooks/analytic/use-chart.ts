@@ -10,7 +10,7 @@ type Store = {
   getAccounts: () => Promise<void>;
 };
 
-export const useAnalytic = create<Store>()(
+export const useChart = create<Store>()(
   persist(
     (set) => ({
       analytic: null,
