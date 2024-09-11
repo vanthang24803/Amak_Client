@@ -8,3 +8,14 @@ export type YearChart = {
   month: string;
   total: any;
 };
+
+export type AreaChart = {
+  week: DataEntry[];
+  month: DataEntry[];
+};
+
+export type DataEntry = {
+  date: string;
+  input: number;
+  output: number;
+};

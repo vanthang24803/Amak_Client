@@ -65,7 +65,7 @@ export const Chart = () => {
   }, [data, timeRange]);
 
   return (
-    <div className="flex items-center justify-center p-4">
+    <div className="flex items-center justify-center">
       <Card className="w-full">
         <CardHeader>
           <div className="flex items-center justify-between">

@@ -2,15 +2,19 @@
 import _http from "@/utils/http";
 import { Chart as BarChart } from "./bar-chart";
 import { Chart as AreaChart } from "./area-chart";
+import { Chart as PieChart } from "./pie-chart";
 
 export const Wrapper = () => {
   return (
     <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6">
+      <div className="flex-1 space-y-4 p-8 pt-6 mb-12">
         <BarChart />
-        <div className="flex">
-          <div className="basis-3/4">
+        <div className="flex gap-4">
+          <div className="w-2/3">
             <AreaChart />
+          </div>
+          <div className="w-1/3">
+            <PieChart />
           </div>
         </div>
       </div>
