@@ -55,7 +55,7 @@ export const columns: ColumnDef<AccountColumn>[] = [
     ),
   },
   {
-    accessorKey : "isManager",
+    accessorKey: "isManager",
     header: "Manager",
     cell: ({ row }) => (
       <div className="flex items-center justify-center">

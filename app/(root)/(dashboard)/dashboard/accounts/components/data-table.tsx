@@ -278,7 +278,7 @@ export function DataTable<TData, TValue>({
                       {item.icon}
                       <span className="text-[12.5px]">{item.name}</span>
                     </div>
-                      {role === item.name && <Check className="w-4 h-4" />}
+                    {role === item.name && <Check className="w-4 h-4" />}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuSubContent>

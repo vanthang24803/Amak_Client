@@ -26,7 +26,6 @@ export const ActionRight = () => {
     // const response = await _http.get(`/Products/ExportExcel`, {
     //   responseType: "blob",
     // });
-
     // FileSaver.saveAs(
     //   new Blob([response.data]),
     //   `export-product-${timestamp}.xlsx`
@@ -38,7 +37,6 @@ export const ActionRight = () => {
     // const response = await _http.get(`/Products/ExportCSV`, {
     //   responseType: "blob",
     // });
-
     // FileSaver.saveAs(
     //   new Blob([response.data]),
     //   `export-product-${timestamp}.csv`
@@ -50,7 +48,6 @@ export const ActionRight = () => {
     // const response = await _http.get(`/Products/ExportJson`, {
     //   responseType: "blob",
     // });
-
     // FileSaver.saveAs(
     //   new Blob([response.data]),
     //   `export-product-${timestamp}.json`

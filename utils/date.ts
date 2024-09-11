@@ -1,4 +1,4 @@
-import { parseISO, format, formatDistanceToNow } from "date-fns";
+import { parseISO, format, formatDistanceToNow, parse } from "date-fns";
 import { vi } from "date-fns/locale";
 
 const formatStringToDate = (dateString: string) => {
@@ -11,4 +11,12 @@ const formatDateToNow = (dateString: string) => {
   return formatDistanceToNow(date, { locale: vi });
 };
 
-export { formatStringToDate, formatDateToNow };
+const convertToVietnameseMonth = (monthAbbreviation: string | null) => {
+  if (monthAbbreviation) {
+    const date = parse(monthAbbreviation, "MMM", new Date());
+
+    return format(date, "MMMM", { locale: vi });
+  }
+};
+
+export { formatStringToDate, formatDateToNow , convertToVietnameseMonth };

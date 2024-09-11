@@ -1,39 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Loading } from "../../_components/loading";
 import _http from "@/utils/http";
-import { Pagination, Product } from "@/types";
+import { useEffect } from "react";
+import { Loading } from "../../_components/loading";
 import { DataTable } from "./data-table";
 import { columns, ProductColumn } from "./columns";
+import { useProductsAnalytic } from "@/hooks/analytic/use-product";
 
 export const ProductTable = () => {
-  const [data, setData] = useState<Pagination<Product[]>>();
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      const response = await _http.get(`/Products`);
-
-      if (response.status === 200) {
-        setData(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { fetchProducts, data, loading } = useProductsAnalytic();
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
   if (loading) return <Loading />;
 
   const productColumns: ProductColumn[] =
-    data?.result.map((product) => ({
+    data.map((product) => ({
       id: product.id,
       name: product.name,
       brand: product.brand,

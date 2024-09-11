@@ -1,14 +1,15 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import _http from "@/utils/http";
-import { Analytic } from "@/types";
+import { Analytic, UserAnalytic } from "@/types";
 
 type Store = {
   analytic: Analytic | null;
   getAnalytic: () => Promise<void>;
+  getAccounts: () => Promise<void>;
 };
 
-const useAnalytic = create<Store>()(
+export const useAnalytic = create<Store>()(
   persist(
     (set) => ({
       analytic: null,
@@ -25,6 +26,7 @@ const useAnalytic = create<Store>()(
           console.log(error);
         }
       },
+      getAccounts: async () => {},
     }),
     {
       name: "analytic-storage",
@@ -32,5 +34,3 @@ const useAnalytic = create<Store>()(
     }
   )
 );
-
-export default useAnalytic;
