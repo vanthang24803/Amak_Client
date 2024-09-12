@@ -19,3 +19,8 @@ export type DataEntry = {
   input: number;
   output: number;
 };
+
+export type PieChart = {
+  month: string;
+  account: number;
+};

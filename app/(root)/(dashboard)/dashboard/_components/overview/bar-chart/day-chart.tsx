@@ -29,12 +29,11 @@ export const DayChart = ({ data }: Props) => {
     }
   };
 
-  const [activeChart, _] =
-    useState<keyof typeof chartConfig>("total");
+  const [activeChart, _] = useState<keyof typeof chartConfig>("total");
   return (
     <ChartContainer
       config={chartConfig}
-      className="aspect-auto h-[60vh] w-full"
+      className="aspect-auto h-[50vh] w-full"
     >
       <BarChart
         accessibilityLayer
@@ -60,7 +59,11 @@ export const DayChart = ({ data }: Props) => {
           }}
         />
         <ChartTooltip content={<CustomTooltip text="Doanh thu" />} />
-        <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} radius={4} />
+        <Bar
+          dataKey={activeChart}
+          fill={`var(--color-${activeChart})`}
+          radius={4}
+        />
       </BarChart>
     </ChartContainer>
   );

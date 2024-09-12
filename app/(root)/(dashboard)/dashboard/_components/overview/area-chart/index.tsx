@@ -38,7 +38,7 @@ import _http from "@/utils/http";
 import { Loading } from "../../loading";
 
 export function Chart() {
-  const [timeRange, setTimeRange] = useState<"month" | "week">("month");
+  const [timeRange, setTimeRange] = useState<"month" | "week">("week");
   const [chartData, setData] = useState<ChartType | null>(null);
   const [loading, setLoading] = useState(false);
 
