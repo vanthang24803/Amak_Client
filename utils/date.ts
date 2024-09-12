@@ -19,4 +19,4 @@ const convertToVietnameseMonth = (monthAbbreviation: string | null) => {
   }
 };
 
-export { formatStringToDate, formatDateToNow , convertToVietnameseMonth };
+export { formatStringToDate, formatDateToNow, convertToVietnameseMonth };

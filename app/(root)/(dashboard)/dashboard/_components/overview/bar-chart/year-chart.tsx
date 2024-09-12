@@ -31,7 +31,10 @@ export const YearChart = ({ data }: Props) => {
   };
 
   return (
-    <ChartContainer config={chartConfig} className="h-[60vh] w-full aspect-auto">
+    <ChartContainer
+      config={chartConfig}
+      className="h-[60vh] w-full aspect-auto"
+    >
       <BarChart data={convertChart(data)} accessibilityLayer>
         <CartesianGrid vertical={false} />
         <XAxis
@@ -41,7 +44,7 @@ export const YearChart = ({ data }: Props) => {
           axisLine={false}
           tickFormatter={(value) => {
             let newValue = value.slice(0, 3);
-            
+
             return convertToVietnameseMonth(newValue) || newValue;
           }}
         />

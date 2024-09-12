@@ -25,62 +25,134 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import _http from "@/utils/http";
+import { Loading } from "../../loading";
 
-export const description = "An interactive pie chart";
+type ChartType = {
+  month: string;
+  account: number;
+};
 
-const desktopData = [
-  { month: "thang1", desktop: 186, fill: "var(--color-thang1)" },
-  { month: "thang2", desktop: 305, fill: "var(--color-thang2)" },
-  { month: "thang3", desktop: 237, fill: "var(--color-thang3)" },
-  { month: "thang4", desktop: 173, fill: "var(--color-thang4)" },
-  { month: "thang5", desktop: 209, fill: "var(--color-thang5)" },
-];
+const monthTranslations: { [key: string]: string } = {
+  Jan: "Tháng 1",
+  Feb: "Tháng 2",
+  Mar: "Tháng 3",
+  Apr: "Tháng 4",
+  May: "Tháng 5",
+  Jun: "Tháng 6",
+  Jul: "Tháng 7",
+  Aug: "Tháng 8",
+  Sep: "Tháng 9",
+  Oct: "Tháng 10",
+  Nov: "Tháng 11",
+  Dec: "Tháng 12",
+};
 
-const chartConfig = {
-  visitors: {
-    label: "Khách truy cập",
-  },
-  desktop: {
-    label: "Máy tính để bàn",
-  },
-  mobile: {
-    label: "Di động",
-  },
-  thang1: {
-    label: "Tháng 1",
-    color: "hsl(var(--chart-1))",
-  },
-  thang2: {
-    label: "Tháng 2",
-    color: "hsl(var(--chart-2))",
-  },
-  thang3: {
-    label: "Tháng 3",
-    color: "hsl(var(--chart-3))",
-  },
-  thang4: {
-    label: "Tháng 4",
-    color: "hsl(var(--chart-4))",
-  },
-  thang5: {
-    label: "Tháng 5",
-    color: "hsl(var(--chart-5))",
-  },
-  thang6: {
-    label: "Tháng 6",
-    color: "hsl(var(--chart-6))",
-  },
-} satisfies ChartConfig;
+const translateMonth = (month: string): string => {
+  return monthTranslations[month] || month;
+};
+
+const generateChartConfig = (data: ChartType[]): ChartConfig => {
+  const config: ChartConfig = {
+    accounts: {
+      label: "Tài khoản",
+    },
+  };
+
+  data.forEach((item, index) => {
+    const key = item.month.toLowerCase();
+    config[key] = {
+      label: translateMonth(item.month),
+      color: `hsl(var(--chart-${(index % 12) + 1}))`,
+    };
+  });
+
+  return config;
+};
 
 export const Chart = () => {
-  const id = "pie-interactive";
-  const [activeMonth, setActiveMonth] = React.useState(desktopData[0].month);
+  const id = "dynamic-pie-chart";
+  const [data, setData] = React.useState<ChartType[] | null>(null);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+  const [activeMonth, setActiveMonth] = React.useState<string | null>(null);
+
+  const fetchChart = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await _http.get(`/Analytic/PieChart`);
+      if (response.status === 200) {
+        setData(response.data.result);
+        setActiveMonth(response.data.result[0].month);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Không tìm thấy dữ liệu");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchChart();
+  }, []);
+
+  const chartConfig = React.useMemo(
+    () => (data ? generateChartConfig(data) : {}),
+    [data]
+  );
+
+  const accountData = React.useMemo(
+    () =>
+      data
+        ? data.map((item) => ({
+            ...item,
+            month: translateMonth(item.month),
+            fill: `var(--color-${item.month.toLowerCase()})`,
+          }))
+        : [],
+    [data]
+  );
 
   const activeIndex = React.useMemo(
-    () => desktopData.findIndex((item) => item.month === activeMonth),
-    [activeMonth]
+    () =>
+      accountData.findIndex(
+        (item) => item.month === translateMonth(activeMonth || "")
+      ),
+    [activeMonth, accountData]
   );
-  const months = React.useMemo(() => desktopData.map((item) => item.month), []);
+
+  const months = React.useMemo(
+    () => (data ? data.map((item) => item.month) : []),
+    [data]
+  );
+
+  if (loading) {
+    return (
+      <Card className="w-full h-[400px] flex items-center justify-center">
+        <Skeleton className="w-[300px] h-[300px] rounded-full" />
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Card className="w-full h-[400px] flex items-center justify-center">
+        <p className="text-red-500">{error}</p>
+      </Card>
+    );
+  }
+
+  if (!data || data.length === 0) {
+    return (
+      <Card className="w-full h-[400px] flex items-center justify-center">
+        <p>Không có dữ liệu</p>
+      </Card>
+    );
+  }
 
   return (
     <Card data-chart={id} className="flex flex-col">
@@ -91,18 +163,19 @@ export const Chart = () => {
             Biểu đồ khách hàng
           </CardTitle>
           <CardDescription className="text-[12px] flex items-center gap-2">
-            Tần suất sử dụng của khách hàng
+            {`${translateMonth(data[data.length - 1].month)}/${new Date().getFullYear()} -${translateMonth(data[0].month)}/${new Date().getFullYear()}`}
           </CardDescription>
         </div>
-        <Select value={activeMonth} onValueChange={setActiveMonth}>
+        <Select value={activeMonth || ""} onValueChange={setActiveMonth}>
           <SelectTrigger
             className="ml-auto h-7 w-[130px] rounded-lg pl-2.5"
-            aria-label="Chọn một giá trị"
+            aria-label="Chọn tháng"
           >
             <SelectValue placeholder="Chọn tháng" />
           </SelectTrigger>
           <SelectContent align="end" className="rounded-xl">
-            {months.map((key) => {
+            {months.map((month) => {
+              const key = month.toLowerCase();
               const config = chartConfig[key as keyof typeof chartConfig];
 
               if (!config) {
@@ -111,8 +184,8 @@ export const Chart = () => {
 
               return (
                 <SelectItem
-                  key={key}
-                  value={key}
+                  key={month}
+                  value={month}
                   className="rounded-lg [&_span]:flex"
                 >
                   <div className="flex items-center gap-2 text-xs">
@@ -131,69 +204,75 @@ export const Chart = () => {
         </Select>
       </CardHeader>
       <CardContent className="flex flex-1 justify-center pb-0">
-        <ChartContainer
-          id={id}
-          config={chartConfig}
-          className="mx-auto aspect-square w-full max-w-[300px]"
-        >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={desktopData}
-              dataKey="desktop"
-              nameKey="month"
-              innerRadius={60}
-              strokeWidth={5}
-              activeIndex={activeIndex}
-              activeShape={({
-                outerRadius = 0,
-                ...props
-              }: PieSectorDataItem) => (
-                <g>
-                  <Sector {...props} outerRadius={outerRadius + 10} />
-                  <Sector
-                    {...props}
-                    outerRadius={outerRadius + 25}
-                    innerRadius={outerRadius + 12}
-                  />
-                </g>
-              )}
-            >
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
+        {loading ? (
+          <Loading />
+        ) : (
+          <ChartContainer
+            id={id}
+            config={chartConfig}
+            className="mx-auto aspect-square w-full max-w-[300px]"
+          >
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                data={accountData}
+                dataKey="account"
+                nameKey="month"
+                innerRadius={60}
+                strokeWidth={5}
+                activeIndex={activeIndex}
+                activeShape={({
+                  outerRadius = 0,
+                  ...props
+                }: PieSectorDataItem) => (
+                  <g>
+                    <Sector {...props} outerRadius={outerRadius + 10} />
+                    <Sector
+                      {...props}
+                      outerRadius={outerRadius + 25}
+                      innerRadius={outerRadius + 12}
+                    />
+                  </g>
+                )}
+              >
+                <Label
+                  content={({ viewBox }) => {
+                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                      return (
+                        <text
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
+                          textAnchor="middle"
+                          dominantBaseline="middle"
                         >
-                          {desktopData[activeIndex].desktop.toLocaleString()}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
-                        >
-                          Khách truy cập
-                        </tspan>
-                      </text>
-                    );
-                  }
-                }}
-              />
-            </Pie>
-          </PieChart>
-        </ChartContainer>
+                          <tspan
+                            x={viewBox.cx}
+                            y={viewBox.cy}
+                            className="fill-foreground text-3xl font-bold"
+                          >
+                            {accountData[
+                              activeIndex
+                            ]?.account.toLocaleString() || "0"}
+                          </tspan>
+                          <tspan
+                            x={viewBox.cx}
+                            y={(viewBox.cy || 0) + 24}
+                            className="fill-muted-foreground"
+                          >
+                            Tài khoản
+                          </tspan>
+                        </text>
+                      );
+                    }
+                  }}
+                />
+              </Pie>
+            </PieChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );
