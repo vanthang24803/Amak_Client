@@ -33,7 +33,7 @@ export const YearChart = ({ data }: Props) => {
   return (
     <ChartContainer
       config={chartConfig}
-      className="h-[60vh] w-full aspect-auto"
+      className="h-[50vh] w-full aspect-auto"
     >
       <BarChart data={convertChart(data)} accessibilityLayer>
         <CartesianGrid vertical={false} />

@@ -15,7 +15,8 @@ const convertToVietnameseMonth = (monthAbbreviation: string | null) => {
   if (monthAbbreviation) {
     const date = parse(monthAbbreviation, "MMM", new Date());
 
-    return format(date, "MMMM", { locale: vi });
+    const formattedMonth = format(date, "MMMM", { locale: vi });
+    return `T${formattedMonth.slice(1)}`;
   }
 };
 

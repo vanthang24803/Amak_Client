@@ -33,7 +33,7 @@ export const DayChart = ({ data }: Props) => {
   return (
     <ChartContainer
       config={chartConfig}
-      className="aspect-auto h-[60vh] w-full"
+      className="aspect-auto h-[50vh] w-full"
     >
       <BarChart
         accessibilityLayer

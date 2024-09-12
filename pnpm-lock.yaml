@@ -160,6 +160,9 @@ importers:
       react-confetti:
         specifier: ^6.1.0
         version: 6.1.0(react@18.3.1)
+      react-countup:
+        specifier: ^6.5.3
+        version: 6.5.3(react@18.3.1)
       react-day-picker:
         specifier: 8.10.1
         version: 8.10.1(date-fns@3.6.0)(react@18.3.1)
@@ -2758,6 +2761,12 @@ packages:
         integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==,
       }
 
+  countup.js@2.8.0:
+    resolution:
+      {
+        integrity: sha512-f7xEhX0awl4NOElHulrl4XRfKoNH3rB+qfNSZZyjSZhaAoUk6elvhH+MNxMmlmuUJ2/QNTWPSA7U4mNtIAKljQ==,
+      }
+
   crelt@1.0.6:
     resolution:
       {
@@ -4845,6 +4854,14 @@ packages:
     engines: { node: ">=10.18" }
     peerDependencies:
       react: ^16.3.0 || ^17.0.1 || ^18.0.0
+
+  react-countup@6.5.3:
+    resolution:
+      {
+        integrity: sha512-udnqVQitxC7QWADSPDOxVWULkLvKUWrDapn5i53HE4DPRVgs+Y5rr4bo25qEl8jSh+0l2cToJgGMx+clxPM3+w==,
+      }
+    peerDependencies:
+      react: ">= 16.3.0"
 
   react-day-picker@8.10.1:
     resolution:
@@ -7636,6 +7653,8 @@ snapshots:
 
   concat-map@0.0.1: {}
 
+  countup.js@2.8.0: {}
+
   crelt@1.0.6: {}
 
   cross-spawn@7.0.3:
@@ -7935,7 +7954,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.9.0(eslint@8.57.0)
       eslint-plugin-react: 7.35.0(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
@@ -7959,7 +7978,7 @@ snapshots:
       enhanced-resolve: 5.17.0
       eslint: 8.57.0
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.6
       is-core-module: 2.15.0
@@ -7981,7 +8000,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
@@ -9018,6 +9037,11 @@ snapshots:
     dependencies:
       react: 18.3.1
       tween-functions: 1.2.0
+
+  react-countup@6.5.3(react@18.3.1):
+    dependencies:
+      countup.js: 2.8.0
+      react: 18.3.1
 
   react-day-picker@8.10.1(date-fns@3.6.0)(react@18.3.1):
     dependencies:
