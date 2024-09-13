@@ -3,7 +3,7 @@
 cd ..
 
 echo "Runing build application 💀💀💀💀💀"
-rm -rf .next && pnpm build
+rm -rf .next && bun build
 
 echo "Application build sucess 🎉🎉🎉🎉🎉🎉"
 

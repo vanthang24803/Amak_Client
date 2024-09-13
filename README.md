@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Running the Application
 
-## Getting Started
+This is a basic guide on how to run the AMAK Nextjs application.
 
-First, run the development server:
+## Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+To run the application, you will need to have the following installed on your machine:
+
+- NodeJS >= 20.16.0: [Download and Install NodeJS](https://nodejs.org/en)
+- Bun >= 1.1.27: [Download and Install Bun](https://bun.sh/) 
+- Git: [Download and Install Git](https://git-scm.com/downloads)
+
+## Environment
+Setup env before run dockerfile:
+
+```env.example
+NEXT_PUBLIC_API_URL=
+NODE_ENV=development
+NEXT_PUBLIC_API_SOCKET=
+NEXT_PUBLIC_URL=
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_BUCKET=
+NEXT_PUBLIC_FIREBASE_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=1
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
+API_URL=
+NEXT_PUBLIC_QR_IMAGE=
+NEXT_PUBLIC_QR_KEY=
+NEXT_PUBLIC_QR_ID=
+NEXT_PUBLIC_QR_BANK_BIN=
+NEXT_PUBLIC_QR_BANK_NAME=
+NEXT_PUBLIC_QR_BANK_ID=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Running Application
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Build application
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+sh build.sh
+```
 
-## Learn More
+Run application
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+sh run.sh
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Build docker image
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+sh docker.sh "something"
+```
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is licensed under the [MIT License](LICENSE).

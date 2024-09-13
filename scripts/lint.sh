@@ -4,11 +4,11 @@ cd ..
 
 echo "Format code 🤡🤡🤡🤡🤡"
 
-pnpm prettier
+bun prettier
 
 echo "Running lint 🧨🧨🧨🧨🧨"
 
-pnpm lint
+bun lint
 
 echo "Success ✔️✔️✔️✔️✔️"
 
