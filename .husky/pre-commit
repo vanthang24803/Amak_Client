@@ -1,7 +1,7 @@
 echo "Running lint 🧨🧨🧨🧨🧨"
-pnpm lint
+bun lint
 
 echo "Runing build application 💀💀💀💀💀"
-rm -rf .next && pnpm build
+rm -rf .next && bun run build
 
 echo "Application build sucess 🎉🎉🎉🎉🎉🎉"

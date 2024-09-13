@@ -4,7 +4,7 @@ cd ..
 
 echo "Install dependencies  😍😍😍😍😍"
 
-pnpm install
+bun install
 
 cd ./scripts
 
