@@ -17,3 +17,5 @@ export type UserAnalytic = Base & {
   isManager: boolean;
   updateAt: string;
 };
+
+export type TimeRange = "month" | "week" | "day";

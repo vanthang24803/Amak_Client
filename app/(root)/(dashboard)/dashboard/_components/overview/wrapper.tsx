@@ -4,6 +4,8 @@ import { Chart as BarChart } from "./bar-chart";
 import { Chart as AreaChart } from "./area-chart";
 import { Chart as PieChart } from "./pie-chart";
 import { HeaderOverview } from "./header";
+import { TopProductTable } from "./table/product";
+import { TopCustomerTable } from "./table/customer";
 
 export const Wrapper = () => {
   return (
@@ -18,6 +20,10 @@ export const Wrapper = () => {
           <div className="w-1/3">
             <PieChart />
           </div>
+        </div>
+        <div className="flex gap-4">
+          <TopProductTable />
+          <TopCustomerTable />
         </div>
       </div>
     </div>
