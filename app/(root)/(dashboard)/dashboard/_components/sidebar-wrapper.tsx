@@ -147,6 +147,16 @@ export const SidebarWrapper = ({
               icon: MessagesSquare,
               path: "",
             },
+            {
+              title: "Gmail",
+              image: "/gmail.png",
+              path: "",
+            },
+            {
+              title: "Drive",
+              image: "/drive.png",
+              path: "",
+            },
           ]}
         />
       </ResizablePanel>

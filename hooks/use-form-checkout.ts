@@ -2,7 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import useCart from "./use-cart";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
@@ -10,6 +9,7 @@ import _http from "@/utils/http";
 import { checkOutValidation } from "@/validations/checkout";
 import { PaymentType } from "@/app/(root)/(checkout)/checkout/components/payment";
 import { Momo } from "@/types";
+import { useCartV2 } from "./use-cart.v2";
 
 type Props = {
   email: string | undefined;
@@ -38,11 +38,11 @@ export default function useFormCheckOut({
   totalPrice,
   numberPhone,
 }: Props) {
-  const cart = useCart();
   const router = useRouter();
+  const { totalItems, data: cart, clearCart } = useCartV2();
   const [loading, setLoading] = useState(false);
 
-  const priceShip = cart.totalPrice() + 35000;
+  const priceShip = totalPrice + 35000;
 
   const uuid = uuidv4();
 
@@ -68,20 +68,20 @@ export default function useFormCheckOut({
       ...data,
       id: uuid,
       customer: data.name,
-      products: cart.items.map((item) => ({
-        optionId: item.product.options[0].id,
-        productId: item.product.id,
-        productName: item.product.name,
-        thumbnail: item.product.thumbnail,
-        optionName: item.product.options[0].name,
-        price: item.product.options[0].price,
-        sale: item.product.options[0].sale,
+      products: cart.map((item) => ({
+        optionId: item.optionId,
+        productId: item.productId,
+        productName: item.productName,
+        thumbnail: item.thumbnail,
+        optionName: item.optionName,
+        price: item.price,
+        sale: item.sale,
         quantity: item.quantity,
       })),
       voucher: voucher,
       payment: payment?.toUpperCase(),
       shipping: sendChecked,
-      quantity: cart.items.length,
+      quantity: totalItems,
       totalPrice: totalPrice,
     };
 
@@ -92,7 +92,7 @@ export default function useFormCheckOut({
         if (response.status == 201) {
           toast.success("Thành công");
           router.push(`/checkout/${uuid}`);
-          cart.removeAll();
+          clearCart();
         } else {
           toast.error("Thất bại");
         }

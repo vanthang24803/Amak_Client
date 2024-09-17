@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -17,8 +18,9 @@ type Props = {
   links: {
     title: string;
     label?: string;
-    icon: LucideIcon;
+    icon?: LucideIcon;
     path: string;
+    image?: string;
   }[];
 };
 
@@ -47,7 +49,17 @@ export const Nav = ({ isCollapsed, links }: Props) => {
                         "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
                     )}
                   >
-                    <link.icon className="h-4 w-4" />
+                    {link.icon && !link.image ? (
+                      <link.icon className="h-4 w-4" />
+                    ) : (
+                      <Image
+                        src={link.image || ""}
+                        alt="image"
+                        width={16}
+                        height={16}
+                      />
+                    )}
+
                     <span className="sr-only">{link.title}</span>
                   </Link>
                 </TooltipTrigger>
@@ -80,7 +92,18 @@ export const Nav = ({ isCollapsed, links }: Props) => {
                 "justify-start"
               )}
             >
-              <link.icon className="mr-2 h-4 w-4" />
+              <div className="mr-2">
+                {link.icon && !link.image ? (
+                  <link.icon className="h-4 w-4" />
+                ) : (
+                  <Image
+                    src={link.image || ""}
+                    alt="image"
+                    width={16}
+                    height={16}
+                  />
+                )}
+              </div>
               <p className="scroll-m-20 text-[13px] font-medium tracking-tight">
                 {link.title}
               </p>

@@ -4,13 +4,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
-import useCart from "@/hooks/use-cart";
 import { ProductDetail } from "@/types/product";
 import { Option } from "@/types/options";
 import { convertPrice, formatPrice } from "@/utils/price";
 import { ShareModal } from "@/components/modal/share-modal";
 import { Thumbnail } from "./thumbnail";
 import { Policy } from "./policy";
+import { Cart } from "@/types";
+import { useCartV2 } from "@/hooks/use-cart.v2";
 
 type Props = {
   product: ProductDetail;
@@ -26,19 +27,18 @@ export const DetailCard = ({ product }: Props) => {
     setOption(newOption);
   };
 
-  const cart = useCart();
+  const { addToCart } = useCartV2();
 
-  const addToCart = () => {
-    if (product && option) {
-      const productCopy = { ...product };
-
-      productCopy.options = [option];
-
-      cart.addItem(productCopy, total);
-    } else {
-      console.error("Data or option is undefined");
-    }
-  };
+  const dataSend = {
+    optionId: option?.id,
+    optionName: option?.name,
+    price: option?.price,
+    sale: option?.sale,
+    productId: product.id,
+    productName: product.name,
+    quantity: total,
+    thumbnail: product.thumbnail,
+  } as Cart;
 
   return (
     <div className="w-full bg-white rounded-md md:p-8 p-4">
@@ -169,7 +169,7 @@ export const DetailCard = ({ product }: Props) => {
                     <Button
                       variant="default"
                       className="bg-[#417505] text-white font-medium  hover:bg-[#65b10d]"
-                      onClick={addToCart}
+                      onClick={() => addToCart(dataSend)}
                     >
                       Thêm vào giỏ hàng
                     </Button>

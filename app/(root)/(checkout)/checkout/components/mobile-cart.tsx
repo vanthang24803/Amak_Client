@@ -11,11 +11,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import useCart from "@/hooks/use-cart";
+import { useCartV2 } from "@/hooks/use-cart.v2";
 import { Voucher } from "@/types";
 import { convertPrice, formatPrice } from "@/utils/price";
 import { format } from "date-fns";
-import { ArrowUpRight, Check, ShoppingCart, Trash } from "lucide-react";
+import { ArrowUpRight, ShoppingCart, Trash } from "lucide-react";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
@@ -40,7 +40,7 @@ export const MobileCart = ({
   setCode,
   setVoucher,
 }: Props) => {
-  const cart = useCart();
+  const { data: cart } = useCartV2();
 
   const finalPrice = voucher?.discount
     ? totalPrice - voucher.discount * 1000
@@ -69,25 +69,25 @@ export const MobileCart = ({
           </AccordionTrigger>
           <AccordionContent>
             <ScrollArea className="flex flex-col max-h-[50vh]">
-              {cart.items.map((item, index) => (
+              {cart.map((item, index) => (
                 <Link
-                  href={`/products/${item.product.id}`}
+                  href={`/products/${item.productId}`}
                   key={index}
                   target="_blank"
                   className="flex space-x-4 mb-4"
                 >
                   <img
-                    src={item.product.thumbnail}
-                    alt={item.product.name}
+                    src={item.thumbnail}
+                    alt={item.productName}
                     className="w-[15%] md:w-[12%] relative"
                   />
                   <div className="flex justify-between w-full">
                     <div className="flex flex-col text-sm w-[180px] space-y-1">
                       <span className="text-[12px] line-clamp-2 font-medium">
-                        {item.product.name}
+                        {item.productName}
                       </span>
                       <span className="text-xs text-neutral-500">
-                        {item.product.options[0].name}
+                        {item.optionName}
                       </span>
                       <span className=" text-neutral-700">
                         x{item.quantity}
@@ -95,11 +95,7 @@ export const MobileCart = ({
                     </div>
 
                     <p className="text-[13px] text-neutral-700 font-bold">
-                      {formatPrice(
-                        item.product.options[0].price,
-                        item.product.options[0].sale
-                      )}
-                      ₫
+                      {formatPrice(item.price, item.sale)}₫
                     </p>
                   </div>
                 </Link>

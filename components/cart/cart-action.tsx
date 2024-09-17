@@ -12,7 +12,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Cart } from "../svg";
-import useCart from "@/hooks/use-cart";
 import { ScrollArea } from "../ui/scroll-area";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
@@ -22,12 +21,19 @@ import { Button } from "../ui/button";
 import { UpdateCart } from "./cart-update";
 import { useState } from "react";
 import Image from "next/image";
+import { useCartV2 } from "@/hooks/use-cart.v2";
 
 export default function CartAction() {
-  const { isClient } = useClient();
   const router = useRouter();
-  const cart = useCart();
+  const { isClient } = useClient();
   const [open, setOpen] = useState(false);
+
+  const {
+    data: cart,
+    totalItems,
+    totalPrice,
+    removeOptionToCart,
+  } = useCartV2();
 
   const handleOpen = () => {
     setOpen(!open);
@@ -51,11 +57,9 @@ export default function CartAction() {
         <div className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-neutral-200">
           <div className="relative">
             <Cart />
-            {cart.totalItems() > 0 && (
+            {totalItems > 0 && (
               <div className="w-5 h-5 flex items-center justify-center rounded-full bg-red-500 absolute -top-3 -right-3">
-                <span className="text-white text-[12px]">
-                  {cart.totalItems()}
-                </span>
+                <span className="text-white text-[12px]">{totalItems}</span>
               </div>
             )}
           </div>
@@ -73,71 +77,65 @@ export default function CartAction() {
             <SheetTitle>Giỏ Hàng</SheetTitle>
           </h2>
           <SheetDescription>
-            Số sản phẩm trong giỏ hàng: {cart.totalItems()}
+            Số sản phẩm trong giỏ hàng: {totalItems}
           </SheetDescription>
         </SheetHeader>
         <div className="flex flex-col space-y-2">
           <ScrollArea className="lg:h-[75vh] h-[78vh] w-full ">
             <div className="flex flex-col space-y-4 my-4">
-              {cart.totalItems() > 0 ? (
+              {totalItems > 0 ? (
                 <>
-                  {cart.items.map((item, index) => (
+                  {cart.map((item, index) => (
                     <div
                       key={index}
                       className="flex flex-col space-y-2 text-sm hover:cursor-pointer"
                     >
                       <div className="flex space-x-4">
                         <img
-                          src={item.product.thumbnail}
+                          src={item.thumbnail}
                           alt="thumbnail"
                           className="w-1/4 object-fill"
                           onClick={() => {
-                            router.push(`/products/${item.product.id}`);
+                            router.push(`/products/${item.productId}`);
                             handleOpen();
                           }}
                         />
-                        <div className="flex flex-col">
-                          <div className="relative w-[250px]">
+                        <div className="flex flex-col gap-1">
+                          <div className="relative w-[220px]">
                             <span
-                              className="font-semibold text-[12px] md:w-[160px] line-clamp-1 md:line-clamp-2"
+                              className="font-semibold text-[12px] md:w-[160px] line-clamp-1 md:line-clamp-2 leading-4 tracking-tight"
                               onClick={() => {
-                                router.push(`/products/${item.product.id}`);
+                                router.push(`/products/${item.productId}`);
                                 handleOpen();
                               }}
                             >
-                              {item.product.name}
+                              {item.productName}
                             </span>
                             <X
-                              className="w-4 h-4 absolute top-0 -right-0"
-                              onClick={() =>
-                                cart.removeItem(
-                                  item.product.id,
-                                  item.product.options[0].id
-                                )
-                              }
+                              className="absolute top-0 right-0 w-4 h-4"
+                              onClick={() => removeOptionToCart(item)}
                             />
                           </div>
-                          <span className="text-neutral-400 text-[11px] tracking-tighter">
-                            {item.product.options[0].name}
-                          </span>
+                          <div className="flex items-center justify-between w-[220px]">
+                            <span className="text-neutral-400 text-[11px] tracking-tighter">
+                              {item.optionName}
+                            </span>
+                            {item.sale > 0 && (
+                              <div className="w-8 h-5 flex items-center justify-center text-[12px] font-medium tracking-tighter text-white bg-red-500 rounded">
+                                {item.sale}%
+                              </div>
+                            )}
+                          </div>
                           <div className="flex items-center space-x-4 mt-2 mb-4">
-                            <UpdateCart
-                              productId={item.product.id}
-                              optionId={item.product.options[0].id}
-                              quantity={item.quantity}
-                            />
+                            <UpdateCart cart={item} />
 
                             <div className="flex items-center space-x-2">
                               <span className="font-semibold ">
-                                {formatPrice(
-                                  item.product.options[0].price,
-                                  item.product.options[0].sale
-                                )}
-                                ₫
+                                {formatPrice(item.price, item.sale)}₫
                               </span>
 
                               <span className="text-[12px] line-through hidden md:block">
-                                {convertPrice(item.product.options[0].price)}₫
+                                {convertPrice(item.price)}₫
                               </span>
                             </div>
                           </div>
@@ -160,7 +158,7 @@ export default function CartAction() {
           <div className="flex items-center justify-between">
             <span className="text-lg font-semibold uppercase">Tổng tiền:</span>
             <span className="font-bold text-[#ff0000]">
-              {convertPrice(cart.totalPrice())}₫
+              {convertPrice(totalPrice)}₫
             </span>
           </div>
           <Button
@@ -169,7 +167,7 @@ export default function CartAction() {
               router.push("/checkout");
               handleOpen();
             }}
-            disabled={cart.totalItems() == 0}
+            disabled={totalItems == 0}
           >
             Thanh toán
           </Button>

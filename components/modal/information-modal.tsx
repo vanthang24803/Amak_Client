@@ -1,6 +1,5 @@
 "use client";
 
-import useCart from "@/hooks/use-cart";
 import { Option } from "@/types/options";
 import { Product } from "@/types/product";
 import { convertPrice, formatPrice } from "@/utils/price";
@@ -9,34 +8,35 @@ import { Button } from "../ui/button";
 import { Minus, Plus } from "lucide-react";
 import { DialogTitle } from "../ui/dialog";
 import { ShareModal } from "./share-modal";
+import { Cart } from "@/types";
+import { useCartV2 } from "@/hooks/use-cart.v2";
 
 type Props = {
   product: Product;
 };
 
 export default function InformationModal({ product }: Props) {
-  const cart = useCart();
-
   const [total, setTotal] = useState(1);
 
   const [option, setOption] = useState<Option | undefined>(product?.options[0]);
+
+  const { addToCart } = useCartV2();
 
   const handleOptionChange = (id: string) => {
     const newOption = product?.options.find((option) => option.id === id);
     setOption(newOption);
   };
 
-  const addToCart = () => {
-    if (product && option) {
-      const productCopy = { ...product };
-
-      productCopy.options = [option];
-
-      cart.addItem(productCopy, total);
-    } else {
-      console.error("Data or option is undefined");
-    }
-  };
+  const dataSend = {
+    optionId: option?.id,
+    optionName: option?.name,
+    price: option?.price,
+    sale: option?.sale,
+    productId: product.id,
+    productName: product.name,
+    quantity: total,
+    thumbnail: product.thumbnail,
+  } as Cart;
 
   return (
     <div className="flex flex-col space-y-2 p-4">
@@ -141,7 +141,7 @@ export default function InformationModal({ product }: Props) {
             <Button
               variant="default"
               className="bg-[#417505] text-white font-medium  hover:bg-[#65b10d]"
-              onClick={addToCart}
+              onClick={() => addToCart(dataSend)}
             >
               Thêm vào giỏ hàng
             </Button>
