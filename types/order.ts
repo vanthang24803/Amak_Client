@@ -14,11 +14,13 @@ export type Order = Base & {
   orderDetails: OrderDetails[];
 };
 
-type OrderDetails = {
+export type OrderDetails = {
   productId: string;
   thumbnail: string;
   name: string;
   optionName: string;
+  productName: string;
+  optionId: string;
   quantity: number;
   price: number;
   sale: number;

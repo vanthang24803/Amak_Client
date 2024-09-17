@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ModalReview } from "./review";
 import { SettingOrder } from "./settings";
+import { useCartV2 } from "@/hooks/use-cart.v2";
 
 type Props = {
   order: Order;
@@ -60,23 +61,11 @@ const statusList: { [key: string]: React.ReactNode } = {
 export const OrderData = ({ order }: Props) => {
   const router = useRouter();
 
-  const handlerBuyBack = async () => {
-    // for (const item of order.orderDetails) {
-    //   try {
-    //     const response = await _http.get(`/Products/${item.productId}`);
-    //     if (response.status === 200) {
-    //       const data: Response<Product> = response.data as Response<Product>;
-    //       const addProduct: Product = {
-    //         ...data.result,
-    //         options: data.result.options.filter(
-    //           (i) => i.name == item.optionName
-    //         ),
-    //       };
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
+  const { handlerBuyBack } = useCartV2();
+
+  const actionBuy = () => {
+    handlerBuyBack(order.orderDetails);
+    router.push("/checkout");
   };
 
   return (
@@ -144,7 +133,7 @@ export const OrderData = ({ order }: Props) => {
                 <Button
                   variant="mix"
                   className="rounded-sm"
-                  onClick={() => handlerBuyBack()}
+                  onClick={actionBuy}
                 >
                   Mua lại
                 </Button>

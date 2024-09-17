@@ -60,7 +60,7 @@ export const Container = () => {
           </span>
 
           <div className="w-full rounded-md border border-neutral-200 p-4">
-            <ScrollArea className="h-[50vh]">
+            <ScrollArea className="h-[50vh]" scrollHideDelay={10} type="scroll">
               {totalItems > 0 ? (
                 <div className="flex flex-col space-y-4 my-4 w-full">
                   {cart.map((item, index) => (
