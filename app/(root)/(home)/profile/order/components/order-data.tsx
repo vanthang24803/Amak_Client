@@ -3,8 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import useCart from "@/hooks/use-cart";
-import { Order, Product, Response } from "@/types";
+import { Order } from "@/types";
 import _http from "@/utils/http";
 import { convertPrice } from "@/utils/price";
 import { Check, LoaderCircle, Settings, Truck, X } from "lucide-react";
@@ -60,29 +59,24 @@ const statusList: { [key: string]: React.ReactNode } = {
 
 export const OrderData = ({ order }: Props) => {
   const router = useRouter();
-  const cart = useCart();
 
   const handlerBuyBack = async () => {
-    for (const item of order.orderDetails) {
-      try {
-        const response = await _http.get(`/Products/${item.productId}`);
-
-        if (response.status === 200) {
-          const data: Response<Product> = response.data as Response<Product>;
-
-          const addProduct: Product = {
-            ...data.result,
-            options: data.result.options.filter(
-              (i) => i.name == item.optionName
-            ),
-          };
-
-          cart.addItem(addProduct, item.quantity);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    // for (const item of order.orderDetails) {
+    //   try {
+    //     const response = await _http.get(`/Products/${item.productId}`);
+    //     if (response.status === 200) {
+    //       const data: Response<Product> = response.data as Response<Product>;
+    //       const addProduct: Product = {
+    //         ...data.result,
+    //         options: data.result.options.filter(
+    //           (i) => i.name == item.optionName
+    //         ),
+    //       };
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
   };
 
   return (

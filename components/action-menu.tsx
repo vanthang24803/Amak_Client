@@ -17,12 +17,11 @@ export default function ActionMenu() {
 
   return (
     <div className="flex items-center space-x-4">
-      <CartAction />
-
       {isClient && (
         <>
           {isLogin ? (
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <CartAction />
               <NotificationComponent />
               <UserMenu />
             </div>

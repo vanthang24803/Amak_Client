@@ -7,8 +7,10 @@ import { generateSlug } from "@/utils/slug";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Cart } from "../svg";
-import useCart from "@/hooks/use-cart";
 import { ProductModal } from "../modal/product-modal";
+import useAuth from "@/hooks/use-auth";
+import { useCartV2 } from "@/hooks/use-cart.v2";
+import { Cart as CartType } from "@/types";
 
 type Props = {
   product: Product;
@@ -16,7 +18,19 @@ type Props = {
 
 export const Card = ({ product }: Props) => {
   const router = useRouter();
-  const cart = useCart();
+  const { isLogin } = useAuth();
+  const { addToCart } = useCartV2();
+
+  const dataSend = {
+    productId: product.id,
+    optionName: product.options[0].name,
+    optionId: product.options[0].id,
+    price: product.options[0].price,
+    productName: product.name,
+    quantity: 1,
+    sale: product.options[0].sale,
+    thumbnail: product.thumbnail,
+  } as CartType;
 
   return (
     <div className="w-full pb-4 bg-white rounded-sm hover:shadow-md hover:cursor-pointer flex flex-col overflow-hidden group lg:h-[60vh] md:h-[50vh] relative">
@@ -73,28 +87,34 @@ export const Card = ({ product }: Props) => {
             </Button>
           )}
         </div>
-        {product.options[0].quantity > 0 ? (
-          <div
-            className="my-2 flex items-center space-x-4 md:absolute md:bottom-4"
-            onClick={() => cart.addItem(product, 1)}
-          >
-            <div className="w-8 h-8 flex items-center justify-center bg-[#65b10d] rounded-full">
-              <Cart />
-            </div>
-            <span className="font-bold text-[11px] uppercase hover:text-[#65b10d]">
-              Thêm vào giỏ
-            </span>
-          </div>
-        ) : (
-          <div className="my-2 flex items-center space-x-4 md:absolute md:bottom-4">
-            <div className="w-8 h-8 flex items-center justify-center bg-neutral-300/90 rounded-full cursor-not-allowed">
-              <Cart />
-            </div>
-            <span className="font-bold text-[11px] uppercase text-neutral-400 cursor-not-allowed">
-              Hết hàng
-            </span>
-          </div>
-        )}
+        <>
+          {isLogin && (
+            <>
+              {product.options[0].quantity > 0 ? (
+                <div
+                  className="my-2 flex items-center space-x-4 md:absolute md:bottom-4"
+                  onClick={() => addToCart(dataSend)}
+                >
+                  <div className="w-8 h-8 flex items-center justify-center bg-[#65b10d] rounded-full">
+                    <Cart />
+                  </div>
+                  <span className="font-bold text-[11px] uppercase hover:text-[#65b10d]">
+                    Thêm vào giỏ
+                  </span>
+                </div>
+              ) : (
+                <div className="my-2 flex items-center space-x-4 md:absolute md:bottom-4">
+                  <div className="w-8 h-8 flex items-center justify-center bg-neutral-300/90 rounded-full cursor-not-allowed">
+                    <Cart />
+                  </div>
+                  <span className="font-bold text-[11px] uppercase text-neutral-400 cursor-not-allowed">
+                    Hết hàng
+                  </span>
+                </div>
+              )}
+            </>
+          )}
+        </>
       </div>
     </div>
   );

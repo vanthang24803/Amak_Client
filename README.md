@@ -7,10 +7,11 @@ This is a basic guide on how to run the AMAK Nextjs application.
 To run the application, you will need to have the following installed on your machine:
 
 - NodeJS >= 20.16.0: [Download and Install NodeJS](https://nodejs.org/en)
-- Bun >= 1.1.27: [Download and Install Bun](https://bun.sh/) 
+- Bun >= 1.1.27: [Download and Install Bun](https://bun.sh/)
 - Git: [Download and Install Git](https://git-scm.com/downloads)
 
 ## Environment
+
 Setup env before run dockerfile:
 
 ```env.example

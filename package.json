@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier": "npx prettier . --write --ignore-unknown",
+    "format": "npx prettier . --write --ignore-unknown",
+    "approved": "bun format && bun lint",
     "prepare": "if [ \"$NODE_ENV\" = \"development\" ]; then husky install; fi"
   },
   "lint-staged": {

@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import useCart from "@/hooks/use-cart";
 import { useRouter } from "next/navigation";
 import {
   Breadcrumb,
@@ -21,11 +20,17 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
+import { useCartV2 } from "@/hooks/use-cart.v2";
 
 export const Container = () => {
-  const cart = useCart();
-
   const router = useRouter();
+
+  const {
+    totalItems,
+    totalPrice,
+    data: cart,
+    removeOptionToCart,
+  } = useCartV2();
 
   const { isClient } = useClient();
 
@@ -40,7 +45,7 @@ export const Container = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Giỏ hàng ({cart.totalItems()})</BreadcrumbPage>
+            <BreadcrumbPage>Giỏ hàng ({totalItems})</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -51,67 +56,54 @@ export const Container = () => {
           <Separator />
 
           <span>
-            Bạn đang có <b>{cart.totalItems()} sản phẩm</b> trong giỏ hàng
+            Bạn đang có <b>{totalItems} sản phẩm</b> trong giỏ hàng
           </span>
 
           <div className="w-full rounded-md border border-neutral-200 p-4">
             <ScrollArea className="h-[50vh]">
-              {cart.totalItems() > 0 ? (
+              {totalItems > 0 ? (
                 <div className="flex flex-col space-y-4 my-4 w-full">
-                  {cart.items.map((item, index) => (
+                  {cart.map((item, index) => (
                     <div
                       key={index}
                       className="flex flex-col space-y-2 text-sm hover:cursor-pointer"
                     >
                       <div className="flex md:space-x-8 space-x-4">
                         <img
-                          src={item.product.thumbnail}
+                          src={item.thumbnail}
                           alt="thumbnail"
                           className="w-[20%] md:w-[10%] object-cover"
                           onClick={() =>
-                            router.push(`/products/${item.product.id}`)
+                            router.push(`/products/${item.productId}`)
                           }
                         />
                         <div className="flex flex-col w-full">
                           <div className="flex items-center justify-between ">
                             <Link
-                              href={`/products/${item.product.id}`}
+                              href={`/products/${item.productId}`}
                               target="_blank"
                               className="font-semibold line-clamp-2"
                             >
-                              {item.product.name}
+                              {item.productName}
                             </Link>
                             <X
                               className="w-6 h-6"
-                              onClick={() =>
-                                cart.removeItem(
-                                  item.product.id,
-                                  item.product.options[0].id
-                                )
-                              }
+                              onClick={() => removeOptionToCart(item)}
                             />
                           </div>
                           <span className="text-neutral-400 text-[12px]">
-                            {item.product.options[0].name}
+                            {item.productName}
                           </span>
                           <div className="flex items-center justify-between my-2">
-                            <UpdateCart
-                              productId={item.product.id}
-                              optionId={item.product.options[0].id}
-                              quantity={item.quantity}
-                            />
+                            <UpdateCart cart={item} />
 
                             <div className="flex items-center space-x-2">
                               <span className="font-semibold ">
-                                {formatPrice(
-                                  item.product.options[0].price,
-                                  item.product.options[0].sale
-                                )}
-                                ₫
+                                {formatPrice(item.price, item.sale)}₫
                               </span>
 
                               <span className="text-[12px] line-through hidden md:block">
-                                {convertPrice(item.product.options[0].price)}₫
+                                {convertPrice(item.price)}₫
                               </span>
                             </div>
                           </div>
@@ -142,7 +134,7 @@ export const Container = () => {
           <div className="flex items-center justify-between">
             <h2 className="text-base font-bold">Tổng tiền:</h2>
             <p className="text-2xl font-bold text-[#ff0000]">
-              {convertPrice(cart.totalPrice())}₫
+              {convertPrice(totalPrice)}₫
             </p>
           </div>
           <Separator />
@@ -158,7 +150,7 @@ export const Container = () => {
           </div>
           <Button
             variant="destructive"
-            disabled={cart.totalItems() == 0}
+            disabled={totalItems == 0}
             onClick={() => router.push(`/checkout`)}
             className="bg-[#ff0000] uppercase font-semibold"
           >

@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Spinner } from "@/components/spinner";
 import _http from "@/utils/http";
 import { useEffect } from "react";
-import useCart from "@/hooks/use-cart";
+import { useCartV2 } from "@/hooks/use-cart.v2";
 
 enum EMomoCode {
   Success = 0,
@@ -21,7 +21,7 @@ export const Wrapper = () => {
 
   const { isClient } = useClient();
 
-  const cart = useCart();
+  const { clearCart } = useCartV2();
 
   const router = useRouter();
 
@@ -46,7 +46,7 @@ export const Wrapper = () => {
   useEffect(() => {
     handlerOrderPayment();
     if (Number(resultCode) === EMomoCode.Success) {
-      cart.removeAll();
+      clearCart();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

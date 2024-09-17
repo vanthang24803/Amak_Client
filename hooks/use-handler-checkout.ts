@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import useCart from "./use-cart";
 import { Voucher } from "@/types";
 import _http from "@/utils/http";
+import { useCartV2 } from "./use-cart.v2";
 
 type CheckboxType = "send" | "store";
 type PaymentType = "cod" | "bank" | "momo";
 
 export default function useHandlerCheckout() {
-  const cart = useCart();
+  const { totalPrice } = useCartV2();
   const [sendChecked, setSendChecked] = useState(true);
   const [storeChecked, setStoreChecked] = useState(false);
   const [payment, setPayment] = useState<PaymentType | null>("cod");
@@ -33,8 +33,7 @@ export default function useHandlerCheckout() {
     }
   };
 
-  const totalPrice = cart.totalPrice();
-  const priceShipping = cart.totalPrice() + 35000;
+  const priceShipping = totalPrice + 35000;
 
   const finalPriceVoucher = voucher?.discount
     ? totalPrice - voucher.discount * 1000
