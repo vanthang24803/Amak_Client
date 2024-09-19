@@ -34,7 +34,7 @@ export const CustomCard = ({
       </CardHeader>
       <CardContent>
         {content}
-        {percentChange && (
+        {percentChange && percentChange != 0 && (
           <CardDescription
             className={`${
               isStock ? "text-emerald-500" : "text-red-500"

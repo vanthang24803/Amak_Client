@@ -12,12 +12,15 @@ import { Thumbnail } from "./thumbnail";
 import { Policy } from "./policy";
 import { Cart } from "@/types";
 import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/use-auth";
 
 type Props = {
   product: ProductDetail;
 };
 
 export const DetailCard = ({ product }: Props) => {
+  const router = useRouter();
   const [option, setOption] = useState<Option | undefined>(product.options[0]);
 
   const [total, setTotal] = useState(1);
@@ -28,6 +31,7 @@ export const DetailCard = ({ product }: Props) => {
   };
 
   const { addToCart } = useCartV2();
+  const { isLogin } = useAuth();
 
   const dataSend = {
     optionId: option?.id,
@@ -39,6 +43,11 @@ export const DetailCard = ({ product }: Props) => {
     quantity: total,
     thumbnail: product.thumbnail,
   } as Cart;
+
+  const handlerAddToCart = () => {
+    if (!isLogin) router.push("/login");
+    addToCart(dataSend);
+  };
 
   return (
     <div className="w-full bg-white rounded-md md:p-8 p-4">
@@ -169,7 +178,7 @@ export const DetailCard = ({ product }: Props) => {
                     <Button
                       variant="default"
                       className="bg-[#417505] text-white font-medium  hover:bg-[#65b10d]"
-                      onClick={() => addToCart(dataSend)}
+                      onClick={handlerAddToCart}
                     >
                       Thêm vào giỏ hàng
                     </Button>

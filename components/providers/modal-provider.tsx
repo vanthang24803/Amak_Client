@@ -10,14 +10,13 @@ export const ModalProvider = () => {
 
   const { isLogin, getProfile, getNotification } = useAuth();
 
-  const {getCarts , data} = useCartV2();
-
+  const { getCarts } = useCartV2();
 
   useEffect(() => {
     if (isLogin) {
       getProfile();
       getNotification();
-      getCarts()
+      getCarts();
     }
   }, [getCarts, getNotification, getProfile, isLogin]);
 

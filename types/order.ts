@@ -12,14 +12,21 @@ export type Order = Base & {
   updateAt: string;
   isReviewed: boolean;
   orderDetails: OrderDetails[];
+  statusOrders: StatusOrder[];
 };
 
-type OrderDetails = {
+export type OrderDetails = {
   productId: string;
   thumbnail: string;
   name: string;
   optionName: string;
+  optionId: string;
   quantity: number;
   price: number;
   sale: number;
+};
+
+export type StatusOrder = {
+  status: string;
+  timestamp: string;
 };

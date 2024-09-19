@@ -1,36 +1,23 @@
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { Analytic } from "@/types";
 import _http from "@/utils/http";
-import { Analytic, UserAnalytic } from "@/types";
+import { create } from "zustand";
 
-type Store = {
+interface Store {
   analytic: Analytic | null;
   getAnalytic: () => Promise<void>;
-  getAccounts: () => Promise<void>;
-};
+}
 
-export const useAnalytic = create<Store>()(
-  persist(
-    (set) => ({
-      analytic: null,
-      getAnalytic: async () => {
-        try {
-          const response = await _http.get<{ result: Analytic }>(
-            "/Analytic/Count"
-          );
+export const useAnalytic = create<Store>((set) => ({
+  analytic: null,
+  getAnalytic: async () => {
+    try {
+      const response = await _http.get<{ result: Analytic }>("/Analytic/Count");
 
-          if (response.status === 200) {
-            set({ analytic: response.data.result });
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      getAccounts: async () => {},
-    }),
-    {
-      name: "analytic-storage",
-      storage: createJSONStorage(() => localStorage),
+      if (response.status === 200) {
+        set({ analytic: response.data.result });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  )
-);
+  },
+}));

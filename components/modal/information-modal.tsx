@@ -10,12 +10,17 @@ import { DialogTitle } from "../ui/dialog";
 import { ShareModal } from "./share-modal";
 import { Cart } from "@/types";
 import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/use-auth";
 
 type Props = {
   product: Product;
 };
 
 export default function InformationModal({ product }: Props) {
+  const router = useRouter();
+  const { isLogin } = useAuth();
+
   const [total, setTotal] = useState(1);
 
   const [option, setOption] = useState<Option | undefined>(product?.options[0]);
@@ -37,6 +42,11 @@ export default function InformationModal({ product }: Props) {
     quantity: total,
     thumbnail: product.thumbnail,
   } as Cart;
+
+  const actionAddToCart = () => {
+    if (!isLogin) router.push("/login");
+    addToCart(dataSend);
+  };
 
   return (
     <div className="flex flex-col space-y-2 p-4">
@@ -141,7 +151,7 @@ export default function InformationModal({ product }: Props) {
             <Button
               variant="default"
               className="bg-[#417505] text-white font-medium  hover:bg-[#65b10d]"
-              onClick={() => addToCart(dataSend)}
+              onClick={actionAddToCart}
             >
               Thêm vào giỏ hàng
             </Button>

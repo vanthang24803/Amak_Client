@@ -1,4 +1,4 @@
-import { Cart } from "@/types";
+import { Cart, OrderDetails } from "@/types";
 import _http from "@/utils/http";
 import toast from "react-hot-toast";
 import { create } from "zustand";
@@ -9,7 +9,7 @@ interface Store {
   totalPrice: number;
   getCarts: () => void;
   addToCart: (cart: Cart) => void;
-
+  handlerBuyBack: (data: OrderDetails[]) => void;
   calculator: () => void;
   removeToCart: (cart: Cart) => void;
   removeOptionToCart: (cart: Cart) => void;
@@ -76,6 +76,18 @@ export const useCartV2 = create<Store>((set, get) => ({
     try {
       await _http.delete("/Cart/Clear");
       get().getCarts();
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  handlerBuyBack: async (data: OrderDetails[]) => {
+    try {
+      const response = await _http.post("/Cart/BuyBack", data);
+      if (response.status === 200) {
+        toast.success("Sản phẩm đã được thêm vào giỏ.");
+        get().getCarts();
+      }
     } catch (error) {
       console.log(error);
     }
