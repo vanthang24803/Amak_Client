@@ -1,9 +1,10 @@
-import { Order } from "@/types";
-import _http from "@/utils/http";
+import { Order, OrderDetails } from "@/types";
 import { create } from "zustand";
+import _http from "@/utils/http";
 
 interface Store {
   data: Order[];
+  order: OrderDetails | null;
   loading: boolean;
   error: string | null;
   fetchOrders: () => void;
@@ -11,6 +12,7 @@ interface Store {
 
 export const useOrdersAnalytic = create<Store>((set) => ({
   data: [],
+  order: null,
   loading: false,
   error: null,
   fetchOrders: async () => {

@@ -118,11 +118,6 @@ export const UserMenu = () => {
               <span className="text-[13.25px] font-medium tracking-tighter">
                 Đơn hàng
               </span>
-              {profile && profile.processOrder > 0 && (
-                <div className="flex items-center justify-center w-5 h-5 rounded-full text-white bg-red-500 text-[12px]">
-                  {profile?.processOrder}
-                </div>
-              )}
             </div>
           </DropdownMenuItem>
           {profile?.roles.includes("ADMIN") && (
