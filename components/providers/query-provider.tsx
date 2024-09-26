@@ -9,7 +9,14 @@ export const QueryProvider = ({ children }: PropsWithChildren) => {
   const { isClient } = useClient();
 
   const queryClient = new QueryClient({
-    defaultOptions: { queries: { retry: 5, retryDelay: 1000 } },
+    defaultOptions: {
+      queries: {
+        retry: 5,
+        retryDelay: 1000,
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
+      },
+    },
   });
 
   if (!isClient) return null;

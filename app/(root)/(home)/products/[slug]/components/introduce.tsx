@@ -24,7 +24,7 @@ export const Introduce = ({ data }: Props) => {
         <div className="flex flex-col space-y-1 text-sm">
           <div
             dangerouslySetInnerHTML={{
-              __html: data.specifications || "",
+              __html: data.introduction || "",
             }}
           />
           {!show && (
@@ -48,10 +48,10 @@ export const Introduce = ({ data }: Props) => {
 
       {show && (
         <div className="flex flex-col space-y-1 text-sm">
-          {data?.introduction && (
+          {data?.specifications && (
             <div
               dangerouslySetInnerHTML={{
-                __html: data.introduction,
+                __html: data?.specifications,
               }}
             />
           )}

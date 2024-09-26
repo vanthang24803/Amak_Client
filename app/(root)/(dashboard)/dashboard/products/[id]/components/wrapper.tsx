@@ -23,7 +23,7 @@ export const Wrapper = ({ id }: Props) => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="w-full max-w-screen-xl p-4 flex flex-col gap-4">
+      <div className="w-full max-w-screen-xl mb-20 p-4 flex flex-col gap-4">
         <ArrowBack path="/dashboard/products" />
         <div className="w-full flex justify-between gap-x-8">
           <div className="w-2/3 flex flex-col gap-4">

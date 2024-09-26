@@ -8,3 +8,4 @@ export * from "./update-profile";
 export * from "./option";
 export * from "./product";
 export * from "./update-password";
+export * from "./update-product";
