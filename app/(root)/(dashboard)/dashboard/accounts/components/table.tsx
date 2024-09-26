@@ -1,20 +1,25 @@
 "use client";
 
 import _http from "@/utils/http";
-import { useEffect } from "react";
 import { Loading } from "../../_components/loading";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { useAccountAnalytic } from "@/hooks/analytic/use-account";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAnalyticAccounts } from "@/services/dashboard/account";
 
 export const AccountTable = () => {
-  const { data, fetchAccounts, loading } = useAccountAnalytic();
+  const { data, isLoading } = useQuery({
+    queryKey: [`dashboard-analytic-accounts`],
+    queryFn: () => fetchAnalyticAccounts(),
+  });
 
-  useEffect(() => {
-    fetchAccounts();
-  }, [fetchAccounts]);
+  if (isLoading) return <Loading />;
 
-  if (loading) return <Loading />;
-
-  return <DataTable searchKey="email" columns={columns} data={data ?? []} />;
+  return (
+    <DataTable
+      searchKey="email"
+      columns={columns}
+      data={data?.data.result ?? []}
+    />
+  );
 };

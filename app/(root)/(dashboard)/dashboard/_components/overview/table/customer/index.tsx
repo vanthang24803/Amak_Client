@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TopCustomerTableColumn } from "./columns";
 import _http from "@/utils/http";
 import { DataTable } from "./data-table";
@@ -23,15 +23,16 @@ import {
 import { format, subDays } from "date-fns";
 import { TimeRange } from "@/types";
 import { Loading } from "../../../loading";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTopCustomers } from "@/services/dashboard/overview";
 
-type TopCustomerTable = {
+export type TopCustomerTable = {
   day: TopCustomerTableColumn[];
   week: TopCustomerTableColumn[];
   month: TopCustomerTableColumn[];
 };
 
 export const TopCustomerTable = () => {
-  const [loading, setLoading] = useState(false);
   const [timeRange, setTimeRange] = useState<TimeRange>("month");
 
   const currentDate = new Date();
@@ -39,26 +40,10 @@ export const TopCustomerTable = () => {
   const startOfMonth = format(subDays(currentDate, 30), "dd/MM/yyyy");
   const endDate = format(currentDate, "dd/MM/yyyy");
 
-  const [data, setData] = useState<TopCustomerTable | null>(null);
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await _http.get(`/Analytic/TopCustomer`);
-
-      if (response.status === 200) {
-        setData(response.data.result);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, isLoading, error } = useQuery<TopCustomerTable>({
+    queryKey: ["dashboard-analytic-customers"],
+    queryFn: fetchTopCustomers,
+  });
 
   const getDataForTimeRange = () => {
     if (!data) return [];
@@ -114,8 +99,12 @@ export const TopCustomerTable = () => {
         </Select>
       </CardHeader>
       <CardContent className="p-4">
-        {loading ? (
+        {isLoading ? (
           <Loading />
+        ) : error ? (
+          <div className="text-red-600">
+            Error fetching data: {error.message}
+          </div>
         ) : (
           data && <DataTable columns={columns} data={getDataForTimeRange()} />
         )}

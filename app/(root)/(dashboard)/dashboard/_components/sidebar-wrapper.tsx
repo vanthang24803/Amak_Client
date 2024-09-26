@@ -23,7 +23,7 @@ import { useRouter } from "next/navigation";
 import { Header } from "./header";
 import useClient from "@/hooks/use-client";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useAnalytic } from "@/hooks/analytic";
+import { useAnalytic } from "@/hooks/use-analytic";
 
 type Props = {
   defaultLayout?: number[];

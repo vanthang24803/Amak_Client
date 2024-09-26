@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import _http from "@/utils/http";
 import { BarChart } from "@/types";
 import { YearChart } from "./year-chart";
@@ -23,9 +23,10 @@ import { Loading } from "../../loading";
 import { DayChart } from "./day-chart";
 import { TrendingUp } from "lucide-react";
 import { convertPrice } from "@/utils/price";
+import { fetchBarOverviewChart } from "@/services/dashboard/overview";
+import { useQuery } from "@tanstack/react-query";
 
 export const Chart = () => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [timeRange, setTimeRange] = useState<"year" | "month" | "week">("year");
   const currentDate = new Date();
 
@@ -33,26 +34,10 @@ export const Chart = () => {
   const startOfMonth = format(subDays(currentDate, 30), "dd/MM/yyyy");
   const endDate = format(currentDate, "dd/MM/yyyy");
 
-  const [data, setData] = useState<BarChart | null>(null);
-
-  const fetchChartYear = async () => {
-    try {
-      setLoading(true);
-      const response = await _http.get(`/Analytic/BarChart`);
-      if (response.status === 200) {
-        setData(response.data.result);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchChartYear();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data, isLoading: loading } = useQuery<BarChart>({
+    queryKey: ["dashboard-analytic-bar-chart-overview"],
+    queryFn: fetchBarOverviewChart,
+  });
 
   const total = useMemo(() => {
     if (!data) return 0;

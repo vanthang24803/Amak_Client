@@ -1,23 +1,22 @@
 "use client";
 
 import _http from "@/utils/http";
-import { useEffect } from "react";
 import { Loading } from "../../_components/loading";
 import { DataTable } from "./data-table";
 import { columns, ProductColumn } from "./columns";
-import { useProductsAnalytic } from "@/hooks/analytic/use-product";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProducts } from "@/services/dashboard/product";
 
 export const ProductTable = () => {
-  const { fetchProducts, data, loading } = useProductsAnalytic();
+  const { data, isLoading } = useQuery({
+    queryKey: [`dashboard-products`],
+    queryFn: () => fetchProducts(),
+  });
 
-  useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
-
-  if (loading) return <Loading />;
+  if (isLoading) return <Loading />;
 
   const productColumns: ProductColumn[] =
-    data.map((product) => ({
+    data?.data.result.map((product) => ({
       id: product.id,
       name: product.name,
       brand: product.brand,
