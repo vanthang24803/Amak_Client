@@ -59,7 +59,6 @@ export const CategoryProduct = ({ product }: Props) => {
     const jsonSend = data.categories.map((item) => ({
       id: item,
     }));
-    console.log(jsonSend);
 
     try {
       setLoading(true);

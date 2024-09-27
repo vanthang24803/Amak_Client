@@ -9,6 +9,7 @@ import { ArrowBack } from "../../../_components/arrow-back";
 import { useQuery } from "@tanstack/react-query";
 import { fetchDetailProduct } from "@/services/dashboard/product";
 import { CategoryProduct } from "./category";
+import { OptionProduct } from "./option";
 
 type Props = {
   id: string;
@@ -22,18 +23,21 @@ export const Wrapper = ({ id }: Props) => {
 
   if (isLoading) return <Loading />;
 
+  const data = product?.data.result;
+
   return (
     <div className="flex items-center justify-center">
       <div className="w-full max-w-screen-xl mb-20 p-4 flex flex-col gap-4">
         <ArrowBack path="/dashboard/products" />
         <div className="w-full flex justify-between gap-x-8">
           <div className="w-2/3 flex flex-col gap-4">
-            <Attribute product={product?.data.result} />
-            <CategoryProduct product={product?.data.result} />
+            <Attribute product={data} />
+            <CategoryProduct product={data} />
+            <OptionProduct product={data} />
           </div>
           <div className="w-1/3 flex flex-col gap-4">
-            <Thumbnail product={product?.data.result} />
-            <Media product={product?.data.result} />
+            <Thumbnail product={data} />
+            <Media product={data} />
           </div>
         </div>
       </div>
