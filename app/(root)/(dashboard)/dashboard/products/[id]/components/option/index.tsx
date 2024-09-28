@@ -2,7 +2,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { ProductDetail } from "@/types";
-import { Pencil, X } from "lucide-react";
 import { useState } from "react";
 import { ListOptions } from "./list-options";
 import { CreateOption } from "./create-option";

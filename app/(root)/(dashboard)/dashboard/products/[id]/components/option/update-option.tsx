@@ -9,10 +9,9 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { Option } from "@/types";
-import { LoaderCircle, Plus } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,25 +27,29 @@ import { useState } from "react";
 import _http from "@/utils/http";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 
 type CreateFormValue = z.infer<typeof updateOptionProductValidation>;
 
 type Props = {
   option: Option;
+  open: boolean;
+  handleOpen: () => void;
 };
 
-export const UpdateOption = ({ option }: Props) => {
+export const UpdateOption = ({ option, open, handleOpen }: Props) => {
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const params = useParams<{ id: string }>();
 
   const form = useForm({
     resolver: zodResolver(updateOptionProductValidation),
     defaultValues: {
-      name: "",
-      sale: "0",
-      quantity: 0,
-      price: 0,
+      name: option.name,
+      sale: option.sale.toString(),
+      quantity: option.quantity,
+      price: option.price,
     },
   });
 
@@ -57,52 +60,39 @@ export const UpdateOption = ({ option }: Props) => {
       isActive: true,
     };
 
-    // try {
-    //   setLoading(true);
+    try {
+      setLoading(true);
 
-    //   const handleUpdate = _http.post(
-    //     `/Products/${product?.id}/Options`,
-    //     jsonSend
-    //   );
+      const handleUpdate = _http.put(
+        `/Products/${params.id}/Options/${option.id}`,
+        jsonSend
+      );
 
-    //   toast.promise(handleUpdate, {
-    //     loading: "Đang xử lý...",
-    //     success: () => {
-    //       queryClient.invalidateQueries({
-    //         queryKey: [`dashboard-product-${product?.id}`],
-    //       });
-    //       handleClose();
-    //       return "Tạo mới thành công!";
-    //     },
-    //     error: () => "Oops!",
-    //   });
-    // } catch (error) {
-    //   console.log("Error updating product:", error);
-    // } finally {
-    //   setLoading(false);
-    // }
-  };
-
-  const handleClose = () => {
-    form.reset();
-    setOpen(!open);
+      toast.promise(handleUpdate, {
+        loading: "Đang xử lý...",
+        success: () => {
+          queryClient.invalidateQueries({
+            queryKey: [`dashboard-product-${params.id}`],
+          });
+          handleOpen();
+          return "Cập nhật thành công!";
+        },
+        error: () => "Oops!",
+      });
+    } catch (error) {
+      console.log("Error updating product:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <Sheet open={open} onOpenChange={handleClose}>
-      <SheetTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2">
-          <Plus className="w-3 h-4" />
-          <span className="text-[13px] font-semibold tracking-tighter">
-            Thêm mới
-          </span>
-        </Button>
-      </SheetTrigger>
+    <Sheet open={open} onOpenChange={handleOpen}>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Tạo phiên bản</SheetTitle>
+          <SheetTitle>Cập nhật phiên bản</SheetTitle>
           <SheetDescription>
-            Hãy hoàn thiện các thông tin cần thiết khởi tạo một phiên bản mới
+            Hãy hoàn thiện các thông tin cần thiết cập nhật một phiên bản mới{" "}
           </SheetDescription>
         </SheetHeader>
         <FormProvider {...form}>
