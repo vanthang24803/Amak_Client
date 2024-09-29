@@ -28,8 +28,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import _http from "@/utils/http";
 import { Loading } from "../../loading";
+import { useQuery } from "@tanstack/react-query";
+import { fetchPieChart } from "@/services/dashboard/overview";
 
-type ChartType = {
+export type PieChartType = {
   month: string;
   account: number;
 };
@@ -53,7 +55,7 @@ const translateMonth = (month: string): string => {
   return monthTranslations[month] || month;
 };
 
-const generateChartConfig = (data: ChartType[]): ChartConfig => {
+const generateChartConfig = (data: PieChartType[]): ChartConfig => {
   const config: ChartConfig = {
     accounts: {
       label: "Tài khoản",
@@ -73,32 +75,23 @@ const generateChartConfig = (data: ChartType[]): ChartConfig => {
 
 export const Chart = () => {
   const id = "dynamic-pie-chart";
-  const [data, setData] = React.useState<ChartType[] | null>(null);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+
   const [activeMonth, setActiveMonth] = React.useState<string | null>(null);
 
-  const fetchChart = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const response = await _http.get(`/Analytic/PieChart`);
-      if (response.status === 200) {
-        setData(response.data.result);
-        setActiveMonth(response.data.result[0].month);
-      }
-    } catch (error) {
-      console.error(error);
-      setError("Không tìm thấy dữ liệu");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    data,
+    isLoading: loading,
+    error,
+  } = useQuery<PieChartType[]>({
+    queryKey: ["dashboard-analytic-pie-chart"],
+    queryFn: fetchPieChart,
+  });
 
   React.useEffect(() => {
-    fetchChart();
-  }, []);
+    if (data && data.length > 0) {
+      setActiveMonth(data[0].month);
+    }
+  }, [data]);
 
   const chartConfig = React.useMemo(
     () => (data ? generateChartConfig(data) : {}),
@@ -141,7 +134,7 @@ export const Chart = () => {
   if (error) {
     return (
       <Card className="w-full h-[400px] flex items-center justify-center">
-        <p className="text-red-500">{error}</p>
+        <p className="text-red-500">{error.message}</p>
       </Card>
     );
   }

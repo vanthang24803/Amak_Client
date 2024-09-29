@@ -366,7 +366,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Không tìm thấy đơn hàng
+                  Không tìm thấy tài khoản
                 </TableCell>
               </TableRow>
             )}

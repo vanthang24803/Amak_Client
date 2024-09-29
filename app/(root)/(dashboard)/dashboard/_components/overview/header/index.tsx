@@ -3,32 +3,17 @@
 import { Bookmark, DollarSign, Inbox, Package } from "lucide-react";
 import { CustomCard } from "./card-overview";
 import CountUp from "react-countup";
-import { useEffect, useState } from "react";
-import { AnalyticStatistic } from "@/types/statistic";
 import _http from "@/utils/http";
 import { Separator } from "@/components/ui/separator";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAnalytic } from "@/services/dashboard/overview";
+import { AnalyticStatistic } from "@/types/statistic";
 
 export const HeaderOverview = () => {
-  const [data, setData] = useState<AnalyticStatistic | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const fetchAnalytic = async () => {
-    setLoading(true);
-    try {
-      const response = await _http.get(`/Analytic/Statistic`);
-      if (response.status === 200) {
-        setData(response.data.result);
-      }
-    } catch (error) {
-      console.error("Failed to fetch analytics:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAnalytic();
-  }, []);
+  const { data, isLoading: loading } = useQuery<AnalyticStatistic>({
+    queryKey: [`dashboard-analytic-statistic`],
+    queryFn: fetchAnalytic,
+  });
 
   const renderCard = (
     title: string,

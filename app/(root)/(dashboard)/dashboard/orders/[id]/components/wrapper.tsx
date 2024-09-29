@@ -7,29 +7,23 @@ import { OrderTimeline } from "./order-timeline";
 import { Order } from "@/types";
 import _http from "@/utils/http";
 import { toast } from "sonner";
+import { ArrowBack } from "../../../_components/arrow-back";
+import { useQuery } from "@tanstack/react-query";
+import { fetchOrderDetail } from "@/services/dashboard/order";
 
 type Props = {
   id: string;
 };
 
 export const Wrapper = ({ id }: Props) => {
-  const [loading, setLoading] = useState<boolean>();
-  const [data, setData] = useState<Order>();
-
-  const fetchOrderDetail = async () => {
-    try {
-      setLoading(true);
-      const response = await _http.get(`/Orders/${id}`);
-
-      if (response.status === 200) {
-        setData(response.data.result);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    data,
+    isLoading: loading,
+    refetch,
+  } = useQuery<Order>({
+    queryKey: [`dashboard-order-${id}`],
+    queryFn: () => fetchOrderDetail(id),
+  });
 
   const handlerUpdateStatus = async (id: string, type: string) => {
     const updateStatusPromise = _http.put(`/Orders/${id}/Status`, {
@@ -39,17 +33,12 @@ export const Wrapper = ({ id }: Props) => {
     toast.promise(updateStatusPromise, {
       loading: "Đang xử lý...",
       success: () => {
-        fetchOrderDetail();
+        refetch();
         return "Cập nhật thành công!";
       },
       error: () => "Oops!",
     });
   };
-
-  useEffect(() => {
-    fetchOrderDetail();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
 
   if (loading)
     return (
@@ -59,9 +48,14 @@ export const Wrapper = ({ id }: Props) => {
     );
 
   return (
-    <div className="flex justify-between gap-4 m-4 flex-1">
-      <OrderDetail order={data} handlerUpdateStatus={handlerUpdateStatus} />
-      <OrderTimeline data={data?.statusOrders} />
+    <div className="flex flex-1 flex-col gap-1">
+      <div className="px-4 ">
+        <ArrowBack path="/dashboard/orders" />
+      </div>
+      <div className="flex justify-between gap-4 m-4 flex-1">
+        <OrderDetail order={data} handlerUpdateStatus={handlerUpdateStatus} />
+        <OrderTimeline data={data?.statusOrders} />
+      </div>
     </div>
   );
 };

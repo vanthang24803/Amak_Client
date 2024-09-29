@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TopProductTableColumn } from "./columns";
 import _http from "@/utils/http";
 import { DataTable } from "./data-table";
@@ -23,15 +23,16 @@ import {
 import { format, subDays } from "date-fns";
 import { TimeRange } from "@/types";
 import { Loading } from "../../../loading";
+import { fetchTopProducts } from "@/services/dashboard/overview";
+import { useQuery } from "@tanstack/react-query";
 
-type TopProductTable = {
+export type TopProductTable = {
   day: TopProductTableColumn[];
   week: TopProductTableColumn[];
   month: TopProductTableColumn[];
 };
 
 export const TopProductTable = () => {
-  const [loading, setLoading] = useState(false);
   const [timeRange, setTimeRange] = useState<TimeRange>("month");
 
   const currentDate = new Date();
@@ -39,26 +40,10 @@ export const TopProductTable = () => {
   const startOfMonth = format(subDays(currentDate, 30), "dd/MM/yyyy");
   const endDate = format(currentDate, "dd/MM/yyyy");
 
-  const [data, setData] = useState<TopProductTable | null>(null);
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await _http.get(`/Analytic/TopProduct`);
-
-      if (response.status === 200) {
-        setData(response.data.result);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, isLoading: loading } = useQuery<TopProductTable>({
+    queryKey: [`dashboard-top-products`],
+    queryFn: fetchTopProducts,
+  });
 
   const getDataForTimeRange = () => {
     if (!data) return [];

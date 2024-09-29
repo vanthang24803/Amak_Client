@@ -33,14 +33,14 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import { format, subDays } from "date-fns";
-import { AreaChart as ChartType } from "@/types";
+import { AreaChartType } from "@/types";
 import _http from "@/utils/http";
 import { Loading } from "../../loading";
+import { fetchAreaChart } from "@/services/dashboard/overview";
+import { useQuery } from "@tanstack/react-query";
 
 export function Chart() {
   const [timeRange, setTimeRange] = useState<"month" | "week">("week");
-  const [chartData, setData] = useState<ChartType | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const currentDate = new Date();
 
@@ -59,24 +59,10 @@ export function Chart() {
     },
   } satisfies ChartConfig;
 
-  const fetchChart = async () => {
-    try {
-      setLoading(true);
-      const response = await _http.get(`/Analytic/AreaChart`);
-      if (response.status === 200) {
-        setData(response.data.result);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    fetchChart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data: chartData, isLoading: loading } = useQuery<AreaChartType>({
+    queryKey: ["dashboard-analytic-area-chart"],
+    queryFn: fetchAreaChart,
+  });
 
   const data = timeRange === "month" ? chartData?.month : chartData?.week;
 

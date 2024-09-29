@@ -1,18 +1,18 @@
 "use client";
 
-import { useEffect } from "react";
 import { Loading } from "../../_components/loading";
 import _http from "@/utils/http";
 import { DataTable } from "./data-table";
 import { columns, OrderColumn } from "./columns";
-import { useOrdersAnalytic } from "@/hooks/analytic/use-order";
+import { useQuery } from "@tanstack/react-query";
+import { Order } from "@/types";
+import { fetchOrders } from "@/services/dashboard/order";
 
 export const CategoriesTable = () => {
-  const { data, fetchOrders, loading } = useOrdersAnalytic();
-
-  useEffect(() => {
-    fetchOrders();
-  }, [fetchOrders]);
+  const { data, isLoading: loading } = useQuery<Order[]>({
+    queryKey: [`dashboard-orders`],
+    queryFn: fetchOrders,
+  });
 
   if (loading) return <Loading />;
 

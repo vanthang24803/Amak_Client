@@ -9,7 +9,7 @@ export type YearChart = {
   total: any;
 };
 
-export type AreaChart = {
+export type AreaChartType = {
   week: DataEntry[];
   month: DataEntry[];
 };
