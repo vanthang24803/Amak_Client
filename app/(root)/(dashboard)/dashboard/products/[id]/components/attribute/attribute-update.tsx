@@ -162,7 +162,11 @@ export const AttributeForm = ({ product, handleClose }: Props) => {
             </FormItem>
           )}
         />
-        <Button className="w-[200px]" variant="mix" disabled={loading}>
+        <Button
+          className="w-[120px] h-8 text-[13px]"
+          variant="mix"
+          disabled={loading}
+        >
           {loading ? (
             <div className="flex items-center gap-2">
               <LoaderCircle className="w-4 h-4 animate-spin" />

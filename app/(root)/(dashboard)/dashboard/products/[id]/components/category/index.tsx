@@ -135,7 +135,7 @@ export const CategoryProduct = ({ product }: Props) => {
             {open && (
               <Button
                 type="submit"
-                className="w-[160px] h-8 text-[0.85rem]"
+                className="w-[120px] h-8 text-[13px]"
                 variant="mix"
                 disabled={loading}
               >

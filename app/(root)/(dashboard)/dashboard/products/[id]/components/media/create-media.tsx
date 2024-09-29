@@ -57,7 +57,7 @@ export const CreateMedia = ({ handleClose }: Props) => {
     },
   });
 
-  const onSubmit = async (data: CreteMediaType) => {
+  const onSubmit = async (_: CreteMediaType) => {
     const formData = new FormData();
 
     const images = (document.getElementById("file-upload") as HTMLInputElement)
