@@ -15,6 +15,7 @@ import { AttributeForm } from "./components/attribute-form";
 import { StepperFormValues } from "@/types/hook-stepper";
 import { FormProvider, useForm } from "react-hook-form";
 import { ThumbnailForm } from "./components/thumbnail-form";
+import { CategoriesForm } from "./components/categories-from";
 
 export default function CreateProduct() {
   const [activeStep, setActiveStep] = useState(1);
@@ -45,7 +46,8 @@ export default function CreateProduct() {
         return <AttributeForm />;
       case 2:
         return <ThumbnailForm />;
-
+      case 3:
+        return <CategoriesForm />;
       default:
         return <AttributeForm />;
     }

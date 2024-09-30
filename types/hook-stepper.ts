@@ -4,4 +4,5 @@ export type StepperFormValues = {
   introduction?: string;
   specifications?: string;
   thumbnail?: File;
+  categories: string[];
 };
