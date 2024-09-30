@@ -3,7 +3,6 @@ import "./globals.css";
 import { siteConfig } from "@/configs/site";
 import { ToasterProvider } from "@/components/providers/toaster-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
-import { QueryProvider } from "@/components/providers/query-provider";
 
 export const metadata: Metadata = {
   title: {
