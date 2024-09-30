@@ -16,10 +16,16 @@ import { StepperFormValues } from "@/types/hook-stepper";
 import { FormProvider, useForm } from "react-hook-form";
 import { ThumbnailForm } from "./components/thumbnail-form";
 import { CategoriesForm } from "./components/categories-from";
+import { OptionsForm } from "./components/options-from";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import _http from "@/utils/http";
 
 export default function CreateProduct() {
   const [activeStep, setActiveStep] = useState(1);
   const [erroredInputName, setErroredInputName] = useState("");
+  const router = useRouter();
+
   const methods = useForm<StepperFormValues>({
     mode: "onTouched",
   });
@@ -27,8 +33,7 @@ export default function CreateProduct() {
   const {
     trigger,
     handleSubmit,
-    setError,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = methods;
 
   useEffect(() => {
@@ -48,6 +53,8 @@ export default function CreateProduct() {
         return <ThumbnailForm />;
       case 3:
         return <CategoriesForm />;
+      case 4:
+        return <OptionsForm />;
       default:
         return <AttributeForm />;
     }
@@ -60,6 +67,54 @@ export default function CreateProduct() {
 
   const handlePrev = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const onSubmit = async (data: StepperFormValues) => {
+    const categoriesData = data.categories.toString().split(",");
+    const categories = categoriesData.map((item) => ({ id: item }));
+
+    const options = data.options.map((item) => ({
+      ...item,
+      isActive: true,
+    }));
+
+    const formData = new FormData();
+
+    formData.append("name", data.name || "");
+    formData.append("brand", data.brand || "");
+    formData.append("thumbnail", data.thumbnail || "");
+
+    categories.forEach((category, index) => {
+      formData.append(`categories[${index}].id`, category.id);
+    });
+
+    options.forEach((option, index) => {
+      formData.append(`options[${index}].name`, option.name);
+      formData.append(`options[${index}].price`, option.price.toString());
+      formData.append(`options[${index}].quantity`, option.quantity.toString());
+      formData.append(`options[${index}].sale`, option.sale.toString());
+    });
+    formData.append("introduction", data.introduction || "");
+    formData.append("specifications", data.specifications || "");
+
+    try {
+      const handleUpdate = _http.post(`/Products`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      toast.promise(handleUpdate, {
+        loading: "Đang xử lý...",
+        success: () => {
+          router.push(`/dashboard/products`);
+          return "Tạo sản phẩm thành công!";
+        },
+        error: () => "Oops!",
+      });
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
   };
 
   return (
@@ -85,13 +140,24 @@ export default function CreateProduct() {
         >
           Trở lại
         </Button>
-        <Button
-          className="h-8 text-[12.5px]"
-          variant="mix"
-          onClick={handleNext}
-        >
-          Tiếp theo
-        </Button>
+        {activeStep === 4 ? (
+          <Button
+            className="h-8 text-[12.5px]"
+            variant="mix"
+            onClick={handleSubmit(onSubmit)}
+            disabled={isSubmitting}
+          >
+            Xác nhận
+          </Button>
+        ) : (
+          <Button
+            className="h-8 text-[12.5px]"
+            variant="mix"
+            onClick={handleNext}
+          >
+            Tiếp theo
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

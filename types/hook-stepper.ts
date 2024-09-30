@@ -5,4 +5,10 @@ export type StepperFormValues = {
   specifications?: string;
   thumbnail?: File;
   categories: string[];
+  options: Array<{
+    name: string;
+    sale: number;
+    quantity: number;
+    price: number;
+  }>;
 };

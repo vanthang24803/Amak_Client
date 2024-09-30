@@ -12,7 +12,7 @@ type Props = {
 export const StepperIndicator = ({ activeStep }: Props) => {
   return (
     <div className="flex items-center justify-center">
-      {[1, 2, 3, 4, 5].map((step) => (
+      {[1, 2, 3, 4].map((step) => (
         <Fragment key={step}>
           <div
             className={clsx(
@@ -27,7 +27,7 @@ export const StepperIndicator = ({ activeStep }: Props) => {
               <Check className="h-5 w-5 dark:text-green-600" />
             )}
           </div>
-          {step !== 5 && (
+          {step !== 4 && (
             <Separator
               orientation="horizontal"
               className={clsx(
