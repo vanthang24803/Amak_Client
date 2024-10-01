@@ -16,6 +16,8 @@ import {
   ClipboardEdit,
   Users2,
   PanelTopOpen,
+  Settings2,
+  Settings,
 } from "lucide-react";
 import { Nav } from "./nav";
 import { Separator } from "@/components/ui/separator";
@@ -152,6 +154,11 @@ export const SidebarWrapper = ({
               title: "Tin nhắn",
               icon: MessagesSquare,
               path: "",
+            },
+            {
+              title: "Cài đặt",
+              icon: Settings,
+              path: "/dashboard/settings",
             },
             {
               title: "Gmail",

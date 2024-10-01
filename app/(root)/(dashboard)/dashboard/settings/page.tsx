@@ -1,5 +1,5 @@
 import { Wrapper } from "./components/wrapper";
 
-export default function TrashDashboard() {
+export default function SettingsComponent() {
   return <Wrapper />;
 }
