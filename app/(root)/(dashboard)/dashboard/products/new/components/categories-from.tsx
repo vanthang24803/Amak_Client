@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { fetchCategories } from "@/services/dashboard/category";
+import { fetchCategories } from "@/services/api/category";
 import { StepperFormValues } from "@/types/hook-stepper";
 import { useQuery } from "@tanstack/react-query";
 import { useFormContext } from "react-hook-form";

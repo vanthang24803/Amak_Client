@@ -6,7 +6,7 @@ import CountUp from "react-countup";
 import _http from "@/utils/http";
 import { Separator } from "@/components/ui/separator";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAnalytic } from "@/services/dashboard/overview";
+import { fetchAnalytic } from "@/services/api/overview";
 import { AnalyticStatistic } from "@/types/statistic";
 
 export const HeaderOverview = () => {
@@ -70,7 +70,7 @@ export const HeaderOverview = () => {
         )}
       {data?.warehouse &&
         renderCard(
-          "Kho hàng",
+          "Hàng Nhập",
           data.warehouse.isStock,
           <Inbox className="h-4 w-4 text-muted-foreground" />,
           data.warehouse.total,
@@ -78,7 +78,7 @@ export const HeaderOverview = () => {
         )}
       {data?.saleOut &&
         renderCard(
-          "Đã bán",
+          "Hàng xuất",
           data.saleOut.isStock,
           <Bookmark className="h-4 w-4 text-muted-foreground" />,
           data.saleOut.total,

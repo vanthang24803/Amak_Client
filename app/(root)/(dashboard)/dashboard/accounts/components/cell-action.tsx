@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { Fragment, useState } from "react";
+import { CircleUserRound, Copy, MoreHorizontal } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,58 +15,26 @@ import {
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
 
-import { AlertModal } from "@/components/modal/alert-modal";
 import _http from "@/utils/http";
 import { UserAnalytic as AccountColumn } from "@/types/analytic";
+import { ProfileInfo } from "./profile-info";
 
 interface CellActionProps {
   data: AccountColumn;
 }
 
 export const CellAction = ({ data }: CellActionProps) => {
-  const router = useRouter();
-
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const onConfirm = async () => {
-    toast.loading("Waiting");
-    try {
-      setLoading(true);
-      // await _http.delete(`/api/product/${data.id}`);
-      toast.dismiss();
-      toast.success("Đã xóa đơn hàng.");
-      router.refresh();
-    } catch (error) {
-      toast.dismiss();
-      console.log(error);
-      toast.error("Có lỗi xảy ra!");
-    } finally {
-      toast.dismiss();
-      setOpen(false);
-      setLoading(false);
-    }
-  };
+
+  const handleToggle = () => setOpen(!open);
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Đã sao chép id tài khoản!", {
-      style: {
-        fontSize: 13,
-        fontWeight: 500,
-      },
-      duration: 800,
-    });
+    toast.info("Đã sao chép mã tài khoản!");
   };
 
   return (
-    <>
-      <AlertModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onConfirm={onConfirm}
-        loading={loading}
-      />
-
+    <Fragment>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -84,26 +51,22 @@ export const CellAction = ({ data }: CellActionProps) => {
               onClick={() => onCopy(data.id)}
             >
               <Copy className="mr-2 h-4 w-4" />
-              Mã tài khoản
+              {data.isManager ? "Mã nhân viên" : "Mã khách hàng"}
             </DropdownMenuItem>
-            {data.isManager && (
-              <DropdownMenuItem
-                className="text-[12px]"
-                onClick={() => router.push(`/dashboard/products/${data.id}`)}
-              >
-                <Edit className="mr-2 h-4 w-4" /> Cập nhật
-              </DropdownMenuItem>
-            )}
-            <DropdownMenuItem
-              className="text-[12px]"
-              onClick={() => setOpen(true)}
-              disabled
-            >
-              <Trash className="mr-2 h-4 w-4" /> Xóa
+            <DropdownMenuItem className="text-[12px]" onClick={handleToggle}>
+              <CircleUserRound className="mr-2 h-4 w-4" />
+              Thông tin tài khoản
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-    </>
+
+      <ProfileInfo
+        open={open}
+        handleToggle={handleToggle}
+        id={data.id}
+        isAdmin={data.isManager}
+      />
+    </Fragment>
   );
 };

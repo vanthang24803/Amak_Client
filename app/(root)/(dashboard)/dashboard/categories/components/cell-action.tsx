@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -19,38 +19,49 @@ import {
 import { CategoryColumn } from "./columns";
 import { AlertModal } from "@/components/modal/alert-modal";
 import _http from "@/utils/http";
+import { UpdateCategory } from "./update-categories";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface CellActionProps {
   data: CategoryColumn;
 }
 
 export const CellAction = ({ data }: CellActionProps) => {
-  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const [openSheet, setOpenSheet] = useState(false);
+  const handleToggleSheet = () => setOpenSheet((prev) => !prev);
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const onConfirm = async () => {
-    toast.loading("Waiting");
     try {
       setLoading(true);
-      // await _http.delete(`/api/product/${data.id}`);
-      toast.dismiss();
-      toast.success("Đã xóa đơn hàng.");
-      router.refresh();
+
+      const handleUpdate = _http.delete(`/Categories/${data.id}`);
+
+      toast.promise(handleUpdate, {
+        loading: "Đang xử lý...",
+        success: async () => {
+          await queryClient.invalidateQueries({
+            queryKey: [`dashboard-categories`],
+          });
+          setOpen(false);
+          return "Xóa thành công!";
+        },
+        error: () => "Oops!",
+      });
     } catch (error) {
-      toast.dismiss();
-      console.log(error);
-      toast.error("Có lỗi xảy ra!");
+      console.log("Error:", error);
     } finally {
-      toast.dismiss();
-      setOpen(false);
       setLoading(false);
     }
   };
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Đã sao chép id danh mục!", {
+    toast.info("Đã sao chép id danh mục!", {
       style: {
         fontSize: 13,
         fontWeight: 500,
@@ -88,20 +99,25 @@ export const CellAction = ({ data }: CellActionProps) => {
             </DropdownMenuItem>
             <DropdownMenuItem
               className="text-[12px]"
-              onClick={() => router.push(`/dashboard/products/${data.id}`)}
+              onClick={handleToggleSheet}
             >
               <Edit className="mr-2 h-4 w-4" /> Cập nhật
             </DropdownMenuItem>
             <DropdownMenuItem
               className="text-[12px]"
               onClick={() => setOpen(true)}
-              disabled
             >
               <Trash className="mr-2 h-4 w-4" /> Xóa
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <UpdateCategory
+        json={data}
+        open={openSheet}
+        handleToggle={handleToggleSheet}
+      />
     </>
   );
 };

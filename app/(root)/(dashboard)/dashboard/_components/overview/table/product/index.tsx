@@ -23,7 +23,7 @@ import {
 import { format, subDays } from "date-fns";
 import { TimeRange } from "@/types";
 import { Loading } from "../../../loading";
-import { fetchTopProducts } from "@/services/dashboard/overview";
+import { fetchTopProducts } from "@/services/api/overview";
 import { useQuery } from "@tanstack/react-query";
 
 export type TopProductTable = {

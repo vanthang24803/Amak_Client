@@ -2,7 +2,11 @@ import { Order, Response } from "@/types";
 import _http from "@/utils/http";
 
 const fetchOrders = async () => {
-  const response = await _http.get<Response<Order[]>>(`/Orders`);
+  const response = await _http.get<Response<Order[]>>(`/Orders/Analytic`, {
+    params: {
+      Limit: 100,
+    },
+  });
   if (response.status === 200) {
     return response.data.result;
   }

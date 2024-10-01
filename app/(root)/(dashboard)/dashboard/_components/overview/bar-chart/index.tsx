@@ -23,7 +23,7 @@ import { Loading } from "../../loading";
 import { DayChart } from "./day-chart";
 import { TrendingUp } from "lucide-react";
 import { convertPrice } from "@/utils/price";
-import { fetchBarOverviewChart } from "@/services/dashboard/overview";
+import { fetchBarOverviewChart } from "@/services/api/overview";
 import { useQuery } from "@tanstack/react-query";
 
 export const Chart = () => {

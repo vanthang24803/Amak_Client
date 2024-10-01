@@ -36,7 +36,7 @@ import { format, subDays } from "date-fns";
 import { AreaChartType } from "@/types";
 import _http from "@/utils/http";
 import { Loading } from "../../loading";
-import { fetchAreaChart } from "@/services/dashboard/overview";
+import { fetchAreaChart } from "@/services/api/overview";
 import { useQuery } from "@tanstack/react-query";
 
 export function Chart() {
