@@ -15,6 +15,7 @@ import {
   Package,
   ClipboardEdit,
   Users2,
+  PanelTopOpen,
 } from "lucide-react";
 import { Nav } from "./nav";
 import { Separator } from "@/components/ui/separator";
@@ -105,6 +106,11 @@ export const SidebarWrapper = ({
               title: "Tổng quát",
               icon: ChartNoAxesColumnIncreasing,
               path: "/dashboard",
+            },
+            {
+              title: "Quảng cáo",
+              icon: PanelTopOpen,
+              path: "/dashboard/billboards",
             },
             {
               title: "Đơn hàng",
