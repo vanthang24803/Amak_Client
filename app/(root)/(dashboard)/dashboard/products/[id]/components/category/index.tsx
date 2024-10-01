@@ -9,7 +9,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { fetchCategories } from "@/services/dashboard/category";
+import { fetchCategories } from "@/services/api/category";
 import { ProductDetail } from "@/types";
 import _http from "@/utils/http";
 import { zodResolver } from "@hookform/resolvers/zod";

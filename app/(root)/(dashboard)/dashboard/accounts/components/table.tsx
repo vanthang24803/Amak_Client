@@ -5,7 +5,7 @@ import { Loading } from "../../_components/loading";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAnalyticAccounts } from "@/services/dashboard/account";
+import { fetchAnalyticAccounts } from "@/services/api/account";
 
 export const AccountTable = () => {
   const { data, isLoading } = useQuery({

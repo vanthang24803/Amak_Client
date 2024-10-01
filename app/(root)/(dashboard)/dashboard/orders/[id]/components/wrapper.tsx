@@ -9,7 +9,7 @@ import _http from "@/utils/http";
 import { toast } from "sonner";
 import { ArrowBack } from "../../../_components/arrow-back";
 import { useQuery } from "@tanstack/react-query";
-import { fetchOrderDetail } from "@/services/dashboard/order";
+import { fetchOrderDetail } from "@/services/api/order";
 
 type Props = {
   id: string;

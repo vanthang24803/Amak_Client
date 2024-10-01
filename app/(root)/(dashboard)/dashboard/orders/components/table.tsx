@@ -6,7 +6,7 @@ import { DataTable } from "./data-table";
 import { columns, OrderColumn } from "./columns";
 import { useQuery } from "@tanstack/react-query";
 import { Order } from "@/types";
-import { fetchOrders } from "@/services/dashboard/order";
+import { fetchOrders } from "@/services/api/order";
 
 export const CategoriesTable = () => {
   const { data, isLoading: loading } = useQuery<Order[]>({

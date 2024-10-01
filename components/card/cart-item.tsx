@@ -23,12 +23,12 @@ export const Card = ({ product }: Props) => {
 
   const dataSend = {
     productId: product.id,
-    optionName: product.options[0].name,
-    optionId: product.options[0].id,
-    price: product.options[0].price,
-    productName: product.name,
+    optionName: product.options[0]?.name,
+    optionId: product.options[0]?.id,
+    price: product.options[0]?.price,
+    productName: product?.name,
     quantity: 1,
-    sale: product.options[0].sale,
+    sale: product.options[0]?.sale,
     thumbnail: product.thumbnail,
   } as CartType;
 
@@ -42,7 +42,7 @@ export const Card = ({ product }: Props) => {
         className="md:h-[35vh] object-contain rounded-md  transform transition-transform duration-500 p-2 w-full"
       />
       <ProductModal id={product.id} />
-      {!product.options[0].isActive && (
+      {!product.options[0]?.isActive && (
         <div className="absolute top-3 left-3  bg-neutral-700/80 rounded-md text-white flex items-center justify-center text-[10px] px-2 py-1 font-medium">
           Hết hàng
         </div>
@@ -65,7 +65,7 @@ export const Card = ({ product }: Props) => {
         </span>
 
         <div className="flex items-center justify-between py-2">
-          {product.options[0].sale > 0 ? (
+          {product.options[0]?.sale > 0 ? (
             <div className="flex flex-col">
               <span className="font-bold text-[12px] text-red-600">
                 {formatPrice(product.options[0].price, product.options[0].sale)}
@@ -77,20 +77,20 @@ export const Card = ({ product }: Props) => {
             </div>
           ) : (
             <span className="text-[12px] font-medium">
-              {convertPrice(product.options[0].price)}₫
+              {convertPrice(product.options[0]?.price)}₫
             </span>
           )}
 
-          {product.options[0].sale > 0 && (
+          {product.options[0]?.sale > 0 && (
             <Button className="w-8 h-6 text-[11px] p-2" variant="destructive">
-              -{product.options[0].sale}%
+              -{product.options[0]?.sale}%
             </Button>
           )}
         </div>
         <>
           {isLogin && (
             <>
-              {product.options[0].quantity > 0 ? (
+              {product.options[0]?.quantity > 0 ? (
                 <div
                   className="my-2 flex items-center space-x-4 md:absolute md:bottom-4"
                   onClick={() => addToCart(dataSend)}

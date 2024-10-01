@@ -24,7 +24,7 @@ import { format, subDays } from "date-fns";
 import { TimeRange } from "@/types";
 import { Loading } from "../../../loading";
 import { useQuery } from "@tanstack/react-query";
-import { fetchTopCustomers } from "@/services/dashboard/overview";
+import { fetchTopCustomers } from "@/services/api/overview";
 
 export type TopCustomerTable = {
   day: TopCustomerTableColumn[];

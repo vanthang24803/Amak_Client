@@ -29,7 +29,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import _http from "@/utils/http";
 import { Loading } from "../../loading";
 import { useQuery } from "@tanstack/react-query";
-import { fetchPieChart } from "@/services/dashboard/overview";
+import { fetchPieChart } from "@/services/api/overview";
 
 export type PieChartType = {
   month: string;
@@ -66,7 +66,7 @@ const generateChartConfig = (data: PieChartType[]): ChartConfig => {
     const key = item.month.toLowerCase();
     config[key] = {
       label: translateMonth(item.month),
-      color: `hsl(var(--chart-${(index % 12) + 1}))`,
+      color: `hsl(var(--chart-${(index % 3) + 1}))`,
     };
   });
 

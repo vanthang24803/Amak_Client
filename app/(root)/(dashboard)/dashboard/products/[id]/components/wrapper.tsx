@@ -7,7 +7,7 @@ import { Thumbnail } from "./thumbnail";
 import { Media } from "./media";
 import { ArrowBack } from "../../../_components/arrow-back";
 import { useQuery } from "@tanstack/react-query";
-import { fetchDetailProduct } from "@/services/dashboard/product";
+import { fetchDetailProduct } from "@/services/api/product";
 import { CategoryProduct } from "./category";
 import { OptionProduct } from "./option";
 

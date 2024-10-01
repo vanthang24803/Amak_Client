@@ -5,7 +5,7 @@ import { Loading } from "../../_components/loading";
 import { DataTable } from "./data-table";
 import { columns, ProductColumn } from "./columns";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "@/services/dashboard/product";
+import { fetchProducts } from "@/services/api/product";
 
 export const ProductTable = () => {
   const { data, isLoading } = useQuery({
