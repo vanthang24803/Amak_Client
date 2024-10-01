@@ -1,7 +1,19 @@
-import { UserAnalytic, Response } from "@/types";
+import { UserAnalytic, Response, Profile } from "@/types";
 import _http from "@/utils/http";
 
 const fetchAnalyticAccounts = () =>
   _http.get<Response<UserAnalytic[]>>(`/Analytic/Accounts`);
 
-export { fetchAnalyticAccounts };
+const getDetailAccount = async (id: string) => {
+  const response = await _http.get<Response<Profile>>(
+    `/Analytic/Accounts/${id}`
+  );
+
+  if (response.status === 200) {
+    return response.data.result;
+  }
+
+  throw new Error("Filer");
+};
+
+export { fetchAnalyticAccounts, getDetailAccount };
