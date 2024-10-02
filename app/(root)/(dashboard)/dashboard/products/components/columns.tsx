@@ -4,6 +4,12 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Option } from "@/types";
 import { formatStringToDate } from "@/utils/date";
 import { CellAction } from "./cell-action";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export type ProductColumn = {
   id: string;
@@ -62,6 +68,19 @@ export const columns: ColumnDef<ProductColumn>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <CellAction data={row.original} />,
+    cell: ({ row }) => (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <CellAction data={row.original} />
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p className="text-[12px] tracking-tighter text-slate-700">
+              Lựa chọn
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    ),
   },
 ];

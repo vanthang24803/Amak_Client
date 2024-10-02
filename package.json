@@ -2,6 +2,8 @@
   "name": "amak-store",
   "version": "0.1.0",
   "private": true,
+  "author": "May Nguyen<maynguyen24.work@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

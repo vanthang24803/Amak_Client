@@ -6,9 +6,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
-import { AddNewButton } from "../../_components/add-new-btn";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -20,12 +18,11 @@ import {
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Archive, Code, Percent } from "lucide-react";
 import { DatePicker } from "@/components/ui/date-picker";
-import { useState } from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { validationTicketSchema } from "@/validations/ticket";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addDays, startOfToday } from "date-fns";
 import {
   FormControl,
   FormField,
@@ -37,19 +34,20 @@ import _http from "@/utils/http";
 import { toast } from "sonner";
 import { SubmitButton } from "../../_components/submit-btn";
 import { useQueryClient } from "@tanstack/react-query";
+import { Ticket } from "@/types";
 
 type FormSchema = z.infer<typeof validationTicketSchema>;
 
-export const CreateTicket = () => {
-  const [open, setOpen] = useState(false);
+type Props = {
+  open: boolean;
+  ticket: Ticket;
+  handleToggle: () => void;
+};
+
+export const UpdateTicket = ({ open, handleToggle, ticket }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const queryClient = useQueryClient();
-
-  const handleToggle = () => {
-    form.reset();
-    setOpen(!open);
-  };
 
   const handleRandomCode = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,12 +63,12 @@ export const CreateTicket = () => {
   const form = useForm({
     resolver: zodResolver(validationTicketSchema),
     defaultValues: {
-      name: "",
-      code: "",
-      quantity: 0,
-      discount: 0,
-      startDate: startOfToday(),
-      endDate: addDays(new Date(), 1),
+      name: ticket.name,
+      code: ticket.code,
+      quantity: ticket.quantity,
+      discount: ticket.discount,
+      startDate: new Date(ticket.startDate),
+      endDate: new Date(ticket.endDate),
     },
   });
 
@@ -87,16 +85,16 @@ export const CreateTicket = () => {
     try {
       setLoading(true);
 
-      const handleCreate = _http.post(`/Tickets`, data);
+      const handleUpdate = _http.put(`/Tickets/${ticket.id}`, data);
 
-      toast.promise(handleCreate, {
+      toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
           queryClient.invalidateQueries({
             queryKey: [`dashboard-tickets`],
           });
           handleToggle();
-          return "Tạo mới thành công!";
+          return "Cập nhật thành công!";
         },
         error: () => "Oops!",
       });
@@ -109,14 +107,11 @@ export const CreateTicket = () => {
 
   return (
     <Sheet open={open} onOpenChange={handleToggle}>
-      <SheetTrigger>
-        <AddNewButton />
-      </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Tạo mới mã giảm giá</SheetTitle>
+          <SheetTitle>Cập nhật mã giảm giá</SheetTitle>
           <SheetDescription>
-            Hãy hoàn thiện các thông tin cần thiết để tạo mới 1 mã giảm giá
+            Hãy hoàn thiện các thông tin cần thiết để cập nhật mã giảm giá
           </SheetDescription>
         </SheetHeader>
         <FormProvider {...form}>
@@ -133,7 +128,7 @@ export const CreateTicket = () => {
                   <FormControl>
                     <div className="flex flex-col gap-1">
                       <Label>Tên</Label>
-                      <Input className="h-9 rounded" {...field} />
+                      <Input className="h-9 rounded text-[14px]" {...field} />
                     </div>
                   </FormControl>
                   <FormMessage />

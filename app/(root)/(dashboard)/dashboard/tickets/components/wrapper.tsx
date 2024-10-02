@@ -1,8 +1,9 @@
 "use client";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Separator } from "@radix-ui/react-separator";
 import { CreateTicket } from "./create-ticket";
+import { Separator } from "@/components/ui/separator";
+import { TableTicket as Table } from "./table";
 
 export const Wrapper = () => {
   return (
@@ -14,10 +15,11 @@ export const Wrapper = () => {
               <h2 className="scroll-m-20 text-base font-semibold tracking-tight">
                 Mã giảm giá
               </h2>
-              <CreateTicket reload={() => {}} />
+              <CreateTicket />
             </div>
-            <Separator className="h-[0.1px] bg-neutral-200" />
+            <Separator />
           </CardHeader>
+          <Table />
         </CardContent>
       </Card>
     </div>

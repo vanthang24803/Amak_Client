@@ -5,6 +5,12 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { convertPrice } from "@/utils/price";
 import { formatStringToDate } from "@/utils/date";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const statusList: { [key: string]: string } = {
   PENDING: "#dc2626",
@@ -99,6 +105,19 @@ export const columns: ColumnDef<OrderColumn>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <CellAction data={row.original} />,
+    cell: ({ row }) => (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <CellAction data={row.original} />
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p className="text-[12px] tracking-tighter text-slate-700">
+              Lựa chọn
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    ),
   },
 ];
