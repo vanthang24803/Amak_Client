@@ -3,7 +3,7 @@ import { vi } from "date-fns/locale";
 
 const formatStringToDate = (dateString: string) => {
   const date = parseISO(dateString);
-  return format(date, "dd/MM/yyyy HH:ss");
+  return format(date, "dd/MM/yyyy");
 };
 
 const formatDateToNow = (dateString: string) => {

@@ -16,6 +16,8 @@ import {
   ClipboardEdit,
   Users2,
   PanelTopOpen,
+  Settings,
+  TicketCheck,
 } from "lucide-react";
 import { Nav } from "./nav";
 import { Separator } from "@/components/ui/separator";
@@ -131,6 +133,11 @@ export const SidebarWrapper = ({
               icon: ClipboardEdit,
             },
             {
+              title: "Mã giảm giá",
+              path: "/dashboard/tickets",
+              icon: TicketCheck,
+            },
+            {
               title: "Thùng rác",
               label: `${analytic?.archive}`,
               path: "/dashboard/trash",
@@ -152,6 +159,11 @@ export const SidebarWrapper = ({
               title: "Tin nhắn",
               icon: MessagesSquare,
               path: "",
+            },
+            {
+              title: "Cài đặt",
+              icon: Settings,
+              path: "/dashboard/settings",
             },
             {
               title: "Gmail",

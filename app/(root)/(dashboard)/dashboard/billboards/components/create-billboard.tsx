@@ -11,13 +11,14 @@ import {
 } from "@/components/ui/dialog";
 import _http from "@/utils/http";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Upload, X } from "lucide-react";
+import { Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { AddNewButton } from "../../_components/add-new-btn";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = [
@@ -127,13 +128,7 @@ export const CreateBillboard = ({ reload }: Props) => {
   return (
     <Dialog open={open} onOpenChange={handleToggle}>
       <DialogTrigger>
-        <Button
-          variant="outline"
-          className="flex items-center space-x-2 text-[12px] h-9"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Thêm mới</span>
-        </Button>
+        <AddNewButton />
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
         <DialogHeader>
