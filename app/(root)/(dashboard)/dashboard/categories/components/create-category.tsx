@@ -18,12 +18,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { LoaderCircle, Plus } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import _http from "@/utils/http";
 import { useQueryClient } from "@tanstack/react-query";
+import { AddNewButton } from "../../_components/add-new-btn";
 
 type CreateFormValue = z.infer<typeof validateCategorySchema>;
 
@@ -68,13 +69,7 @@ export const CreateCategory = () => {
   return (
     <Sheet open={openDialog} onOpenChange={handleToggle}>
       <SheetTrigger>
-        <Button
-          variant="outline"
-          className="flex items-center space-x-2 text-[12px] h-9"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Thêm mới</span>
-        </Button>
+        <AddNewButton />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
