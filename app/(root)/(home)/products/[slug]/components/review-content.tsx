@@ -5,16 +5,19 @@ import { Separator } from "@/components/ui/separator";
 import { Review } from "@/types";
 import { Stars } from "./list-star";
 import { starList } from "@/constants";
-import useAuth from "@/hooks/use-auth";
-import Link from "next/link";
 import { formatDateToNow } from "@/utils/date";
+import { Fragment, useState } from "react";
+import FsLightbox from "fslightbox-react";
 
 type Props = {
   review: Review;
 };
 
 export const ReviewContent = ({ review }: Props) => {
-  const auth = useAuth();
+  const [toggler, setToggler] = useState(false);
+
+  const urls = review.photos.map((item) => item.url);
+
   return (
     <div className="flex flex-col space-y-4">
       <div className="flex justify-between">
@@ -44,19 +47,22 @@ export const ReviewContent = ({ review }: Props) => {
           />
 
           {review.photos.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
-              {review.photos.map((item) => (
-                <Link
-                  href={item.url}
-                  target="_blank"
-                  key={item.id}
-                  className="rounded-sm w-[100px] h-[100px] object-center hover:cursor-pointer bg-cover"
-                  style={{
-                    backgroundImage: `url(${item.url})`,
-                  }}
-                />
-              ))}
-            </div>
+            <Fragment>
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
+                {review.photos.map((item) => (
+                  <div
+                    onClick={() => setToggler(!toggler)}
+                    key={item.id}
+                    className="rounded-sm w-[100px] h-[100px] object-center hover:cursor-pointer bg-cover"
+                    style={{
+                      backgroundImage: `url(${item.url})`,
+                    }}
+                  />
+                ))}
+              </div>
+
+              <FsLightbox toggler={toggler} sources={urls} />
+            </Fragment>
           )}
 
           <span className="text-xs text-neutral-500 font-medium">

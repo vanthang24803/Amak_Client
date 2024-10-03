@@ -2,11 +2,16 @@
 
 import useReview from "@/hooks/use-fetch-reviews";
 import { StarReview } from "./star-review";
-import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import Image from "next/image";
 import { Spinner } from "@/components/spinner";
 import { ReviewFilter } from "./review-filter";
+import { ListImage } from "./list-image-review";
+import { ReviewNotFound } from "./review-notfound";
+import { Review } from "@/types";
+import { useEffect, useState } from "react";
+import _http from "@/utils/http";
+import { AIResponse } from "@/types/ai-response";
+import { ReviewAI } from "./review-ai";
 
 type Props = {
   id: string | null;
@@ -16,6 +21,37 @@ export const Reviews = ({ id }: Props) => {
   const { images, loading, reviews } = useReview({
     productId: id,
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const fetchAIReview = async (jsonSend: Review[]) => {
+    try {
+      setIsLoading(true);
+      setError("");
+
+      const response = await _http.post<AIResponse>(`/AI/Review`, {
+        prompt: jsonSend,
+      });
+
+      if (response.status === 200) {
+        setMessage(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      setError("AI Không phản hồi");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (reviews) {
+      fetchAIReview(reviews.result);
+    }
+  }, [reviews]);
+
   return (
     <div className="w-full p-4 md:p-6 rounded-md bg-white flex flex-col">
       <h2 className="font-bold tracking-wide">Khách hàng đánh giá</h2>
@@ -28,40 +64,26 @@ export const Reviews = ({ id }: Props) => {
                 <div className="flex flex-col md:flex-row w-full space-y-4">
                   <StarReview reviews={reviews} />
                   <div className="w-[2px] h-[200px] bg-neutral-200 hidden md:block mx-4" />
-                  <div className="px-4 hidden md:block">
-                    <h2 className="font-semibold tracking-wide text-sm">
-                      Tất cả hình ảnh ({images?.length})
-                    </h2>
-                    <div className="grid md:grid-cols-5 lg:grid-cols-6 gap-4 mt-2">
-                      {images?.map((item) => (
-                        <Link
-                          href={item.url}
-                          target="_bank"
-                          key={item.id}
-                          className="rounded-md w-[80px] h-[80px] object-cover hover:cursor-pointer bg-cover"
-                          style={{
-                            backgroundImage: `url(${item.url})`,
-                          }}
-                        />
-                      ))}
-                    </div>
+
+                  <div className="flex flex-col gap-2 px-4 md:w-[55%]">
+                    {error ? (
+                      <p className="text-[12px] tracking-tighter font-semibold">
+                        {error}
+                      </p>
+                    ) : (
+                      <ReviewAI isLoading={isLoading} message={message} />
+                    )}
+
+                    <Separator />
+
+                    <ListImage images={images ?? []} />
                   </div>
                 </div>
                 <Separator />
                 <ReviewFilter id={id} />
               </div>
             ) : (
-              <div className="flex items-center justify-center flex-col space-y-3 ">
-                <Image
-                  src="https://cdn-icons-png.flaticon.com/512/6381/6381554.png"
-                  width={60}
-                  height={60}
-                  alt="icon"
-                />
-                <p className="text-center text-sm  tracking-tight">
-                  Chưa có đánh giá nào cho sản phẩm này
-                </p>
-              </div>
+              <ReviewNotFound />
             )}
           </div>
         ) : (
