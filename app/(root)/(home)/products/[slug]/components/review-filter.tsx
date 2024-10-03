@@ -2,7 +2,6 @@
 
 import { ListReview } from "@/types";
 import _http from "@/utils/http";
-import { ListFilter } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ListFilterReview } from "./list-filter";
 import { Separator } from "@/components/ui/separator";
