@@ -2,6 +2,7 @@ import { PieChartType } from "@/app/(root)/(dashboard)/dashboard/_components/ove
 import { TopCustomerTable } from "@/app/(root)/(dashboard)/dashboard/_components/overview/table/customer";
 import { TopProductTable } from "@/app/(root)/(dashboard)/dashboard/_components/overview/table/product";
 import { AreaChartType, BarChart, Response } from "@/types";
+import { AIResponse } from "@/types/ai-response";
 import { AnalyticStatistic } from "@/types/statistic";
 import _http from "@/utils/http";
 

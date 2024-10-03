@@ -80,7 +80,7 @@ const SheetHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col space-y-2 text-center sm:text-left font-medium tracking-tighter",
+      "flex flex-col gap-1 text-center sm:text-left font-medium tracking-tighter",
       className
     )}
     {...props}
@@ -120,7 +120,10 @@ const SheetDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-muted-foreground tracking-tighter", className)}
+    className={cn(
+      "text-[13px] text-muted-foreground tracking-tighter",
+      className
+    )}
     {...props}
   />
 ));
