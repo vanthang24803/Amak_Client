@@ -1,5 +1,5 @@
-import { Wrapper } from "./components/wrapper";
+import { Container } from "./_components/container";
 
 export default function SettingsComponent() {
-  return <Wrapper />;
+  return <Container />;
 }
