@@ -114,8 +114,6 @@ export const CreateBillboard = ({ reload }: Props) => {
     } finally {
       setLoading(false);
     }
-
-    console.log(data);
   };
 
   const handleRemoveImage = (e: React.MouseEvent) => {
