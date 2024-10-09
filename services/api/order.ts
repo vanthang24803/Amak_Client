@@ -1,14 +1,15 @@
-import { Order, Response } from "@/types";
+import { Order, Pagination, Response } from "@/types";
 import _http from "@/utils/http";
 
-const fetchOrders = async () => {
-  const response = await _http.get<Response<Order[]>>(`/Orders/Analytic`, {
+const fetchOrders = async (page: number = 1, limit: number = 10) => {
+  const response = await _http.get<Pagination<Order[]>>(`/Orders/Analytic`, {
     params: {
-      Limit: 100,
+      Limit: limit,
+      Page: page,
     },
   });
   if (response.status === 200) {
-    return response.data.result;
+    return response.data;
   }
 
   throw new Error("Fetching Order Wrong!");
