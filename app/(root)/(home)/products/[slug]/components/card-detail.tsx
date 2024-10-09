@@ -11,7 +11,7 @@ import { ShareModal } from "@/components/modal/share-modal";
 import { Thumbnail } from "./thumbnail";
 import { Policy } from "./policy";
 import { Cart } from "@/types";
-import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useCart } from "@/hooks/use-cart";
 import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/use-auth";
 
@@ -30,7 +30,7 @@ export const DetailCard = ({ product }: Props) => {
     setOption(newOption);
   };
 
-  const { addToCart } = useCartV2();
+  const { addToCart } = useCart();
   const { isLogin } = useAuth();
 
   const dataSend = {

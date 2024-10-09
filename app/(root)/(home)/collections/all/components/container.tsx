@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Navigation } from "../../_components/navigation";
 import { Pagination, Product } from "@/types";
 import _http from "@/utils/http";
@@ -11,42 +11,29 @@ import useFilterProduct from "@/hooks/use-filter-product";
 import { SelectFilter } from "../../_components/select-filter";
 import { ProductContainer } from "../../_components/product-container";
 import { MobileFilter } from "../../_components/mobile-filter";
+import useSWR from "swr";
+
+const fetcher = (url: string, params: any) =>
+  _http.get(url, { params }).then((res) => res.data);
 
 export const Container = () => {
-  const [data, setData] = useState<Pagination<Product[]>>();
-
-  const [_, setCurrentPage] = useState(1);
-
+  const [currentPage, setCurrentPage] = useState(1);
   const { filter, handleFilter, reset, price, handlePriceFilter } =
     useFilterProduct();
 
-  const fetchData = async (page: number = 1) => {
-    try {
-      const response = await _http.get(`/Products`, {
-        params: {
-          Page: page,
-          OrderBy: filter,
-          SortBy: price,
-        },
-      });
-
-      if (response.status === 200) {
-        setData(response.data);
-        setCurrentPage(page);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { data, error } = useSWR<Pagination<Product[]>>(
+    [
+      "/Products",
+      { Page: currentPage, OrderBy: filter, SortBy: price, Limit: 20 },
+    ],
+    ([url, params]) => fetcher(url, params)
+  );
 
   const handlePageChange = (page: number) => {
-    fetchData(page);
+    setCurrentPage(page);
   };
 
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [price, filter]);
+  if (error) console.log(error);
 
   return (
     <main className="md:max-w-screen-xl mx-auto  p-4">

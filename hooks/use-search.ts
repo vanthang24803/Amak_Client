@@ -6,12 +6,11 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "./use-debounce";
 import { Product } from "@/types/product";
 import _http from "@/utils/http";
+import useSWR from "swr";
 
 export default function useSearch() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const [searchLoading, setLoading] = useState(false);
 
   const search = searchParams.get("search");
 
@@ -25,21 +24,17 @@ export default function useSearch() {
     setContent(e.target.value);
   };
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const response = await _http.get(`/products?Name=${debounce}`);
-        setProduct(response.data.result);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {
+    data: products,
+    isLoading: searchLoading,
+    error,
+  } = useSWR<Product[]>(`/Products?Name=${debounce}`);
 
-    fetchProducts();
-  }, [debounce]);
+  useEffect(() => {
+    if (products && !searchLoading && !error) {
+      setProduct(products);
+    }
+  }, [products, searchLoading, error]);
 
   useEffect(() => {
     const query = {

@@ -1,6 +1,5 @@
 "use client";
 
-import useFetch from "@/hooks/use-fetch";
 import { ProductDetail } from "@/types/product";
 import {
   Breadcrumb,
@@ -16,19 +15,23 @@ import { Reviews } from "./reviews";
 import { Suggest } from "./suggest";
 import useClient from "@/hooks/use-client";
 import { Separator } from "@/components/ui/separator";
+import useSWR from "swr";
+import { Fragment } from "react";
 
 type Props = {
   id: string | null;
 };
 
 export const Container = ({ id }: Props) => {
-  const { data } = useFetch<ProductDetail>({
-    url: `/Products/${id}`,
-  });
-
   const { isClient } = useClient();
 
-  if (!isClient)
+  const { data, isLoading, error } = useSWR<ProductDetail>(`/Products/${id}`);
+
+  if (!isClient) return null;
+
+  if (error) console.log(error);
+
+  if (isLoading)
     return (
       <div className="md:max-w-screen-xl mx-auto px-4 md:p-4 flex flex-col space-y-6 pb-8 md:pb-12">
         <Separator className="w-full md:w-[500px] h-8 rounded-md bg-primary-foreground" />
@@ -59,12 +62,12 @@ export const Container = ({ id }: Props) => {
       </div>
 
       {data && (
-        <>
+        <Fragment>
           <DetailCard product={data} />
           <Introduce data={data} />
           <Reviews id={id} />
           <Suggest category={data?.categories[0].name} />
-        </>
+        </Fragment>
       )}
     </div>
   );

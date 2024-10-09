@@ -4,6 +4,7 @@ import { BillboardComponent } from "./_components/billboard";
 import { Categories } from "./_components/categories";
 import { NewBook } from "./_components/new-book";
 import { Manga } from "./_components/manga";
+import Figures from "./_components/figures";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Skeleton className="w-full h-10 bg-white" />
       <NewBook />
       <Manga />
+      <Figures />
     </main>
   );
 }

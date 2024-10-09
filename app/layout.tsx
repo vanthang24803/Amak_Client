@@ -3,6 +3,7 @@ import "./globals.css";
 import { siteConfig } from "@/configs/site";
 import { ToasterProvider } from "@/components/providers/toaster-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
+import SWRProvider from "@/components/providers/swr-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -25,10 +26,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <SocketProvider>
-        <ToasterProvider />
-        <body>{children}</body>
-      </SocketProvider>
+      <SWRProvider>
+        <SocketProvider>
+          <ToasterProvider />
+          <body>{children}</body>
+        </SocketProvider>
+      </SWRProvider>
     </html>
   );
 }

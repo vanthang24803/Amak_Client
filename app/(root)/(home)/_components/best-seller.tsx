@@ -9,15 +9,22 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
-import useFetch from "@/hooks/use-fetch";
 import { Product } from "@/types/product";
+import _http from "@/utils/http";
+import useSWR from "swr";
+
+const handleFetcher = (url: string) =>
+  _http
+    .get(url, {
+      params: {
+        Action: "Top-selling",
+        Limit: 6,
+      },
+    })
+    .then((res) => res.data.result);
 
 export const BestSeller = () => {
-  const action = "Top-selling";
-
-  const { data } = useFetch<Product[]>({
-    url: `/Products?Action=${action}&Limit=6`,
-  });
+  const { data } = useSWR<Product[]>("/Products", handleFetcher);
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-4 py-6">

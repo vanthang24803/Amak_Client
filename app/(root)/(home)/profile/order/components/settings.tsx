@@ -37,7 +37,7 @@ type Props = {
 type FormValue = z.infer<typeof updateOrderValidation>;
 
 export const SettingOrder = ({ data }: Props) => {
-  const { fetchData } = useFetchOrder();
+  const { reloadData } = useFetchOrder();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -73,7 +73,7 @@ export const SettingOrder = ({ data }: Props) => {
         toast.success("Cập nhập thông tin thành công!", {
           className: "text-[14px] tracking font-medium tracking-tighter",
         });
-        fetchData();
+        reloadData();
       }
     } catch (error) {
       console.log(error);

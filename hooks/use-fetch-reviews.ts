@@ -1,38 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ListReview, Review } from "@/types/review";
+import useSWR from "swr";
 import _http from "@/utils/http";
-import { useEffect, useState } from "react";
+import { ListReview } from "@/types/review";
 
 type Props = {
   productId: string | null;
 };
 
+const fetcher = (url: string) => _http.get(url).then((res) => res.data);
+
 export default function useReview({ productId }: Props) {
-  const [reviews, setReviews] = useState<ListReview | null>(null);
-  const [loading, setLoading] = useState(false);
+  const {
+    data: reviews,
+    isLoading: loading,
+    error,
+  } = useSWR<ListReview>(`/Reviews/Product/${productId}`, fetcher);
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      if (productId) {
-        const URL = `/Reviews/Product/${productId}`;
-
-        try {
-          setLoading(true);
-          const response = await _http.get(URL);
-
-          if (response.status === 200) {
-            setReviews(response.data);
-          }
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchReviews();
-  }, [productId]);
+  if (error) console.log(error);
 
   const images = reviews?.result?.flatMap((review) => review.photos);
 

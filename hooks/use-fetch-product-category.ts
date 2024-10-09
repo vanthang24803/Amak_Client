@@ -1,6 +1,7 @@
+import useSWR from "swr";
 import { env } from "@/configs/env";
 import { FilterType, PriceType, Product } from "@/types";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 type Props = {
   price: PriceType | null;
@@ -9,6 +10,14 @@ type Props = {
   status?: string | undefined;
 };
 
+const fetcher = (url: string) =>
+  fetch(url).then((res) => {
+    if (!res.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return res.json();
+  });
+
 export default function useProductByCategory({
   price,
   filter,
@@ -16,48 +25,28 @@ export default function useProductByCategory({
   status,
 }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [data, setData] = useState<Product[]>();
 
-  useEffect(() => {
-    let url = `${env.NEXT_PUBLIC_API_URL}/Products?SortBy=${price}&OrderBy=${filter}&Page=${currentPage}`;
-    if (category) {
-      url += `&Category=${category}`;
-    }
+  const url = `${env.NEXT_PUBLIC_API_URL}/Products?SortBy=${price}&OrderBy=${filter}&Page=${currentPage}${
+    category ? `&Category=${category}` : ""
+  }${status ? `&Action=${status}` : ""}`;
 
-    if (status) {
-      url += `&Action=${status}`;
-    }
-
-    fetch(url)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Network response was not ok");
-        }
-      })
-      .then((data) => setData(data))
-      .catch((error) =>
-        console.error(
-          "There has been a problem with your fetch operation: ",
-          error
-        )
-      );
-  }, [price, filter, currentPage, category, status]);
+  const { data, error } = useSWR<Product[]>(url, fetcher);
 
   const pageCount = data ? Math.ceil(data.length / 15) : 0;
   const currentData = data
     ? data.slice((currentPage - 1) * 15, currentPage * 15)
     : [];
+
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
 
   return {
     currentPage,
-    data,
+    data: currentData,
     pageCount,
-    currentData,
     handlePageChange,
+    isLoading: !error && !data,
+    isError: error,
   };
 }

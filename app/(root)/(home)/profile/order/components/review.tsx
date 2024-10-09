@@ -38,8 +38,7 @@ const formSchema = z.object({
 type CreateFormValue = z.infer<typeof formSchema>;
 
 export const ModalReview = ({ orderId }: Props) => {
-  const { fetchData: fetchOrders } = useFetchOrder();
-
+  const { reloadData } = useFetchOrder();
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState<number | null>(null);
 
@@ -77,8 +76,8 @@ export const ModalReview = ({ orderId }: Props) => {
       setRating(null);
       setFiles(null);
       form.reset();
-      fetchOrders();
-      handlerOpen();
+      reloadData();
+      handleToggle();
     } catch (error) {
       console.log(error);
     } finally {
@@ -86,14 +85,14 @@ export const ModalReview = ({ orderId }: Props) => {
     }
   };
 
-  const handlerOpen = () => {
+  const handleToggle = () => {
     setRating(null);
     setFiles(null);
     setOpen(!open);
   };
 
   return (
-    <Dialog open={open} onOpenChange={handlerOpen}>
+    <Dialog open={open} onOpenChange={handleToggle}>
       <DialogTrigger>
         <Button size="sm" variant="mix" className="rounded-sm">
           Đánh giá

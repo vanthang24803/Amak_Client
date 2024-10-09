@@ -1,9 +1,9 @@
-"use client";
-
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import SidebarSettings from "./_components/sidebar";
+import { PropsWithChildren } from "react";
 
-export const Wrapper = () => {
+export default function SettingLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex items-center justify-center">
       <Card className="m-4 max-w-screen-xl flex-1">
@@ -14,10 +14,14 @@ export const Wrapper = () => {
                 Cài đặt
               </h2>
             </div>
-            <Separator className="h-[0.1px] bg-neutral-200" />
+            <Separator />
           </CardHeader>
+          <div className="flex items-start gap-2">
+            <SidebarSettings />
+            <div className="w-4/5">{children}</div>
+          </div>
         </CardContent>
       </Card>
     </div>
   );
-};
+}

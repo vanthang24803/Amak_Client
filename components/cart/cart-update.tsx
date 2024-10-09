@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useCart } from "@/hooks/use-cart";
 import { Button } from "../ui/button";
 import { Cart } from "@/types";
 
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const UpdateCart = ({ cart }: Props) => {
-  const { addToCart, removeToCart } = useCartV2();
+  const { addToCart, removeToCart } = useCart();
 
   const jsonSend = {
     ...cart,

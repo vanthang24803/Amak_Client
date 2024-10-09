@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ModalReview } from "./review";
 import { SettingOrder } from "./settings";
-import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useCart } from "@/hooks/use-cart";
 
 type Props = {
   order: Order;
@@ -61,7 +61,7 @@ const statusList: { [key: string]: React.ReactNode } = {
 export const OrderData = ({ order }: Props) => {
   const router = useRouter();
 
-  const { handlerBuyBack } = useCartV2();
+  const { handlerBuyBack } = useCart();
 
   const actionBuy = () => {
     handlerBuyBack(order.orderDetails);

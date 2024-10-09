@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Voucher } from "@/types";
 import _http from "@/utils/http";
-import { useCartV2 } from "./use-cart.v2";
+import { useCart } from "./use-cart";
 
 type CheckboxType = "send" | "store";
 type PaymentType = "cod" | "bank" | "momo";
 
 export default function useHandlerCheckout() {
-  const { totalPrice } = useCartV2();
+  const { totalPrice } = useCart();
   const [sendChecked, setSendChecked] = useState(true);
   const [storeChecked, setStoreChecked] = useState(false);
   const [payment, setPayment] = useState<PaymentType | null>("cod");

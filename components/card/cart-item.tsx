@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import { Cart } from "../svg";
 import { ProductModal } from "../modal/product-modal";
 import useAuth from "@/hooks/use-auth";
-import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useCart } from "@/hooks/use-cart";
 import { Cart as CartType } from "@/types";
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
 export const Card = ({ product }: Props) => {
   const router = useRouter();
   const { isLogin } = useAuth();
-  const { addToCart } = useCartV2();
+  const { addToCart } = useCart();
 
   const dataSend = {
     productId: product.id,

@@ -1,7 +1,7 @@
 "use client";
 
 import useAuth from "@/hooks/use-auth";
-import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useCart } from "@/hooks/use-cart";
 import useClient from "@/hooks/use-client";
 import { useEffect } from "react";
 
@@ -10,7 +10,7 @@ export const ModalProvider = () => {
 
   const { isLogin, getProfile, getNotification } = useAuth();
 
-  const { getCarts } = useCartV2();
+  const { getCarts } = useCart();
 
   useEffect(() => {
     if (isLogin) {

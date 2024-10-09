@@ -21,19 +21,14 @@ import { Button } from "../ui/button";
 import { UpdateCart } from "./cart-update";
 import { useState } from "react";
 import Image from "next/image";
-import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useCart } from "@/hooks/use-cart";
 
 export default function CartAction() {
   const router = useRouter();
   const { isClient } = useClient();
   const [open, setOpen] = useState(false);
 
-  const {
-    data: cart,
-    totalItems,
-    totalPrice,
-    removeOptionToCart,
-  } = useCartV2();
+  const { data: cart, totalItems, totalPrice, removeOptionToCart } = useCart();
 
   const handleOpen = () => {
     setOpen(!open);

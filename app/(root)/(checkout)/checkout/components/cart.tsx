@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useCart } from "@/hooks/use-cart";
 import { Voucher } from "@/types";
 import { convertPrice, formatPrice } from "@/utils/price";
 import { format } from "date-fns";
@@ -34,7 +34,7 @@ export const Cart = ({
   setCode,
   setVoucher,
 }: CartProp) => {
-  const { data: cart } = useCartV2();
+  const { data: cart } = useCart();
 
   const finalPrice = voucher?.discount
     ? totalPrice - voucher.discount * 1000

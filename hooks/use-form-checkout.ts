@@ -9,7 +9,7 @@ import _http from "@/utils/http";
 import { checkOutValidation } from "@/validations/checkout";
 import { PaymentType } from "@/app/(root)/(checkout)/checkout/components/payment";
 import { Momo } from "@/types";
-import { useCartV2 } from "./use-cart.v2";
+import { useCart } from "./use-cart";
 
 type Props = {
   email: string | undefined;
@@ -39,7 +39,7 @@ export default function useFormCheckOut({
   numberPhone,
 }: Props) {
   const router = useRouter();
-  const { totalItems, data: cart, clearCart } = useCartV2();
+  const { totalItems, data: cart, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
 
   const priceShip = totalPrice + 35000;
