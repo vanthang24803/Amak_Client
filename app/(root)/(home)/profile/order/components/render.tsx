@@ -1,13 +1,11 @@
-"use client";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Inter } from "next/font/google";
-import _http from "@/utils/http";
 import Image from "next/image";
 import { OrderData } from "./order-data";
 import { Spinner } from "@/components/spinner";
 import PaginationComponent from "@/components/pagination";
 import useFetchOrder from "@/hooks/use-fetch-order";
+import { Fragment } from "react";
 
 const font = Inter({
   weight: "400",
@@ -15,17 +13,17 @@ const font = Inter({
 });
 
 export const Render = () => {
-  const { data, loading, select, setSelect, fetchData } = useFetchOrder();
+  const { data, loading, select, setSelect, setCurrentPage } = useFetchOrder();
 
   const handlePageChange = (page: number) => {
-    fetchData(page);
+    setCurrentPage(page);
   };
 
   return (
     <Tabs
       defaultValue={select}
       onValueChange={(value) => setSelect(value)}
-      className={`w-full  ${font.className}`}
+      className={`w-full ${font.className}`}
     >
       <TabsList className="md:grid hidden w-full grid-cols-7">
         <TabsTrigger value="All">Tất cả</TabsTrigger>
@@ -43,10 +41,10 @@ export const Render = () => {
             <Spinner />
           </div>
         ) : (
-          <>
+          <Fragment>
             {data && data.result.length > 0 ? (
               <div className="flex flex-col space-y-4">
-                <div className="flex flex-col space-y-2 p pt-3">
+                <div className="flex flex-col space-y-2 pt-3">
                   {data.result.map((item) => (
                     <OrderData key={item.id} order={item} />
                   ))}
@@ -70,7 +68,7 @@ export const Render = () => {
                 </p>
               </div>
             )}
-          </>
+          </Fragment>
         )}
       </TabsContent>
     </Tabs>

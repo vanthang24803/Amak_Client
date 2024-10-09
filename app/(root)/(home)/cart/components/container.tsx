@@ -20,17 +20,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useCart } from "@/hooks/use-cart";
 
 export const Container = () => {
   const router = useRouter();
 
-  const {
-    totalItems,
-    totalPrice,
-    data: cart,
-    removeOptionToCart,
-  } = useCartV2();
+  const { totalItems, totalPrice, data: cart, removeOptionToCart } = useCart();
 
   const { isClient } = useClient();
 

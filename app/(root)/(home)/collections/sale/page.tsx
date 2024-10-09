@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { Container } from "../../_components/container-action";
+import { Container } from "../_components/container-action";
 
 export const metadata: Metadata = {
   title: "Sản phẩm khuyến mãi",

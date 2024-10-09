@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Spinner } from "@/components/spinner";
 import _http from "@/utils/http";
 import { useEffect } from "react";
-import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useCart } from "@/hooks/use-cart";
 
 enum EMomoCode {
   Success = 0,
@@ -21,7 +21,7 @@ export const Wrapper = () => {
 
   const { isClient } = useClient();
 
-  const { clearCart } = useCartV2();
+  const { clearCart } = useCart();
 
   const router = useRouter();
 

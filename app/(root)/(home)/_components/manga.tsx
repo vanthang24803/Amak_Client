@@ -2,40 +2,25 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Product } from "@/types/product";
 import { Products } from "./products";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import _http from "@/utils/http";
 import { Category } from "@/utils/category";
+import useSWR from "swr";
+import { Product } from "@/types";
+
+const handleFetcher = (url: string) =>
+  _http
+    .get(url, {
+      params: {
+        Category: Category.Manga,
+        Limit: 10,
+      },
+    })
+    .then((res) => res.data.result);
 
 export const Manga = () => {
-  const [data, setData] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const response = await _http.get(`/Products`, {
-        params: {
-          Category: Category.Manga,
-          Limit: 10,
-        },
-      });
-      if (response.status === 200) {
-        setData(response.data.result);
-      }
-    } catch (e: any) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data, isLoading } = useSWR<Product[]>("/Products", handleFetcher);
 
   const router = useRouter();
 
@@ -54,7 +39,7 @@ export const Manga = () => {
       </div>
 
       <div className="flex flex-col space-y-4">
-        <Products products={data || []} isLoading={loading} />
+        <Products products={data || []} isLoading={isLoading} />
         <div className="flex items-center justify-center">
           <Button
             variant="outline"

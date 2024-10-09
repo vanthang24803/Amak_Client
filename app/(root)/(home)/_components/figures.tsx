@@ -3,40 +3,25 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { FigureItem } from "./figure-item";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Product } from "@/types";
-import { useEffect, useState } from "react";
+import { Pagination, Product } from "@/types";
 import _http from "@/utils/http";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import useSWR from "swr";
+
+const fetcher = (url: string, params: any) =>
+  _http.get(url, { params }).then((res) => res.data);
 
 export default function Figures() {
-  const [data, setData] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { data, error, isLoading } = useSWR<Pagination<Product[]>>(
+    ["/Products", { Category: "Phụ kiện", Limit: 10 }],
+    ([url, params]) => fetcher(url, params)
+  );
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const response = await _http.get(`/Products`, {
-        params: {
-          Category: "Phụ kiện",
-          Limit: 10,
-        },
-      });
-      if (response.status === 200) {
-        setData(response.data.result);
-      }
-    } catch (e: any) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (error) {
+    console.log(error);
+  }
 
   return (
     <Card>
@@ -54,12 +39,14 @@ export default function Figures() {
       </CardHeader>
 
       <ScrollArea className="max-h-[30vh] h-auto px-4 pb-4 overflow-auto">
-        {loading ? (
+        {isLoading ? (
           <Skeleton className="w-full h-[28vh]" />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-hidden mx-4">
             {data &&
-              data.map((item) => <FigureItem key={item.id} data={item} />)}
+              data.result.map((item) => (
+                <FigureItem key={item.id} data={item} />
+              ))}
           </div>
         )}
       </ScrollArea>

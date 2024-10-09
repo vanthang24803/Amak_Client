@@ -9,7 +9,7 @@ import { Minus, Plus } from "lucide-react";
 import { DialogTitle } from "../ui/dialog";
 import { ShareModal } from "./share-modal";
 import { Cart } from "@/types";
-import { useCartV2 } from "@/hooks/use-cart.v2";
+import { useCart } from "@/hooks/use-cart";
 import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/use-auth";
 
@@ -25,7 +25,7 @@ export default function InformationModal({ product }: Props) {
 
   const [option, setOption] = useState<Option | undefined>(product?.options[0]);
 
-  const { addToCart } = useCartV2();
+  const { addToCart } = useCart();
 
   const handleOptionChange = (id: string) => {
     const newOption = product?.options.find((option) => option.id === id);

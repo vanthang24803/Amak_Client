@@ -7,39 +7,30 @@ import { Pagination, Product } from "@/types";
 import _http from "@/utils/http";
 import { Separator } from "@radix-ui/react-separator";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PaginationComponent from "../../../../../components/pagination";
-import { Spinner } from "@/components/spinner";
 import { Skeleton } from "@/components/ui/skeleton";
+import useSWR from "swr";
+
+const handleFetcher = (url: string) => _http.get(url).then((res) => res.data);
 
 export const Container = () => {
   const searchParams = useSearchParams();
   const search = searchParams.get("product");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const [data, setData] = useState<Pagination<Product[]>>();
-  const [_, setCurrentPage] = useState(1);
-
-  const fetchData = async (page: number = 1) => {
-    try {
-      const response = await _http.get(`/Products`, {
-        params: {
-          Name: search,
-          Page: page,
-        },
-      });
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
+  const { data, error } = useSWR<Pagination<Product[]>>(
+    `/Products?Name=${search}&Page=${currentPage}`,
+    handleFetcher,
+    {
+      revalidateOnFocus: false,
     }
-  };
+  );
 
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  if (error) console.log(error);
 
   const handlePageChange = (page: number) => {
-    fetchData(page);
+    setCurrentPage(page);
   };
 
   return (
@@ -80,7 +71,7 @@ export const Container = () => {
               </div>
             ) : (
               <div className="flex items-center justify-center flex-col space-y-2">
-                <img src="/404.svg" className="w-[200px] my-4" />
+                <img src="/box.png" className="w-[200px] my-4" />
                 <span className="tracking-tight font-medium">
                   Không tìm thấy sản phẩm yêu cầu
                 </span>
