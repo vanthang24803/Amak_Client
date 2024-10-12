@@ -49,7 +49,7 @@ export const RegisterHandler = () => {
       setLoading(true);
       const response = await _http.post(`/Authentication/Register`, data);
 
-      if (response.status == 200) {
+      if (response.status == 201) {
         toast.dismiss();
         toast.success("Check your email !");
         setActive(true);

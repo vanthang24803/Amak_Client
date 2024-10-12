@@ -20,6 +20,7 @@ import { Response } from "@/types";
 import { useSocket } from "../providers/socket-provider";
 import useAuth from "@/hooks/use-auth";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import MessageIcon from "../../public/message.svg";
 
 const font = Inter({ subsets: ["latin"], weight: "400" });
 
@@ -80,7 +81,7 @@ export const ChatWrapper = () => {
     <Dialog open={open} onOpenChange={handlerOpen}>
       <DialogTrigger>
         <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white hover:cursor-pointer">
-          <Image alt="message" width={20} height={20} src="./message.svg" />
+          <Image alt="message" width={20} height={20} src={MessageIcon} />
         </div>
       </DialogTrigger>
       <DialogContent

@@ -61,18 +61,14 @@ export default function WrapperEmailSetting() {
             handleFilter(selectedType);
           }}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[180px] capitalize ">
             <SelectValue placeholder="Select template" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               <SelectItem value="ORDER">Đơn hàng</SelectItem>
-              <SelectItem value="VERIFY_ACCOUNT" disabled>
-                Xác nhận tài khoản
-              </SelectItem>
-              <SelectItem value="FORGOT_PASSWORD" disabled>
-                Quên mật khẩu
-              </SelectItem>
+              <SelectItem value="VERIFY_ACCOUNT">Xác nhận tài khoản</SelectItem>
+              <SelectItem value="FORGOT_PASSWORD">Quên mật khẩu</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

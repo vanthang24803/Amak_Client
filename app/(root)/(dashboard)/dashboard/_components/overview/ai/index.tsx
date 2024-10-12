@@ -45,7 +45,7 @@ export const AiDialogDashboard = () => {
     try {
       setLoading(true);
 
-      const response = await _http.post<AIResponse>(`/AI/Statistic`, {
+      const response = await _http.post<AIResponse>(`/Gemini/Statistic`, {
         prompt: jsonSend,
       });
 

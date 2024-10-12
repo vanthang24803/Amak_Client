@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/command";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 type Props = {
   data: {
@@ -55,7 +55,7 @@ export const SearchHeader = ({ data }: Props) => {
   };
 
   return (
-    <>
+    <Fragment>
       <button
         type="button"
         onClick={() => setOpen(true)}
@@ -93,6 +93,6 @@ export const SearchHeader = ({ data }: Props) => {
           })}
         </CommandList>
       </CommandDialog>
-    </>
+    </Fragment>
   );
 };

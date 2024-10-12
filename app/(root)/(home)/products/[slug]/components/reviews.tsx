@@ -31,7 +31,7 @@ export const Reviews = ({ id }: Props) => {
       setIsLoading(true);
       setError("");
 
-      const response = await _http.post<AIResponse>(`/AI/Review`, {
+      const response = await _http.post<AIResponse>(`/Gemini/Review`, {
         prompt: jsonSend,
       });
 
