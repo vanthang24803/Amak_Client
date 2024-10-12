@@ -165,14 +165,44 @@ export const SidebarWrapper = ({
               icon: Settings,
               path: "/dashboard/settings",
             },
+          ]}
+        />
+        <Separator />
+
+        <Nav
+          isCollapsed={isCollapsed}
+          links={[
             {
               title: "Gmail",
               image: "/gmail.png",
-              path: "",
+              path: "/dashboard/mail",
             },
             {
-              title: "Drive",
-              image: "/drive.png",
+              title: "Momo",
+              image: "/momo-icon.ico",
+              path: "/dashboard/momo",
+            },
+            {
+              title: "Cloudinary",
+              image: "/cloudinary.png",
+              path: "/dashboard/cloudinary",
+            },
+          ]}
+        />
+
+        <Separator />
+
+        <Nav
+          isCollapsed={isCollapsed}
+          links={[
+            {
+              title: "Gemini",
+              image: "/gemini.svg",
+              path: "/dashboard/gemini",
+            },
+            {
+              title: "ChatGPT",
+              image: "/chat-gpt.svg",
               path: "",
             },
           ]}
