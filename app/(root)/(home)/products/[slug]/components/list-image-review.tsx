@@ -19,7 +19,7 @@ export const ListImage = ({ images }: Props) => {
         Tất cả hình ảnh ({images.length})
       </h2>
       <div className="grid md:grid-cols-5 lg:grid-cols-6 gap-4 mt-2">
-        {images.map((item, index) => (
+        {images.map((item) => (
           <div
             key={item.id}
             onClick={() => setToggler(!toggler)}

@@ -48,4 +48,21 @@ const validateMomoConfig = z.object({
   }),
 });
 
-export { validateMailConfig, validateGoogleConfig, validateMomoConfig };
+const validateCloudinaryConfig = z.object({
+  cloudName: z.string().min(1, {
+    message: "Không được bỏ trông",
+  }),
+  apiKey: z.string().min(1, {
+    message: "Không được bỏ trông",
+  }),
+  apiSecret: z.string().min(1, {
+    message: "Không được bỏ trông",
+  }),
+});
+
+export {
+  validateMailConfig,
+  validateGoogleConfig,
+  validateMomoConfig,
+  validateCloudinaryConfig,
+};

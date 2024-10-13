@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 import _http from "@/utils/http";
 import useAuth from "@/hooks/use-auth";
 import useSocialLogin from "@/hooks/use-social-login";
+import PasswordInput from "@/components/ui/input-password";
 
 export type LoginFromValue = z.infer<typeof loginValidation>;
 
@@ -100,11 +101,10 @@ export const LoginHandler = () => {
                 <FormControl>
                   <div className="flex flex-col space-y-1">
                     <span className="font-medium text-sm">Password</span>
-                    <Input
-                      type="password"
+                    <PasswordInput
+                      placeholder="Password"
                       {...field}
                       autoComplete="off"
-                      placeholder="Password"
                     />
                   </div>
                 </FormControl>

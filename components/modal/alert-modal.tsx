@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Modal } from "./modal";
+import { Loader } from "lucide-react";
 
 interface AlertModalProps {
   isOpen: boolean;
@@ -40,7 +41,13 @@ export const AlertModal: React.FC<AlertModalProps> = ({
           Thoát
         </Button>
         <Button disabled={loading} variant="destructive" onClick={onConfirm}>
-          Xác nhận
+          {loading ? (
+            <div className="flex items-center gap-2">
+              <Loader className="w-4 h-4 animate-spin" />
+            </div>
+          ) : (
+            "Xác nhận"
+          )}
         </Button>
       </div>
     </Modal>
