@@ -22,6 +22,7 @@ import _http from "@/utils/http";
 import useAuth from "@/hooks/use-auth";
 import useSocialLogin from "@/hooks/use-social-login";
 import PasswordInput from "@/components/ui/input-password";
+import { Label } from "@/components/ui/label";
 
 export type LoginFromValue = z.infer<typeof loginValidation>;
 
@@ -79,8 +80,8 @@ export const LoginHandler = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="flex flex-col space-y-1">
-                    <span className="font-medium text-sm">Email address</span>
+                  <div className="flex flex-col space-y-2">
+                    <Label>Email address</Label>
                     <Input
                       {...field}
                       autoComplete="off"
@@ -100,7 +101,6 @@ export const LoginHandler = () => {
               <FormItem>
                 <FormControl>
                   <div className="flex flex-col space-y-1">
-                    <span className="font-medium text-sm">Password</span>
                     <PasswordInput
                       placeholder="Password"
                       {...field}
