@@ -1,5 +1,6 @@
 import {
   CloudinaryConfig,
+  GeminiConfig,
   GoogleConfig,
   MailConfig,
   MomoConfig,
@@ -51,9 +52,22 @@ const fetchMomoConfig = async () => {
   throw new Error("Fetching Momo Settings Wrong!");
 };
 
+const fetchGeminiConfig = async () => {
+  const response = await _http.get<Response<GeminiConfig>>(
+    "/Configuration/Gemini"
+  );
+
+  if (response.status === 200) {
+    return response.data.result;
+  }
+
+  throw new Error("Fetching Gemini Settings Wrong!");
+};
+
 export {
   fetchMailConfig,
   fetchGoogleConfig,
   fetchCloudinaryConfig,
   fetchMomoConfig,
+  fetchGeminiConfig,
 };

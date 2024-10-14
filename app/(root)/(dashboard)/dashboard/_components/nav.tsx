@@ -41,7 +41,7 @@ export const Nav = ({ isCollapsed, links }: Props) => {
                     href={link.path}
                     className={cn(
                       buttonVariants({
-                        variant: pathname === link.path ? "default" : "ghost",
+                        variant: pathname === link.path ? "secondary" : "ghost",
                         size: "icon",
                       }),
                       "h-9 w-9",
@@ -84,7 +84,7 @@ export const Nav = ({ isCollapsed, links }: Props) => {
               href={link.path}
               className={cn(
                 buttonVariants({
-                  variant: pathname === link.path ? "default" : "ghost",
+                  variant: pathname === link.path ? "secondary" : "ghost",
                   size: "sm",
                 }),
                 pathname === link.path &&
