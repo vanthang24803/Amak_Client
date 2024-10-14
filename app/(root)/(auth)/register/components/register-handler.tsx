@@ -21,6 +21,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RegisterSuccess } from "./register-success";
 import { Step } from "./Step";
+import PasswordInput from "@/components/ui/input-password";
+import { Label } from "@/components/ui/label";
 
 type LoginFormValue = z.infer<typeof registerValidation>;
 
@@ -102,8 +104,8 @@ export const RegisterHandler = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <div className="flex flex-col space-y-1">
-                          <span className="font-medium text-sm">Họ</span>
+                        <div className="flex flex-col space-y-2">
+                          <Label>Họ</Label>
                           <Input
                             {...field}
                             autoComplete="off"
@@ -121,8 +123,8 @@ export const RegisterHandler = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <div className="flex flex-col space-y-1">
-                          <span className="font-medium text-sm">Tên</span>
+                        <div className="flex flex-col space-y-2">
+                          <Label>Tên</Label>
                           <Input
                             {...field}
                             autoComplete="off"
@@ -142,8 +144,8 @@ export const RegisterHandler = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <div className="flex flex-col space-y-1">
-                        <span className="font-medium text-sm">Email</span>
+                      <div className="flex flex-col space-y-2">
+                        <Label>Email</Label>
                         <Input
                           {...field}
                           autoComplete="off"
@@ -162,15 +164,11 @@ export const RegisterHandler = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <div className="flex flex-col space-y-1">
-                        <span className="font-medium text-sm">Password</span>
-                        <Input
-                          type="password"
-                          {...field}
-                          autoComplete="off"
-                          placeholder="Password"
-                        />
-                      </div>
+                      <PasswordInput
+                        placeholder="Password"
+                        {...field}
+                        autoComplete="off"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

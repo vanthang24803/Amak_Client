@@ -60,9 +60,22 @@ const validateCloudinaryConfig = z.object({
   }),
 });
 
+const validateGeminiConfig = z.object({
+  projectNumber: z.string().min(1, {
+    message: "Không được bỏ trông",
+  }),
+  apiKey: z.string().min(1, {
+    message: "Không được bỏ trông",
+  }),
+  model: z.string().min(1, {
+    message: "Không được bỏ trông",
+  }),
+});
+
 export {
   validateMailConfig,
   validateGoogleConfig,
   validateMomoConfig,
   validateCloudinaryConfig,
+  validateGeminiConfig,
 };

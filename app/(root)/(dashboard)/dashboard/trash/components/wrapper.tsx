@@ -14,7 +14,7 @@ export const Wrapper = () => {
                 Thùng rác
               </h2>
             </div>
-            <Separator className="h-[0.1px] bg-neutral-200" />
+            <Separator />
           </CardHeader>
         </CardContent>
       </Card>

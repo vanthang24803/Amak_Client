@@ -25,3 +25,16 @@ export type MomoConfig = {
   secretKey: string;
   paymentUrl: string;
 };
+
+export type GeminiConfig = {
+  apiKey: string;
+  projectNumber: string;
+  model: GeminiModel;
+};
+
+type GeminiModel =
+  | "gemini-1.5-pro"
+  | "gemini-1.5-flash-latest"
+  | "gemini-1.5-flash"
+  | "gemini-1.5-flash-002"
+  | "gemini-1.5-flash-8b";
