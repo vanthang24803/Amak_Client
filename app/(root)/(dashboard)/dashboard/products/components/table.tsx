@@ -6,16 +6,11 @@ import { DataTable } from "./data-table";
 import { columns, ProductColumn } from "./columns";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/services/api/product";
-import { useState } from "react";
-import { PaginationTable } from "@/types/pagination-table";
 
 export const ProductTable = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [limit, setLimit] = useState<PaginationTable>(10);
-
   const { data, isLoading } = useQuery({
-    queryKey: [`dashboard-products-${currentPage}-${limit}`],
-    queryFn: () => fetchProducts(currentPage, limit),
+    queryKey: [`dashboard-products`],
+    queryFn: () => fetchProducts(),
   });
 
   if (isLoading) return <Loading />;
@@ -30,17 +25,5 @@ export const ProductTable = () => {
       createAt: product.createAt,
     })) || [];
 
-  return (
-    <DataTable
-      searchKey="name"
-      data={productColumns}
-      columns={columns}
-      currentPage={currentPage}
-      onPageChange={setCurrentPage}
-      itemsPerPage={limit}
-      onItemsPerPageChange={setLimit}
-      totalItem={data?.data._totalItems || 10}
-      totalPage={data?.data._totalPage || 1}
-    />
-  );
+  return <DataTable searchKey="name" columns={columns} data={productColumns} />;
 };

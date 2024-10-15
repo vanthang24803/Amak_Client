@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Container } from "../../_components/container";
 import { ActionRight } from "./action-right";
-import { CategoriesTable as Table } from "./table";
+import { OrderTable as Table } from "./table";
 
 export const Wrapper = () => {
   return (
