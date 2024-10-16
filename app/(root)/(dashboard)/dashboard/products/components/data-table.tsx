@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -30,47 +30,30 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { PaginationTable } from "@/types/pagination-table";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey: string;
   statusFilter?: boolean;
-  currentPage: number;
-  onPageChange: Dispatch<SetStateAction<number>>;
-  itemsPerPage: number;
-  onItemsPerPageChange: Dispatch<SetStateAction<PaginationTable>>;
-  totalItem: number;
-  totalPage: number;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   searchKey,
-  currentPage,
-  onPageChange,
-  itemsPerPage,
-  onItemsPerPageChange,
-  totalItem,
-  totalPage,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [row, setRow] = useState(10);
 
   const handleRowChange = (value: string) => {
-    const newRow = Number(value) as PaginationTable;
-    onItemsPerPageChange(newRow);
+    const newRow = Number(value);
+    setRow(newRow);
     table.setPageSize(newRow);
   };
 
-  const handlePageChange = (newPage: number) => {
-    onPageChange(newPage);
-    table.setPageIndex(newPage - 1);
-  };
-
   const table = useReactTable({
-    data: data,
+    data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -81,8 +64,7 @@ export function DataTable<TData, TValue>({
     },
     initialState: {
       pagination: {
-        pageSize: itemsPerPage,
-        pageIndex: currentPage - 1,
+        pageSize: row,
       },
     },
   });
@@ -157,16 +139,17 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-[12px] text-muted-foreground flex items-center space-x-3">
           <div className="flex items-center space-x-2">
-            {currentPage} trên {Math.ceil(totalItem / itemsPerPage)}
+            {table.getState().pagination.pageIndex + 1} trên{" "}
+            {table.getPageCount()} trang
           </div>
           <div className="flex items-center space-x-2">
             <span>Số hàng:</span>
             <Select
-              defaultValue={itemsPerPage.toString()}
+              defaultValue={row.toString()}
               onValueChange={handleRowChange}
             >
               <SelectTrigger className="w-16">
-                <SelectValue placeholder={itemsPerPage.toString()} />
+                <SelectValue placeholder={row.toString()} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup className="w-30">
@@ -186,8 +169,8 @@ export function DataTable<TData, TValue>({
             variant="outline"
             size="sm"
             className="h-8"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
           >
             <span className="text-[12px]">Trang trước</span>
           </Button>
@@ -195,8 +178,8 @@ export function DataTable<TData, TValue>({
             variant="outline"
             size="sm"
             className="h-8"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPage}
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
           >
             <span className="text-[12px]">Trang sau</span>
           </Button>

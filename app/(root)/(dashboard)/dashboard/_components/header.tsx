@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LogOut, UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { SearchHeader } from "./search-header";
+import { CommandBar } from "./command";
 
 export const Header = () => {
   const { profile, logout } = useAuth();
@@ -23,20 +23,7 @@ export const Header = () => {
   const router = useRouter();
   return (
     <header className="flex items-center justify-between border-b-[1px] py-2 px-4">
-      <SearchHeader
-        data={[
-          {
-            label: "Đơn hàng",
-            type: "order",
-            data: [],
-          },
-          {
-            label: "Sản phẩm",
-            type: "product",
-            data: [],
-          },
-        ]}
-      />
+      <CommandBar />
       <div className="flex items-center space-x-3">
         <ThemeToggle />
         <DropdownMenu>

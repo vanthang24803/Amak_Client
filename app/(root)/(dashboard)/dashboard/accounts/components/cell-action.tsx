@@ -1,7 +1,13 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { CircleUserRound, Copy, MoreHorizontal } from "lucide-react";
+import {
+  ArchiveRestore,
+  BadgeX,
+  CircleUserRound,
+  Copy,
+  MoreHorizontal,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -18,6 +24,7 @@ import {
 import _http from "@/utils/http";
 import { UserAnalytic as AccountColumn } from "@/types/analytic";
 import { ProfileInfo } from "./profile-info";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface CellActionProps {
   data: AccountColumn;
@@ -26,11 +33,47 @@ interface CellActionProps {
 export const CellAction = ({ data }: CellActionProps) => {
   const [open, setOpen] = useState(false);
 
+  const queryClient = useQueryClient();
+
   const handleToggle = () => setOpen(!open);
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
     toast.info("Đã sao chép mã tài khoản!");
+  };
+
+  const upgradeToManager = async () => {
+    try {
+      const response = await _http.post(`/Authentication/Upgrade/Manager`, {
+        email: data.email,
+      });
+
+      if (response.status === 200) {
+        queryClient.invalidateQueries({
+          queryKey: [`dashboard-analytic-accounts`],
+        });
+        toast.success("Thành công");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const downgradeToManager = async () => {
+    try {
+      const response = await _http.post(`/Authentication/Downgrade/Manager`, {
+        email: data.email,
+      });
+
+      if (response.status === 200) {
+        queryClient.invalidateQueries({
+          queryKey: [`dashboard-analytic-accounts`],
+        });
+        toast.success("Thành công");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -53,6 +96,27 @@ export const CellAction = ({ data }: CellActionProps) => {
               <Copy className="mr-2 h-4 w-4" />
               {data.isManager ? "Mã nhân viên" : "Mã khách hàng"}
             </DropdownMenuItem>
+            {!data.isAdmin && (
+              <Fragment>
+                {data.isManager ? (
+                  <DropdownMenuItem
+                    className="text-[12px]"
+                    onClick={downgradeToManager}
+                  >
+                    <BadgeX className="mr-2 h-4 w-4" />
+                    Xóa quyền quản lý
+                  </DropdownMenuItem>
+                ) : (
+                  <DropdownMenuItem
+                    className="text-[12px]"
+                    onClick={upgradeToManager}
+                  >
+                    <ArchiveRestore className="mr-2 h-4 w-4" />
+                    Cấp quyền quản lý
+                  </DropdownMenuItem>
+                )}
+              </Fragment>
+            )}
             <DropdownMenuItem className="text-[12px]" onClick={handleToggle}>
               <CircleUserRound className="mr-2 h-4 w-4" />
               Thông tin tài khoản

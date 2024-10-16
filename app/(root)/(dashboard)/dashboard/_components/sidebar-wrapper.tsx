@@ -150,7 +150,7 @@ export const SidebarWrapper = ({
           isCollapsed={isCollapsed}
           links={[
             {
-              title: "Khách hàng",
+              title: "Tài khoản",
               label: `${analytic?.customers}`,
               path: "/dashboard/accounts",
               icon: Users2,

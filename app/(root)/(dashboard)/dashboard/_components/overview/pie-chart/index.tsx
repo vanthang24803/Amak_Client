@@ -89,9 +89,11 @@ export const Chart = () => {
 
   React.useEffect(() => {
     if (data && data.length > 0) {
-      setActiveMonth(data[0].month);
+      setActiveMonth(data[1].month);
     }
   }, [data]);
+
+  console.log(data);
 
   const chartConfig = React.useMemo(
     () => (data ? generateChartConfig(data) : {}),
