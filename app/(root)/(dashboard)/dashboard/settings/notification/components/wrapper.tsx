@@ -128,7 +128,7 @@ export const Wrapper = () => {
                       </p>
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Url" />
+                      <Input {...field} placeholder="/" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
