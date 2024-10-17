@@ -16,6 +16,7 @@ import {
 import { LogOut, UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { CommandBar } from "./command";
+import { SearchBar } from "./search-bar";
 
 export const Header = () => {
   const { profile, logout } = useAuth();
@@ -23,7 +24,7 @@ export const Header = () => {
   const router = useRouter();
   return (
     <header className="flex items-center justify-between border-b-[1px] py-2 px-4">
-      <CommandBar />
+      <SearchBar />
       <div className="flex items-center space-x-3">
         <ThemeToggle />
         <DropdownMenu>

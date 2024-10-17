@@ -20,6 +20,17 @@ export const OrderCustomer = ({ data }: Props) => {
         <div className="flex-1 flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <p className="text-muted-foreground text-[12px] scroll-m-20">
+              Mã vận đơn
+            </p>
+            <p className="font-medium tracking-tighter text-[12.75px] scroll-m-20">
+              {data?.id}
+            </p>
+          </div>
+          <Separator />
+        </div>
+        <div className="flex-1 flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <p className="text-muted-foreground text-[12px] scroll-m-20">
               Khách hàng
             </p>
             <p className="font-medium tracking-tighter text-[12.75px] scroll-m-20">
