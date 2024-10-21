@@ -24,7 +24,7 @@ import { DayChart } from "./day-chart";
 import { TrendingUp } from "lucide-react";
 import { convertPrice } from "@/utils/price";
 import { fetchBarOverviewChart } from "@/services/api/overview";
-import { useQuery } from "@tanstack/react-query";
+import useSWR from "swr";
 
 export const Chart = () => {
   const [timeRange, setTimeRange] = useState<"year" | "month" | "week">("year");
@@ -34,10 +34,10 @@ export const Chart = () => {
   const startOfMonth = format(subDays(currentDate, 30), "dd/MM/yyyy");
   const endDate = format(currentDate, "dd/MM/yyyy");
 
-  const { data, isLoading: loading } = useQuery<BarChart>({
-    queryKey: ["dashboard-analytic-bar-chart-overview"],
-    queryFn: fetchBarOverviewChart,
-  });
+  const { data, isLoading: loading } = useSWR<BarChart>(
+    "/Analytic/Bar-Chart",
+    fetchBarOverviewChart
+  );
 
   const total = useMemo(() => {
     if (!data) return 0;

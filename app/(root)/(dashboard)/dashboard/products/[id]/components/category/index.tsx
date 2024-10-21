@@ -13,11 +13,11 @@ import { fetchCategories } from "@/services/api/category";
 import { ProductDetail } from "@/types";
 import _http from "@/utils/http";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { LoaderCircle, Pencil, X } from "lucide-react";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import useSWR, { mutate } from "swr";
 import { z } from "zod";
 
 type Props = {
@@ -34,12 +34,8 @@ const FormSchema = z.object({
 export const CategoryProduct = ({ product }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-  const queryClient = useQueryClient();
 
-  const { data } = useQuery({
-    queryKey: [`dashboard-categories`],
-    queryFn: () => fetchCategories(),
-  });
+  const { data } = useSWR("/Categories", fetchCategories);
 
   const defaultValueSelect = product?.categories.map((item) => item.id);
 
@@ -70,9 +66,7 @@ export const CategoryProduct = ({ product }: Props) => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          queryClient.invalidateQueries({
-            queryKey: [`dashboard-product-${product?.id}`],
-          });
+          mutate(`/Products/${product?.id}`);
           handleClose();
           return "Cập nhật thể loại thành công!";
         },

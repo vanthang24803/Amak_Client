@@ -3,12 +3,10 @@
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CreateBillboard } from "./create-billboard";
-import { useQuery } from "@tanstack/react-query";
 import { fetchBillboards } from "@/services/api/billboard";
 import { Loading } from "../../_components/loading";
 import { X } from "lucide-react";
 import { Fragment, useState } from "react";
-import { AlertModal } from "@/components/modal/alert-modal";
 import { toast } from "sonner";
 import _http from "@/utils/http";
 import {
@@ -23,14 +21,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Separator } from "@/components/ui/separator";
+import useSWR, { mutate } from "swr";
 
 export const Wrapper = () => {
   const [loading, setLoading] = useState(false);
 
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: [`dashboard-billboards`],
-    queryFn: () => fetchBillboards(),
-  });
+  const { data, isLoading } = useSWR("/Billboards", fetchBillboards);
 
   const onConfirm = (id: string) => {
     try {
@@ -40,7 +36,7 @@ export const Wrapper = () => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          refetch();
+          mutate(`/Billboards`);
           return "Xóa ảnh thành công!";
         },
         error: () => "Có lỗi xảy ra",
@@ -61,7 +57,7 @@ export const Wrapper = () => {
               <h2 className="scroll-m-20 text-base font-semibold tracking-tight">
                 Danh sách quảng cáo
               </h2>
-              <CreateBillboard reload={refetch} />
+              <CreateBillboard />
             </div>
             <Separator className="h-[0.1px] bg-neutral-200" />
           </CardHeader>

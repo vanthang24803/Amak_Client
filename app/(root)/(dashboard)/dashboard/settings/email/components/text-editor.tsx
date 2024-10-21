@@ -10,6 +10,7 @@ import { Base } from "@/types/base";
 import { TempleType } from "@/types/template";
 import _http from "@/utils/http";
 import { toast } from "sonner";
+import { mutate } from "swr";
 
 export type Template = Base & {
   type: TempleType;
@@ -18,10 +19,9 @@ export type Template = Base & {
 
 type Props = {
   data: Template;
-  reload: () => void;
 };
 
-export const TextEditor = ({ data, reload }: Props) => {
+export const TextEditor = ({ data }: Props) => {
   const [value, setValue] = useState<string>(data.template);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
@@ -51,9 +51,8 @@ export const TextEditor = ({ data, reload }: Props) => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          reload();
+          mutate("/Email/Template");
           handleToggle();
-          reload();
           return "Cập nhật thành công!";
         },
         error: () => "Có lỗi xảy ra",

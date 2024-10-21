@@ -4,14 +4,11 @@ import _http from "@/utils/http";
 import { Loading } from "../../_components/loading";
 import { DataTable } from "./data-table";
 import { columns, ProductColumn } from "./columns";
-import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/services/api/product";
+import useSWR from "swr";
 
 export const ProductTable = () => {
-  const { data, isLoading } = useQuery({
-    queryKey: [`dashboard-products`],
-    queryFn: () => fetchProducts(),
-  });
+  const { data, isLoading } = useSWR(`/Products`, fetchProducts);
 
   if (isLoading) return <Loading />;
 

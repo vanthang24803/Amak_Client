@@ -36,15 +36,13 @@ import { nanoid } from "nanoid";
 import _http from "@/utils/http";
 import { toast } from "sonner";
 import { SubmitButton } from "../../_components/submit-btn";
-import { useQueryClient } from "@tanstack/react-query";
+import { mutate } from "swr";
 
 type FormSchema = z.infer<typeof validationTicketSchema>;
 
 export const CreateTicket = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const queryClient = useQueryClient();
 
   const handleToggle = () => {
     form.reset();
@@ -92,9 +90,7 @@ export const CreateTicket = () => {
       toast.promise(handleCreate, {
         loading: "Đang xử lý...",
         success: () => {
-          queryClient.invalidateQueries({
-            queryKey: [`dashboard-tickets`],
-          });
+          mutate(`/Tickets`);
           handleToggle();
           return "Tạo mới thành công!";
         },

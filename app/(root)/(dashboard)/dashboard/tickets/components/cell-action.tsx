@@ -17,17 +17,16 @@ import {
 
 import { AlertModal } from "@/components/modal/alert-modal";
 import _http from "@/utils/http";
-import { useQueryClient } from "@tanstack/react-query";
+
 import { Ticket } from "@/types";
 import { UpdateTicket } from "./update-ticket";
+import { mutate } from "swr";
 
 interface CellActionProps {
   data: Ticket;
 }
 
 export const CellAction = ({ data }: CellActionProps) => {
-  const queryClient = useQueryClient();
-
   const [openSheet, setOpenSheet] = useState(false);
   const handleToggleSheet = () => setOpenSheet((prev) => !prev);
 
@@ -40,10 +39,8 @@ export const CellAction = ({ data }: CellActionProps) => {
       const handleDelete = _http.delete(`/Tickets/${data.id}`);
       toast.promise(handleDelete, {
         loading: "Đang xử lý...",
-        success: async () => {
-          await queryClient.invalidateQueries({
-            queryKey: [`dashboard-tickets`],
-          });
+        success: () => {
+          mutate(`/Tickets`);
           setOpen(false);
           return "Xóa thành công!";
         },

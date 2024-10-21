@@ -1,7 +1,6 @@
 "use client";
 
 import { fetchGoogleConfig } from "@/services/api/configuration";
-import { useQuery } from "@tanstack/react-query";
 import { Loading } from "../../_components/loading";
 import { FormProvider, useForm } from "react-hook-form";
 import InputPassword from "@/components/ui/input-password";
@@ -21,14 +20,12 @@ import _http from "@/utils/http";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import useSWR, { mutate } from "swr";
 
 type CreateFormValue = z.infer<typeof validateGoogleConfig>;
 
 export const GoogleContainer = () => {
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: [`dashboard-google-settings`],
-    queryFn: () => fetchGoogleConfig(),
-  });
+  const { data, isLoading } = useSWR(`/Google/Config`, fetchGoogleConfig);
 
   const [update, setUpdate] = useState<boolean>(false);
 
@@ -58,7 +55,7 @@ export const GoogleContainer = () => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          refetch();
+          mutate(`/Google/Config`);
           return "Cập nhật thành công!";
         },
         error: () => "Oops!",

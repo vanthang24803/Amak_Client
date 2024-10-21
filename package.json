@@ -39,7 +39,6 @@
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toggle": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
-    "@tanstack/react-query": "^5.56.2",
     "@tanstack/react-table": "^8.20.5",
     "@tiptap/extension-heading": "^2.2.4",
     "@tiptap/extension-image": "^2.2.4",
@@ -67,7 +66,7 @@
     "lucide-react": "^0.414.0",
     "marked": "^14.1.2",
     "nanoid": "^5.0.7",
-    "next": "14.2.5",
+    "next": "14.2.15",
     "next-themes": "^0.3.0",
     "query-string": "^9.1.0",
     "react": "^18",
@@ -93,7 +92,6 @@
     "zustand": "^4.5.4"
   },
   "devDependencies": {
-    "@tanstack/react-query-devtools": "^5.58.0",
     "@types/file-saver": "^2.0.7",
     "@types/fslightbox-react": "^1.7.8",
     "@types/js-cookie": "^3.0.6",

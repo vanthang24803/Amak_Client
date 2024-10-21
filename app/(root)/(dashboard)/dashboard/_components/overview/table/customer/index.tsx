@@ -23,8 +23,8 @@ import {
 import { format, subDays } from "date-fns";
 import { TimeRange } from "@/types";
 import { Loading } from "../../../loading";
-import { useQuery } from "@tanstack/react-query";
 import { fetchTopCustomers } from "@/services/api/overview";
+import useSWR from "swr";
 
 export type TopCustomerTable = {
   day: TopCustomerTableColumn[];
@@ -40,10 +40,10 @@ export const TopCustomerTable = () => {
   const startOfMonth = format(subDays(currentDate, 30), "dd/MM/yyyy");
   const endDate = format(currentDate, "dd/MM/yyyy");
 
-  const { data, isLoading, error } = useQuery<TopCustomerTable>({
-    queryKey: ["dashboard-analytic-customers"],
-    queryFn: fetchTopCustomers,
-  });
+  const { data, isLoading, error } = useSWR<TopCustomerTable>(
+    "/Analytic/Customer",
+    fetchTopCustomers
+  );
 
   const getDataForTimeRange = () => {
     if (!data) return [];

@@ -24,7 +24,7 @@ import {
 import _http from "@/utils/http";
 import { UserAnalytic as AccountColumn } from "@/types/analytic";
 import { ProfileInfo } from "./profile-info";
-import { useQueryClient } from "@tanstack/react-query";
+import { mutate } from "swr";
 
 interface CellActionProps {
   data: AccountColumn;
@@ -32,8 +32,6 @@ interface CellActionProps {
 
 export const CellAction = ({ data }: CellActionProps) => {
   const [open, setOpen] = useState(false);
-
-  const queryClient = useQueryClient();
 
   const handleToggle = () => setOpen(!open);
 
@@ -49,9 +47,7 @@ export const CellAction = ({ data }: CellActionProps) => {
       });
 
       if (response.status === 200) {
-        queryClient.invalidateQueries({
-          queryKey: [`dashboard-analytic-accounts`],
-        });
+        mutate(`/Analytic/Accounts`);
         toast.success("Thành công");
       }
     } catch (error) {
@@ -66,9 +62,7 @@ export const CellAction = ({ data }: CellActionProps) => {
       });
 
       if (response.status === 200) {
-        queryClient.invalidateQueries({
-          queryKey: [`dashboard-analytic-accounts`],
-        });
+        mutate(`/Analytic/Accounts`);
         toast.success("Thành công");
       }
     } catch (error) {

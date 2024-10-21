@@ -1,7 +1,6 @@
 "use client";
 
 import { fetchMailConfig } from "@/services/api/configuration";
-import { useQuery } from "@tanstack/react-query";
 import { Loading } from "../../_components/loading";
 import { FormProvider, useForm } from "react-hook-form";
 import InputPassword from "@/components/ui/input-password";
@@ -21,14 +20,12 @@ import {
 import { Loader } from "lucide-react";
 import _http from "@/utils/http";
 import { toast } from "sonner";
+import useSWR, { mutate } from "swr";
 
 type CreateFormValue = z.infer<typeof validateMailConfig>;
 
 export const GmailContainer = () => {
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: [`dashboard-mail-settings`],
-    queryFn: () => fetchMailConfig(),
-  });
+  const { data, isLoading } = useSWR(`/Mail/Config`, fetchMailConfig);
 
   const [update, setUpdate] = useState<boolean>(false);
 
@@ -69,7 +66,7 @@ export const GmailContainer = () => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          refetch();
+          mutate(`/Mail/Config`);
           return "Cập nhật thành công!";
         },
         error: () => "Oops!",

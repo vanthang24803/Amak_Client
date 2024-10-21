@@ -6,20 +6,19 @@ import { ProductAttribute as Attribute } from "./attribute";
 import { Thumbnail } from "./thumbnail";
 import { Media } from "./media";
 import { ArrowBack } from "../../../_components/arrow-back";
-import { useQuery } from "@tanstack/react-query";
 import { fetchDetailProduct } from "@/services/api/product";
 import { CategoryProduct } from "./category";
 import { OptionProduct } from "./option";
+import useSWR from "swr";
 
 type Props = {
   id: string;
 };
 
 export const Wrapper = ({ id }: Props) => {
-  const { data: product, isLoading } = useQuery({
-    queryKey: [`dashboard-product-${id}`],
-    queryFn: () => fetchDetailProduct(id),
-  });
+  const { data: product, isLoading } = useSWR(`/Products/${id}`, () =>
+    fetchDetailProduct(id)
+  );
 
   if (isLoading) return <Loading />;
 

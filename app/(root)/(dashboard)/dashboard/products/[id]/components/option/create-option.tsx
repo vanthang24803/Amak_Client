@@ -27,7 +27,7 @@ import { updateOptionProductValidation } from "@/validations";
 import { Dispatch, SetStateAction, useState } from "react";
 import _http from "@/utils/http";
 import { toast } from "sonner";
-import { useQueryClient } from "@tanstack/react-query";
+import { mutate } from "swr";
 
 type CreateFormValue = z.infer<typeof updateOptionProductValidation>;
 
@@ -38,7 +38,6 @@ type Props = {
 };
 
 export const CreateOption = ({ open, setOpen, product }: Props) => {
-  const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
 
   const form = useForm({
@@ -69,9 +68,7 @@ export const CreateOption = ({ open, setOpen, product }: Props) => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          queryClient.invalidateQueries({
-            queryKey: [`dashboard-product-${product?.id}`],
-          });
+          mutate(`/Products/${product?.id}`);
           handleClose();
           return "Tạo mới thành công!";
         },

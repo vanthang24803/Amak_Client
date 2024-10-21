@@ -1,17 +1,15 @@
 "use client";
 
 import { fetchCloudinaryPhotos } from "@/services/api/cloudinary";
-import { useQuery } from "@tanstack/react-query";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import { Fragment } from "react";
 import { Loading } from "../../_components/loading";
+import useSWR from "swr";
 
 export const CloudinaryContainer = () => {
-  const { data, isLoading } = useQuery({
-    queryKey: [`dashboard-cloudinary-photos`],
-    queryFn: () => fetchCloudinaryPhotos(),
-  });
+  const { data, isLoading } = useSWR(`/Cloudinary`, () =>
+    fetchCloudinaryPhotos()
+  );
 
   return (
     <div className="pb-20">

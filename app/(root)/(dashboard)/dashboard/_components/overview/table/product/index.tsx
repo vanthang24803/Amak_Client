@@ -24,7 +24,7 @@ import { format, subDays } from "date-fns";
 import { TimeRange } from "@/types";
 import { Loading } from "../../../loading";
 import { fetchTopProducts } from "@/services/api/overview";
-import { useQuery } from "@tanstack/react-query";
+import useSWR from "swr";
 
 export type TopProductTable = {
   day: TopProductTableColumn[];
@@ -40,10 +40,10 @@ export const TopProductTable = () => {
   const startOfMonth = format(subDays(currentDate, 30), "dd/MM/yyyy");
   const endDate = format(currentDate, "dd/MM/yyyy");
 
-  const { data, isLoading: loading } = useQuery<TopProductTable>({
-    queryKey: [`dashboard-top-products`],
-    queryFn: fetchTopProducts,
-  });
+  const { data, isLoading: loading } = useSWR<TopProductTable>(
+    "/Analytic/Product",
+    fetchTopProducts
+  );
 
   const getDataForTimeRange = () => {
     if (!data) return [];

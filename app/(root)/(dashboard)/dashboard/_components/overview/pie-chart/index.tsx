@@ -28,8 +28,8 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import _http from "@/utils/http";
 import { Loading } from "../../loading";
-import { useQuery } from "@tanstack/react-query";
 import { fetchPieChart } from "@/services/api/overview";
+import useSWR from "swr";
 
 export type PieChartType = {
   month: string;
@@ -82,10 +82,7 @@ export const Chart = () => {
     data,
     isLoading: loading,
     error,
-  } = useQuery<PieChartType[]>({
-    queryKey: ["dashboard-analytic-pie-chart"],
-    queryFn: fetchPieChart,
-  });
+  } = useSWR<PieChartType[]>("/Analytic/Pie-Chart", fetchPieChart);
 
   React.useEffect(() => {
     if (data && data.length > 0) {

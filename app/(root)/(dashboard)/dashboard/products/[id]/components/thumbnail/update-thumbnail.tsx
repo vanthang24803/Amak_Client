@@ -16,9 +16,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { ProductDetail } from "@/types";
 import { X, Upload } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
 import _http from "@/utils/http";
 import { toast } from "sonner";
+import { mutate } from "swr";
 
 type Props = {
   open: boolean;
@@ -50,7 +50,6 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export const UpdateThumbnail = ({ product, open, handleToggle }: Props) => {
-  const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -104,10 +103,8 @@ export const UpdateThumbnail = ({ product, open, handleToggle }: Props) => {
 
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
-        success: async () => {
-          await queryClient.invalidateQueries({
-            queryKey: [`dashboard-product-${product?.id}`],
-          });
+        success: () => {
+          mutate(`/Products/${product?.id}`);
           handleToggle();
           reset();
           setPreview(null);

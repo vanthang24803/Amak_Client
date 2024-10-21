@@ -23,7 +23,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import _http from "@/utils/http";
-import { useQueryClient } from "@tanstack/react-query";
+import { mutate } from "swr";
 
 type Props = {
   open: boolean;
@@ -35,7 +35,6 @@ type CreateFormValue = z.infer<typeof validateCategorySchema>;
 
 export const UpdateCategory = ({ open, handleToggle, json }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const queryClient = useQueryClient();
 
   const form = useForm({
     resolver: zodResolver(validateCategorySchema),
@@ -53,9 +52,7 @@ export const UpdateCategory = ({ open, handleToggle, json }: Props) => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          queryClient.invalidateQueries({
-            queryKey: [`dashboard-categories`],
-          });
+          mutate(`/Categories`);
           handleToggle();
           return "Cập nhật thành công!";
         },
