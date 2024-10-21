@@ -58,7 +58,7 @@ export const Container = ({ category, thumbnail }: Props) => {
   };
 
   return (
-    <main className="md:max-w-screen-xl mx-auto  p-4">
+    <main className="md:max-w-screen-xl mx-auto p-4">
       <Navigation collection="Tất cả sản phẩm" />
       <div className="lg:flex w-full lg:space-x-12">
         <div className="flex lg:flex-row flex-col space-y-4 lg:space-y-0 my-4">

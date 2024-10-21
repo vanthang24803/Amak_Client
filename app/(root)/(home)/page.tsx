@@ -5,6 +5,7 @@ import { Categories } from "./_components/categories";
 import { NewBook } from "./_components/new-book";
 import { Manga } from "./_components/manga";
 import Figures from "./_components/figures";
+import { Blogs } from "./_components/blogs";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <NewBook />
       <Manga />
       <Figures />
+      <Blogs />
     </main>
   );
 }
