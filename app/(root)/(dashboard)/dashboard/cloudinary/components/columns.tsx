@@ -4,7 +4,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Cloudinary } from "@/types/cloudinary";
 import { CellAction } from "./cell-action";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
 import Link from "next/link";
 import { convertBytes } from "@/utils/comvert-byte";
 

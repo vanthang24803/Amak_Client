@@ -14,11 +14,11 @@ import { ProductDetail } from "@/types";
 import _http from "@/utils/http";
 import { updateAttributeProductValidation } from "@/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { mutate } from "swr";
 import { z } from "zod";
 
 type Props = {
@@ -29,7 +29,6 @@ type Props = {
 type FromSchema = z.infer<typeof updateAttributeProductValidation>;
 
 export const AttributeForm = ({ product, handleClose }: Props) => {
-  const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
 
   const form = useForm({
@@ -58,9 +57,7 @@ export const AttributeForm = ({ product, handleClose }: Props) => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          queryClient.invalidateQueries({
-            queryKey: [`dashboard-product-${product?.id}`],
-          });
+          mutate(`/Products/${product?.id}`);
           handleClose();
           return "Cập nhật thành công!";
         },

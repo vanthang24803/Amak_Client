@@ -15,9 +15,9 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Fragment, useState } from "react";
 import { CreateMedia } from "./create-media";
-import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import _http from "@/utils/http";
+import { mutate } from "swr";
 
 type Props = {
   photos: Photo[] | undefined;
@@ -27,7 +27,6 @@ type Props = {
 
 export const UpdateMedia = ({ photos, open, handleClose }: Props) => {
   const [isActive, setIsActive] = useState(false);
-  const queryClient = useQueryClient();
   const params = useParams<{ id: string }>();
 
   const handleActive = () => setIsActive(!isActive);
@@ -38,10 +37,8 @@ export const UpdateMedia = ({ photos, open, handleClose }: Props) => {
 
       toast.promise(removePhoto, {
         loading: "Đang xử lý...",
-        success: async () => {
-          await queryClient.invalidateQueries({
-            queryKey: [`dashboard-product-${params.id}`],
-          });
+        success: () => {
+          mutate(`/Products/${params.id}`);
           handleClose();
           return "Xóa ảnh thành công!";
         },

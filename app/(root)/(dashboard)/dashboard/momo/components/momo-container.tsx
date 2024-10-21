@@ -1,17 +1,13 @@
 "use client";
 
-import { fetchMailConfig, fetchMomoConfig } from "@/services/api/configuration";
-import { useQuery } from "@tanstack/react-query";
+import { fetchMomoConfig } from "@/services/api/configuration";
 import { Loading } from "../../_components/loading";
 import { FormProvider, useForm } from "react-hook-form";
 import InputPassword from "@/components/ui/input-password";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import {
-  validateMailConfig,
-  validateMomoConfig,
-} from "@/validations/configuration";
+import { validateMomoConfig } from "@/validations/configuration";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -24,14 +20,12 @@ import {
 import { Loader } from "lucide-react";
 import _http from "@/utils/http";
 import { toast } from "sonner";
+import useSWR, { mutate } from "swr";
 
 type CreateFormValue = z.infer<typeof validateMomoConfig>;
 
 export const MomoContainer = () => {
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: [`dashboard-momo-settings`],
-    queryFn: () => fetchMomoConfig(),
-  });
+  const { data, isLoading } = useSWR(`/Momo/Config`, fetchMomoConfig);
 
   const [update, setUpdate] = useState<boolean>(false);
 
@@ -69,7 +63,7 @@ export const MomoContainer = () => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          refetch();
+          mutate(`/Momo/Config`);
           return "Cập nhật thành công!";
         },
         error: () => "Oops!",

@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import _http from "@/utils/http";
-import { useQueryClient } from "@tanstack/react-query";
+import { mutate } from "swr";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
@@ -49,7 +49,6 @@ const schema = z.object({
 export type CreteMediaType = z.infer<typeof schema>;
 
 export const UploadCloudinary = () => {
-  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [previews, setPreviews] = useState<string[]>([]);
@@ -135,9 +134,8 @@ export const UploadCloudinary = () => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          queryClient.invalidateQueries({
-            queryKey: [`dashboard-cloudinary-photos`],
-          });
+          mutate(`/Cloudinary`);
+          setPreviews([]);
           handleToggle();
           return "Tải lên hình ảnh thành công!";
         },

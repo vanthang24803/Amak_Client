@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/tooltip";
 import { fetchAnalytic } from "@/services/api/overview";
 import { AnalyticStatistic } from "@/types/statistic";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 import { Loader } from "lucide-react";
@@ -26,6 +25,7 @@ import { AIResponse } from "@/types/ai-response";
 import { Button } from "@/components/ui/button";
 import { marked } from "marked";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import useSWR from "swr";
 
 export const AiDialogDashboard = () => {
   const [open, setOpen] = useState(false);
@@ -35,11 +35,7 @@ export const AiDialogDashboard = () => {
 
   const handleToggle = () => setOpen(!open);
 
-  const { data: prompt } = useQuery<AnalyticStatistic>({
-    queryKey: ["dashboard-analytic-statistic"],
-    queryFn: fetchAnalytic,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: prompt } = useSWR(`/Analytic/Statistic`, fetchAnalytic);
 
   const fetchAIAnalytic = async (jsonSend: AnalyticStatistic) => {
     try {

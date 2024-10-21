@@ -17,12 +17,16 @@ import {
 import _http from "@/utils/http";
 import { OptionTrash } from "@/types/trash";
 import { mutate } from "swr";
+import { Fragment, useState } from "react";
+import { AlertModal } from "@/components/modal/alert-modal";
 
 interface CellActionProps {
   data: OptionTrash;
 }
 
 export const CellAction = ({ data }: CellActionProps) => {
+  const [open, setOpen] = useState<boolean>(false);
+
   const onRevert = async () => {
     const jsonSend = {
       reverts: [
@@ -49,30 +53,52 @@ export const CellAction = ({ data }: CellActionProps) => {
   };
 
   const onDelete = async () => {
-    toast.success("delete work");
+    toast.info("It's work");
+    // try {
+    //   const handleUpdate = _http.delete(`/Options/${data.id}`);
+    //   toast.promise(handleUpdate, {
+    //     loading: "Đang xử lý...",
+    //     success: async () => {
+    //       mutate("/Trash/Option");
+    //       setOpen(false);
+    //       return "Xóa thành công!";
+    //     },
+    //     error: () => "Oops!",
+    //   });
+    // } catch (error) {
+    //   console.log("Error:", error);
+    // }
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-40">
-        <DropdownMenuLabel>Tùy chọn</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem className="text-[12px]" onClick={onRevert}>
-            <Undo2 className="mr-2 h-4 w-4" />
-            Khôi phục
-          </DropdownMenuItem>
-          <DropdownMenuItem className="text-[12px]" onClick={onDelete}>
-            <Trash className="mr-2 h-4 w-4" /> Xóa
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Fragment>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={onDelete}
+        loading={false}
+      />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-40">
+          <DropdownMenuLabel>Tùy chọn</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem className="text-[12px]" onClick={onRevert}>
+              <Undo2 className="mr-2 h-4 w-4" />
+              Khôi phục
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-[12px]" onClick={onDelete}>
+              <Trash className="mr-2 h-4 w-4" /> Xóa
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </Fragment>
   );
 };

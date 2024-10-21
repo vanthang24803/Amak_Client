@@ -5,15 +5,15 @@ import { CustomCard } from "./card-overview";
 import CountUp from "react-countup";
 import _http from "@/utils/http";
 import { Separator } from "@/components/ui/separator";
-import { useQuery } from "@tanstack/react-query";
 import { fetchAnalytic } from "@/services/api/overview";
 import { AnalyticStatistic } from "@/types/statistic";
+import useSWR from "swr";
 
 export const HeaderOverview = () => {
-  const { data, isLoading: loading } = useQuery<AnalyticStatistic>({
-    queryKey: [`dashboard-analytic-statistic`],
-    queryFn: fetchAnalytic,
-  });
+  const { data, isLoading: loading } = useSWR<AnalyticStatistic>(
+    "/Analytic/Statistic",
+    fetchAnalytic
+  );
 
   const renderCard = (
     title: string,

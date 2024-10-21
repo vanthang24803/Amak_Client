@@ -23,13 +23,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import _http from "@/utils/http";
-import { useQueryClient } from "@tanstack/react-query";
 import { AddNewButton } from "../../_components/add-new-btn";
+import { mutate } from "swr";
 
 type CreateFormValue = z.infer<typeof validateCategorySchema>;
 
 export const CreateCategory = () => {
-  const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -51,11 +50,10 @@ export const CreateCategory = () => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          queryClient.invalidateQueries({
-            queryKey: [`dashboard-categories`],
-          });
+          mutate(`/Categories`);
           handleToggle();
-          return "Cập nhật thành công!";
+          form.reset();
+          return "Tạo mới thành công!";
         },
         error: () => "Oops!",
       });

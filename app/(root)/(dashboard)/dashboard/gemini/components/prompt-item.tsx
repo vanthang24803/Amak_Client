@@ -16,13 +16,13 @@ import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { mutate } from "swr";
 
 type Props = {
   prompt: Prompt | undefined;
-  reload: () => void;
 };
 
-export const PromptItem = ({ prompt, reload }: Props) => {
+export const PromptItem = ({ prompt }: Props) => {
   const [isUpdate, setIsUpdate] = useState(false);
 
   const form = useForm({
@@ -52,7 +52,7 @@ export const PromptItem = ({ prompt, reload }: Props) => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          reload();
+          mutate(`/Gemini/Prompt`);
           return "Cập nhật thành công!";
         },
         error: () => "Oops!",

@@ -37,7 +37,7 @@ import { AreaChartType } from "@/types";
 import _http from "@/utils/http";
 import { Loading } from "../../loading";
 import { fetchAreaChart } from "@/services/api/overview";
-import { useQuery } from "@tanstack/react-query";
+import useSWR from "swr";
 
 export function Chart() {
   const [timeRange, setTimeRange] = useState<"month" | "week">("week");
@@ -59,10 +59,10 @@ export function Chart() {
     },
   } satisfies ChartConfig;
 
-  const { data: chartData, isLoading: loading } = useQuery<AreaChartType>({
-    queryKey: ["dashboard-analytic-area-chart"],
-    queryFn: fetchAreaChart,
-  });
+  const { data: chartData, isLoading: loading } = useSWR<AreaChartType>(
+    "/Analytic/Area-Chart",
+    fetchAreaChart
+  );
 
   const data = timeRange === "month" ? chartData?.month : chartData?.week;
 

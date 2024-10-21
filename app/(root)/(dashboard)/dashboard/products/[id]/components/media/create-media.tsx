@@ -16,11 +16,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { X } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
 import _http from "@/utils/http";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import Image from "next/image";
+import { mutate } from "swr";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
@@ -45,7 +45,6 @@ type Props = {
 export type CreteMediaType = z.infer<typeof schema>;
 
 export const CreateMedia = ({ handleClose }: Props) => {
-  const queryClient = useQueryClient();
   const params = useParams<{ id: string }>();
   const [loading, setLoading] = useState(false);
   const [previews, setPreviews] = useState<string[]>([]);
@@ -84,9 +83,7 @@ export const CreateMedia = ({ handleClose }: Props) => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          queryClient.invalidateQueries({
-            queryKey: [`dashboard-product-${params.id}`],
-          });
+          mutate(`/Products/${params.id}`);
           handleClose();
           return "Tải lên hình ảnh thành công!";
         },

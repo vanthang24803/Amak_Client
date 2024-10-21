@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { fetchPrompts } from "@/services/api/prompt";
 import { Prompt, PromptType } from "@/types/prompt";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 import {
@@ -14,12 +13,10 @@ import {
 } from "@/components/ui/select";
 import { Loading } from "../../_components/loading";
 import { PromptItem } from "./prompt-item";
+import useSWR from "swr";
 
 export const GeminiPrompt = () => {
-  const { data, isLoading, refetch } = useQuery<Prompt[]>({
-    queryKey: [`dashboard-prompts`],
-    queryFn: () => fetchPrompts(),
-  });
+  const { data, isLoading } = useSWR(`/Gemini/Prompt`, fetchPrompts);
 
   const [select, setSelect] = useState<PromptType>("ANALYTIC_STATISTIC");
   const [filter, setFilter] = useState<Prompt[]>([]);
@@ -85,11 +82,7 @@ export const GeminiPrompt = () => {
         </div>
       </CardHeader>
       <CardContent>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <PromptItem reload={refetch} prompt={filter[0]} />
-        )}
+        {isLoading ? <Loading /> : <PromptItem prompt={filter[0]} />}
       </CardContent>
     </Card>
   );

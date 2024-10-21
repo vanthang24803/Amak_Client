@@ -4,15 +4,11 @@ import { Loading } from "../../_components/loading";
 import _http from "@/utils/http";
 import { DataTable } from "./data-table";
 import { columns, OrderColumn } from "./columns";
-import { useQuery } from "@tanstack/react-query";
-import { Order } from "@/types";
 import { fetchOrders } from "@/services/api/order";
+import useSWR from "swr";
 
 export const OrderTable = () => {
-  const { data, isLoading: loading } = useQuery<Order[]>({
-    queryKey: [`dashboard-orders`],
-    queryFn: fetchOrders,
-  });
+  const { data, isLoading: loading } = useSWR(`/Orders`, fetchOrders);
 
   if (loading) return <Loading />;
 

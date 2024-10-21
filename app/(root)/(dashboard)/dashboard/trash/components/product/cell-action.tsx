@@ -1,6 +1,6 @@
 "use client";
 
-import {MoreHorizontal, Trash, Undo2 } from "lucide-react";
+import { MoreHorizontal, Trash, Undo2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";

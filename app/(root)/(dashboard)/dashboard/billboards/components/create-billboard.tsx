@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { AddNewButton } from "../../_components/add-new-btn";
+import { mutate } from "swr";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = [
@@ -43,11 +44,7 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-type Props = {
-  reload: () => void;
-};
-
-export const CreateBillboard = ({ reload }: Props) => {
+export const CreateBillboard = () => {
   const [open, setOpen] = useState(false);
   const handleToggle = () => setOpen(!open);
 
@@ -101,7 +98,7 @@ export const CreateBillboard = ({ reload }: Props) => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          reload();
+          mutate("/Billboards");
           handleToggle();
           reset();
           setPreview(null);

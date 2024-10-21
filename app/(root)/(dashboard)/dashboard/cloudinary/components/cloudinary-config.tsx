@@ -1,7 +1,6 @@
 "use client";
 
 import { fetchCloudinaryConfig } from "@/services/api/configuration";
-import { useQuery } from "@tanstack/react-query";
 import { Loading } from "../../_components/loading";
 import { FormProvider, useForm } from "react-hook-form";
 import InputPassword from "@/components/ui/input-password";
@@ -24,14 +23,15 @@ import {
 import { Loader } from "lucide-react";
 import _http from "@/utils/http";
 import { toast } from "sonner";
+import useSWR, { mutate } from "swr";
 
 type CreateFormValue = z.infer<typeof validateCloudinaryConfig>;
 
 export const CloudinarySettings = () => {
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: [`dashboard-cloudinary-settings`],
-    queryFn: () => fetchCloudinaryConfig(),
-  });
+  const { data, isLoading } = useSWR(
+    `/Cloudinary/Config`,
+    fetchCloudinaryConfig
+  );
 
   const [update, setUpdate] = useState<boolean>(false);
 
@@ -63,7 +63,7 @@ export const CloudinarySettings = () => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          refetch();
+          mutate(`/Cloudinary/Config`);
           return "Cập nhật thành công!";
         },
         error: () => "Oops!",

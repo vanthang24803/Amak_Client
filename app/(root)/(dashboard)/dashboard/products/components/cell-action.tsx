@@ -18,8 +18,8 @@ import {
 import { ProductColumn } from "./columns";
 import _http from "@/utils/http";
 import { Fragment, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { AlertModal } from "@/components/modal/alert-modal";
+import { mutate } from "swr";
 
 interface CellActionProps {
   data: ProductColumn;
@@ -30,8 +30,6 @@ export const CellAction = ({ data }: CellActionProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const queryClient = useQueryClient();
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
@@ -46,10 +44,8 @@ export const CellAction = ({ data }: CellActionProps) => {
 
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
-        success: async () => {
-          await queryClient.invalidateQueries({
-            queryKey: [`dashboard-products`],
-          });
+        success: () => {
+          mutate(`/Products`);
           setIsOpen(false);
           return "Chuyển vào thùng rác thành công!";
         },

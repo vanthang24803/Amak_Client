@@ -11,7 +11,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { fetchAnalyticAccounts } from "@/services/api/account";
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { z } from "zod";
 import MultiSelectDropdown from "./select-user";
@@ -27,6 +26,7 @@ import {
 import { Button } from "@/components/ui/button";
 import _http from "@/utils/http";
 import { toast } from "sonner";
+import useSWR from "swr";
 
 const FormSchema = z.object({
   content: z.string().min(1, {
@@ -41,10 +41,7 @@ export const Wrapper = () => {
   const [isGlobal, setIsGlobal] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const { data } = useQuery({
-    queryKey: [`dashboard-analytic-accounts`],
-    queryFn: () => fetchAnalyticAccounts(),
-  });
+  const { data } = useSWR("/Analytic/Account", fetchAnalyticAccounts);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

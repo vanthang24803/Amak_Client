@@ -1,29 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Loading } from "../../../_components/loading";
 import { OrderDetail } from "./order-detail";
 import { OrderTimeline } from "./order-timeline";
-import { Order } from "@/types";
 import _http from "@/utils/http";
 import { toast } from "sonner";
 import { ArrowBack } from "../../../_components/arrow-back";
-import { useQuery } from "@tanstack/react-query";
 import { fetchOrderDetail } from "@/services/api/order";
+import useSWR, { mutate } from "swr";
 
 type Props = {
   id: string;
 };
 
 export const Wrapper = ({ id }: Props) => {
-  const {
-    data,
-    isLoading: loading,
-    refetch,
-  } = useQuery<Order>({
-    queryKey: [`dashboard-order-${id}`],
-    queryFn: () => fetchOrderDetail(id),
-  });
+  const { data, isLoading: loading } = useSWR(`/Order-${id}`, () =>
+    fetchOrderDetail(id)
+  );
 
   const handlerUpdateStatus = async (id: string, type: string) => {
     const updateStatusPromise = _http.put(`/Orders/${id}/Status`, {
@@ -33,7 +26,7 @@ export const Wrapper = ({ id }: Props) => {
     toast.promise(updateStatusPromise, {
       loading: "Đang xử lý...",
       success: () => {
-        refetch();
+        mutate(`/Order-${id}`);
         return "Cập nhật thành công!";
       },
       error: () => "Oops!",

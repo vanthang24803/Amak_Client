@@ -1,7 +1,6 @@
 "use client";
 
 import { fetchGeminiConfig } from "@/services/api/configuration";
-import { useQuery } from "@tanstack/react-query";
 import { Loading } from "../../_components/loading";
 import { FormProvider, useForm } from "react-hook-form";
 import InputPassword from "@/components/ui/input-password";
@@ -29,14 +28,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useSWR, { mutate } from "swr";
 
 type CreateFormValue = z.infer<typeof validateGeminiConfig>;
 
 export const GeminiConfig = () => {
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: [`dashboard-gemini-settings`],
-    queryFn: () => fetchGeminiConfig(),
-  });
+  const { data, isLoading } = useSWR(`/Gemini/Config`, fetchGeminiConfig);
 
   const [update, setUpdate] = useState<boolean>(false);
 
@@ -68,7 +65,7 @@ export const GeminiConfig = () => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
-          refetch();
+          mutate(`/Gemini/Config`);
           return "Cập nhật thành công!";
         },
         error: () => "Oops!",

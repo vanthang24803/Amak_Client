@@ -1,6 +1,5 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { Container } from "../../_components/container";
 import { ContainerHeader } from "../../_components/container/conatiner-header";
 import { TextEditor } from "./text-editor";
@@ -18,6 +17,7 @@ import { useEffect, useState } from "react";
 import { TempleType } from "@/types/template";
 import { Base } from "@/types/base";
 import { Loading } from "../../../_components/loading";
+import useSWR from "swr";
 
 export type Template = Base & {
   type: TempleType;
@@ -25,10 +25,10 @@ export type Template = Base & {
 };
 
 export default function WrapperEmailSetting() {
-  const { data, isLoading, refetch } = useQuery<Template[]>({
-    queryKey: [`dashboard-emails-template`],
-    queryFn: () => fetchTemplates(),
-  });
+  const { data, isLoading } = useSWR<Template[]>(
+    "/Email/Template",
+    fetchTemplates
+  );
 
   const [select, setSelect] = useState<TempleType>("ORDER");
   const [filteredTemplates, setFilteredTemplates] = useState<Template[]>([]);
@@ -78,7 +78,7 @@ export default function WrapperEmailSetting() {
       ) : (
         <>
           {filteredTemplates.map((item) => (
-            <TextEditor data={item} key={item.id} reload={refetch} />
+            <TextEditor data={item} key={item.id} />
           ))}
         </>
       )}

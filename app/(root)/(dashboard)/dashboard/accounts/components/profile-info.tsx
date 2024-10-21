@@ -11,13 +11,13 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { getDetailAccount } from "@/services/api/account";
 import { convertPrice } from "@/utils/price";
-import { useQuery } from "@tanstack/react-query";
 import { Loading } from "../../_components/loading";
 import { statusRank, statusRankIcon } from "@/constants";
 import Image from "next/image";
 import { formatStringToDate } from "@/utils/date";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import useSWR from "swr";
 
 type Props = {
   open: boolean;
@@ -27,10 +27,15 @@ type Props = {
 };
 
 export const ProfileInfo = ({ open, handleToggle, id, isAdmin }: Props) => {
-  const { data: profile, isLoading } = useQuery({
-    queryKey: [`dashboard-accounts-${id}`],
-    queryFn: () => getDetailAccount(id),
-  });
+  const {
+    data: profile,
+    error,
+    isLoading,
+  } = useSWR(id ? `/Analytic/Accounts/${id}` : null, () =>
+    getDetailAccount(id)
+  );
+
+  if (error) console.log(error);
 
   const onHandleBan = () => {
     toast.error("Handle Ban");

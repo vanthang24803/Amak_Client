@@ -17,16 +17,14 @@ import {
 
 import { AlertModal } from "@/components/modal/alert-modal";
 import _http from "@/utils/http";
-import { useQueryClient } from "@tanstack/react-query";
 import { Cloudinary } from "@/types/cloudinary";
+import { mutate } from "swr";
 
 interface CellActionProps {
   data: Cloudinary;
 }
 
 export const CellAction = ({ data }: CellActionProps) => {
-  const queryClient = useQueryClient();
-
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -47,9 +45,7 @@ export const CellAction = ({ data }: CellActionProps) => {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: async () => {
-          await queryClient.invalidateQueries({
-            queryKey: [`dashboard-cloudinary-photos`],
-          });
+          mutate(`/Cloudinary`);
           setOpen(false);
           return "Xóa thành công!";
         },

@@ -17,9 +17,9 @@ import {
 import { Option } from "@/types";
 import { UpdateOption } from "./update-option";
 import { AlertModal } from "@/components/modal/alert-modal";
-import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import _http from "@/utils/http";
+import { mutate } from "swr";
 
 interface CellActionProps {
   data: Option;
@@ -31,7 +31,6 @@ export const CellAction = ({ data }: CellActionProps) => {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
 
   const params = useParams<{ id: string }>();
-  const queryClient = useQueryClient();
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
@@ -46,16 +45,14 @@ export const CellAction = ({ data }: CellActionProps) => {
     try {
       setIsLoading(true);
 
-      const handleUpdate = _http.delete(
+      const handleDelete = _http.delete(
         `/Products/${params.id}/Options/${data.id}`
       );
 
-      toast.promise(handleUpdate, {
+      toast.promise(handleDelete, {
         loading: "Đang xử lý...",
         success: () => {
-          queryClient.invalidateQueries({
-            queryKey: [`dashboard-product-${params.id}`],
-          });
+          mutate(`/Products/${params.id}`);
           setIsOpenDialog(false);
           return "Xóa thành công!";
         },

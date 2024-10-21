@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/card";
 import { fetchCategories } from "@/services/api/category";
 import { StepperFormValues } from "@/types/hook-stepper";
-import { useQuery } from "@tanstack/react-query";
 import { useFormContext } from "react-hook-form";
+import useSWR from "swr";
 
 export const CategoriesForm = () => {
   const {
@@ -20,10 +20,7 @@ export const CategoriesForm = () => {
     setValue,
   } = useFormContext<StepperFormValues>();
 
-  const { data } = useQuery({
-    queryKey: [`dashboard-categories`],
-    queryFn: () => fetchCategories(),
-  });
+  const { data } = useSWR(`/Categories`, fetchCategories);
 
   const categorySelect = data?.data.result.map((item) => ({
     label: item.name,

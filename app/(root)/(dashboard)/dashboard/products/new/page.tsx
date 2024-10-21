@@ -20,6 +20,7 @@ import { OptionsForm } from "./components/options-from";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import _http from "@/utils/http";
+import { mutate } from "swr";
 
 export default function CreateProduct() {
   const [activeStep, setActiveStep] = useState(1);
@@ -107,6 +108,7 @@ export default function CreateProduct() {
       toast.promise(handleUpdate, {
         loading: "Đang xử lý...",
         success: () => {
+          mutate(`/Products`);
           router.push(`/dashboard/products`);
           return "Tạo sản phẩm thành công!";
         },

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,15 +19,13 @@ import { CategoryColumn } from "./columns";
 import { AlertModal } from "@/components/modal/alert-modal";
 import _http from "@/utils/http";
 import { UpdateCategory } from "./update-categories";
-import { useQueryClient } from "@tanstack/react-query";
+import { mutate } from "swr";
 
 interface CellActionProps {
   data: CategoryColumn;
 }
 
 export const CellAction = ({ data }: CellActionProps) => {
-  const queryClient = useQueryClient();
-
   const [openSheet, setOpenSheet] = useState(false);
   const handleToggleSheet = () => setOpenSheet((prev) => !prev);
 
@@ -39,14 +36,12 @@ export const CellAction = ({ data }: CellActionProps) => {
     try {
       setLoading(true);
 
-      const handleUpdate = _http.delete(`/Categories/${data.id}`);
+      const handleDelete = _http.delete(`/Categories/${data.id}`);
 
-      toast.promise(handleUpdate, {
+      toast.promise(handleDelete, {
         loading: "Đang xử lý...",
-        success: async () => {
-          await queryClient.invalidateQueries({
-            queryKey: [`dashboard-categories`],
-          });
+        success: () => {
+          mutate("/Categories");
           setOpen(false);
           return "Xóa thành công!";
         },
