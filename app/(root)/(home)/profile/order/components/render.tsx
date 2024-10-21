@@ -6,6 +6,7 @@ import { Spinner } from "@/components/spinner";
 import PaginationComponent from "@/components/pagination";
 import useFetchOrder from "@/hooks/use-fetch-order";
 import { Fragment } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 const font = Inter({
   weight: "400",
@@ -23,9 +24,9 @@ export const Render = () => {
     <Tabs
       defaultValue={select}
       onValueChange={(value) => setSelect(value)}
-      className={`w-full ${font.className}`}
+      className={`w-full md:block hidden ${font.className}`}
     >
-      <TabsList className="md:grid hidden w-full grid-cols-7">
+      <TabsList className="grid w-full grid-cols-7">
         <TabsTrigger value="All">Tất cả</TabsTrigger>
         <TabsTrigger value="Pending">Đang xử lý</TabsTrigger>
         <TabsTrigger value="Create">Xác nhận</TabsTrigger>
@@ -42,32 +43,43 @@ export const Render = () => {
           </div>
         ) : (
           <Fragment>
-            {data && data.result.length > 0 ? (
-              <div className="flex flex-col space-y-4">
-                <div className="flex flex-col space-y-2 pt-3">
-                  {data.result.map((item) => (
-                    <OrderData key={item.id} order={item} />
-                  ))}
-                </div>
-                <PaginationComponent
-                  currentPage={data._currentPage}
-                  totalPage={data._totalPage}
-                  onPageChange={handlePageChange}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-center flex-col space-y-2 w-full min-h-[30vh]">
-                <Image
-                  src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png"
-                  alt="cart"
-                  width={120}
-                  height={120}
-                />
-                <p className="tracking-tighter text-[14px]">
-                  Chưa có đơn hàng!
-                </p>
-              </div>
-            )}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={select}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow"
+              >
+                {data && data.result.length > 0 ? (
+                  <div className="flex flex-col space-y-4">
+                    <div className="flex flex-col space-y-2 pt-3">
+                      {data.result.map((item) => (
+                        <OrderData key={item.id} order={item} />
+                      ))}
+                    </div>
+                    <PaginationComponent
+                      currentPage={data._currentPage}
+                      totalPage={data._totalPage}
+                      onPageChange={handlePageChange}
+                    />
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center flex-col space-y-2 w-full min-h-[30vh]">
+                    <Image
+                      src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png"
+                      alt="cart"
+                      width={120}
+                      height={120}
+                    />
+                    <p className="tracking-tighter text-[14px]">
+                      Chưa có đơn hàng!
+                    </p>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
           </Fragment>
         )}
       </TabsContent>

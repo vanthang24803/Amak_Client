@@ -90,8 +90,6 @@ export const Chart = () => {
     }
   }, [data]);
 
-  console.log(data);
-
   const chartConfig = React.useMemo(
     () => (data ? generateChartConfig(data) : {}),
     [data]

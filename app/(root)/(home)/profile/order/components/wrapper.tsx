@@ -3,6 +3,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Modal } from "../../_components/modal";
 import { Render } from "./render";
+import OrderTabs from "./order-tab";
 
 export const Wrapper = () => {
   return (
@@ -18,6 +19,7 @@ export const Wrapper = () => {
         </h2>
         <Separator />
         <Render />
+        <OrderTabs />
       </Modal>
     </div>
   );
