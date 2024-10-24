@@ -14,7 +14,7 @@ import { generateSlug } from "@/utils/slug";
 
 export const Blogs = () => {
   const { data, isLoading, error } = useSWR<Blog[]>(`/Blogs`, () =>
-    fetchBlog(1, 5)
+    fetchBlog(1, 5),
   );
 
   if (error) console.log(error);

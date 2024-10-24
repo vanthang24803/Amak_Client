@@ -41,7 +41,7 @@ export function DatePicker({ className, selected, onSelect }: DatePickerProps) {
           className={cn(
             "h-9 justify-start text-left font-normal",
             !date && "text-muted-foreground",
-            className
+            className,
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />

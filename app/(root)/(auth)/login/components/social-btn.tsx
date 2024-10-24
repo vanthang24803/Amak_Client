@@ -28,7 +28,7 @@ export const SocialButton = ({ className, onClick, provider, size }: Props) => {
     <Button
       className={cn(
         `bg-white hover:bg-white text-black flex items-center justify-start gap-9`,
-        className
+        className,
       )}
       onClick={onClick}
     >

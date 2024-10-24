@@ -17,7 +17,7 @@ type Props = {
 
 export const Wrapper = ({ id }: Props) => {
   const { data: product, isLoading } = useSWR(`/Products/${id}`, () =>
-    fetchDetailProduct(id)
+    fetchDetailProduct(id),
   );
 
   if (isLoading) return <Loading />;

@@ -32,7 +32,7 @@ export const ThumbnailForm = () => {
         clearErrors("thumbnail");
       }
     },
-    [setValue, clearErrors]
+    [setValue, clearErrors],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

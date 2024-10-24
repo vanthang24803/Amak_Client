@@ -46,7 +46,7 @@ export const CellAction = ({ data }: CellActionProps) => {
       setIsLoading(true);
 
       const handleDelete = _http.delete(
-        `/Products/${params.id}/Options/${data.id}`
+        `/Products/${params.id}/Options/${data.id}`,
       );
 
       toast.promise(handleDelete, {

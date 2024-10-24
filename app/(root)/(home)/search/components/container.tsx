@@ -24,7 +24,7 @@ export const Container = () => {
     handleFetcher,
     {
       revalidateOnFocus: false,
-    }
+    },
   );
 
   if (error) console.log(error);

@@ -10,7 +10,7 @@ import useSWR from "swr";
 export const AccountTable = () => {
   const { data, error, isLoading } = useSWR(
     "/Analytic/Accounts",
-    fetchAnalyticAccounts
+    fetchAnalyticAccounts,
   );
 
   if (isLoading) return <Loading />;

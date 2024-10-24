@@ -62,7 +62,7 @@ export const CreateOption = ({ open, setOpen, product }: Props) => {
 
       const handleUpdate = _http.post(
         `/Products/${product?.id}/Options`,
-        jsonSend
+        jsonSend,
       );
 
       toast.promise(handleUpdate, {

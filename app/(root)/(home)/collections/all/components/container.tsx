@@ -26,7 +26,7 @@ export const Container = () => {
       "/Products",
       { Page: currentPage, OrderBy: filter, SortBy: price, Limit: 20 },
     ],
-    ([url, params]) => fetcher(url, params)
+    ([url, params]) => fetcher(url, params),
   );
 
   const handlePageChange = (page: number) => {

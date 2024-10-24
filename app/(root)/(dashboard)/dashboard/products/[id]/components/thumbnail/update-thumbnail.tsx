@@ -39,11 +39,11 @@ const schema = z.object({
     .any()
     .refine(
       (file) => file && file.size <= MAX_FILE_SIZE,
-      "File hình ảnh phải có size nhỏ hơn 5MB"
+      "File hình ảnh phải có size nhỏ hơn 5MB",
     )
     .refine(
       (file) => file && ACCEPTED_IMAGE_TYPES.includes(file.type),
-      "Các định dạng được chấp nhận: .jpg, .jpeg, .png, .webp"
+      "Các định dạng được chấp nhận: .jpg, .jpeg, .png, .webp",
     ),
 });
 
@@ -71,7 +71,7 @@ export const UpdateThumbnail = ({ product, open, handleToggle }: Props) => {
         setPreview(URL.createObjectURL(file));
       }
     },
-    [setValue]
+    [setValue],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -98,7 +98,7 @@ export const UpdateThumbnail = ({ product, open, handleToggle }: Props) => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       toast.promise(handleUpdate, {

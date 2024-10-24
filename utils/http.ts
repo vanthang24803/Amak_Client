@@ -10,7 +10,7 @@ async function refreshTokenRequest(refreshToken: string | undefined) {
     `${env.NEXT_PUBLIC_API_URL}/Authentication/RefreshToken`,
     {
       token: refreshToken,
-    }
+    },
   );
   if (response.status === 200) {
     Cookies.set("ac_token", response.data.result.accessToken);

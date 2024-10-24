@@ -97,14 +97,14 @@ export const useCart = create<Store>((set, get) => ({
     set({
       totalItems: get().data.reduce(
         (accumulator, item) => accumulator + item.quantity,
-        0
+        0,
       ),
       totalPrice: get().data.reduce(
         (accumulator, item) =>
           accumulator +
           item.quantity * item.price -
           item.quantity * item.price * (item.sale / 100),
-        0
+        0,
       ),
     });
   },

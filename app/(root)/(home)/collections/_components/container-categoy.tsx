@@ -46,7 +46,7 @@ export const Container = ({ category, thumbnail }: Props) => {
     ([url, params]) => fetcher(url, params),
     {
       revalidateOnFocus: false,
-    }
+    },
   );
 
   if (error) {

@@ -74,16 +74,16 @@ export const Address = ({ setAddress }: SelectAddressProps) => {
   useEffect(() => {
     if (selectedProvince && selectedDistrict) {
       const provinceName = provinces.find(
-        (province) => province.province_id === selectedProvince
+        (province) => province.province_id === selectedProvince,
       )?.province_name;
       const districtName = districts.find(
-        (district) => district.district_id === selectedDistrict
+        (district) => district.district_id === selectedDistrict,
       )?.district_name;
       const wardName = wards.find(
-        (ward) => ward.ward_id === selectedWard
+        (ward) => ward.ward_id === selectedWard,
       )?.ward_name;
       setAddress(
-        `${provinceName || ""}, ${districtName || ""}, ${wardName || ""}`
+        `${provinceName || ""}, ${districtName || ""}, ${wardName || ""}`,
       );
     }
   }, [

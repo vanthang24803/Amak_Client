@@ -46,7 +46,7 @@ export default function useSearch() {
         url: window.location.href,
         query,
       },
-      { skipNull: true, skipEmptyString: true }
+      { skipNull: true, skipEmptyString: true },
     );
 
     router.push(url);

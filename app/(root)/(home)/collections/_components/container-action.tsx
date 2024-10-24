@@ -38,7 +38,7 @@ export const Container = ({
     ([url, params]) => fetcher(url, params),
     {
       revalidateOnFocus: false,
-    }
+    },
   );
 
   if (error) {

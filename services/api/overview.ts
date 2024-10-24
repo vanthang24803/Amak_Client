@@ -8,7 +8,7 @@ import _http from "@/utils/http";
 
 const fetchTopCustomers = async () => {
   const response = await _http.get<Response<TopCustomerTable>>(
-    `/Analytic/TopCustomer`
+    `/Analytic/TopCustomer`,
   );
   if (response.status === 200) {
     return response.data.result;

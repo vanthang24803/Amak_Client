@@ -17,11 +17,11 @@ export const Render = () => {
   const { profile } = useAuth();
 
   const address: Address[] | undefined = profile?.addresses.filter(
-    (a) => !a.isActive
+    (a) => !a.isActive,
   );
 
   const activeAddress: Address | undefined = profile?.addresses?.filter(
-    (address) => address.isActive
+    (address) => address.isActive,
   )[0];
 
   return (

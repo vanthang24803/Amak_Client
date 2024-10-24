@@ -29,7 +29,7 @@ export const Container = () => {
   const { isClient } = useClient();
 
   const active: Address | undefined = profile?.addresses?.filter(
-    (address) => address.isActive
+    (address) => address.isActive,
   )[0];
 
   const [exitAddress, setAddress] = useState(active?.addressName ?? "");

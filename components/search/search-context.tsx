@@ -48,7 +48,7 @@ export const SearchContent = ({
                               <span className="line-through text-neutral-500 text-xs">
                                 {formatPrice(
                                   item.options[0].price,
-                                  item.options[0].sale
+                                  item.options[0].sale,
                                 )}
                                 ₫
                               </span>
