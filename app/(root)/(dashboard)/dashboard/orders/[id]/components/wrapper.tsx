@@ -15,7 +15,7 @@ type Props = {
 
 export const Wrapper = ({ id }: Props) => {
   const { data, isLoading: loading } = useSWR(`/Order-${id}`, () =>
-    fetchOrderDetail(id)
+    fetchOrderDetail(id),
   );
 
   const handlerUpdateStatus = async (id: string, type: string) => {

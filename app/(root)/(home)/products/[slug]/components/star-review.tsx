@@ -23,7 +23,7 @@ export const StarReview = ({ reviews }: Props) => {
     .reduce((acc, _, index) => {
       const total = reviews.result.reduce(
         (sum, review) => sum + (review.star === index + 1 ? 1 : 0),
-        0
+        0,
       );
       const percentage = (total / reviews.result.length) * 100;
       acc[index + 1] = { total, percentage };

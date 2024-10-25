@@ -29,7 +29,7 @@ export const ActionRight = () => {
 
     FileSaver.saveAs(
       new Blob([response.data]),
-      `export-product-${timestamp}.xlsx`
+      `export-product-${timestamp}.xlsx`,
     );
     toast.success("File downloaded");
   };
@@ -41,7 +41,7 @@ export const ActionRight = () => {
 
     FileSaver.saveAs(
       new Blob([response.data]),
-      `export-product-${timestamp}.csv`
+      `export-product-${timestamp}.csv`,
     );
     toast.success("File downloaded");
   };
@@ -53,7 +53,7 @@ export const ActionRight = () => {
 
     FileSaver.saveAs(
       new Blob([response.data]),
-      `export-product-${timestamp}.json`
+      `export-product-${timestamp}.json`,
     );
     toast.success("File downloaded");
   };

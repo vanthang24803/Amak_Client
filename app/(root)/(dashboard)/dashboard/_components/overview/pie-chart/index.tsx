@@ -92,7 +92,7 @@ export const Chart = () => {
 
   const chartConfig = React.useMemo(
     () => (data ? generateChartConfig(data) : {}),
-    [data]
+    [data],
   );
 
   const accountData = React.useMemo(
@@ -104,20 +104,20 @@ export const Chart = () => {
             fill: `var(--color-${item.month.toLowerCase()})`,
           }))
         : [],
-    [data]
+    [data],
   );
 
   const activeIndex = React.useMemo(
     () =>
       accountData.findIndex(
-        (item) => item.month === translateMonth(activeMonth || "")
+        (item) => item.month === translateMonth(activeMonth || ""),
       ),
-    [activeMonth, accountData]
+    [activeMonth, accountData],
   );
 
   const months = React.useMemo(
     () => (data ? data.map((item) => item.month) : []),
-    [data]
+    [data],
   );
 
   if (loading) {

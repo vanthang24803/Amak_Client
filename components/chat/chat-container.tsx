@@ -48,8 +48,8 @@ export const ChatContainer = ({ channel }: Props) => {
       const handleMessageDeleted = (messageId: string) => {
         setMessages((prevMessages) =>
           prevMessages.map((msg) =>
-            msg.id === messageId ? { ...msg, isDeleted: true } : msg
-          )
+            msg.id === messageId ? { ...msg, isDeleted: true } : msg,
+          ),
         );
       };
 

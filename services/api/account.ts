@@ -6,7 +6,7 @@ const fetchAnalyticAccounts = () =>
 
 const getDetailAccount = async (id: string) => {
   const response = await _http.get<Response<Profile>>(
-    `/Analytic/Accounts/${id}`
+    `/Analytic/Accounts/${id}`,
   );
 
   if (response.status === 200) {

@@ -59,7 +59,7 @@ export const ChatWrapper = () => {
         connection
           .invoke("GetAccounts", userId)
           .catch((error: any) =>
-            console.log("Error fetching accounts:", error)
+            console.log("Error fetching accounts:", error),
           );
 
         connection.on(`Users-${userId}`, (data: any) => {
@@ -74,7 +74,7 @@ export const ChatWrapper = () => {
   }, [connection, isLogin, isConnected, profile?.id]);
 
   const channelActiveData = data?.result.filter(
-    (x) => x.id === activeChannel
+    (x) => x.id === activeChannel,
   )[0];
 
   return (

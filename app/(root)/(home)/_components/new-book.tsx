@@ -16,7 +16,7 @@ const fetcher = (url: string, params: unknown) =>
 export const NewBook = () => {
   const { data, error, isLoading } = useSWR<Pagination<Product[]>>(
     ["/Products", { Category: Category.SachMoi, Limit: 10 }],
-    ([url, params]) => fetcher(url, params)
+    ([url, params]) => fetcher(url, params),
   );
 
   if (error) {

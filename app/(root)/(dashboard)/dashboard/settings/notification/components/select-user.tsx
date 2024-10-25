@@ -31,7 +31,7 @@ export default function MultiSelectDropdown({
 
   useEffect(() => {
     const filtered = users?.filter((user) =>
-      user.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+      user.fullName.toLowerCase().includes(searchTerm.toLowerCase()),
     );
     setFilteredItems(filtered || []);
   }, [searchTerm, users]);

@@ -64,7 +64,7 @@ export const UpdateOption = ({ option, open, handleOpen }: Props) => {
 
       const handleUpdate = _http.put(
         `/Products/${params.id}/Options/${option.id}`,
-        jsonSend
+        jsonSend,
       );
 
       toast.promise(handleUpdate, {

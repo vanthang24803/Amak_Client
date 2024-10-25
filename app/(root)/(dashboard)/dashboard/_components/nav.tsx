@@ -46,7 +46,7 @@ export const Nav = ({ isCollapsed, links }: Props) => {
                       }),
                       "h-9 w-9",
                       pathname === link.path &&
-                        "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
+                        "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
                     )}
                   >
                     {link.icon && !link.image ? (
@@ -89,7 +89,7 @@ export const Nav = ({ isCollapsed, links }: Props) => {
                 }),
                 pathname === link.path &&
                   "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
-                "justify-start"
+                "justify-start",
               )}
             >
               <div className="mr-2">
@@ -111,14 +111,15 @@ export const Nav = ({ isCollapsed, links }: Props) => {
                 <span
                   className={cn(
                     "ml-auto text-xs  tracking-tight scroll-m-20",
-                    pathname === link.path && "text-background dark:text-white "
+                    pathname === link.path &&
+                      "text-background dark:text-white ",
                   )}
                 >
                   {link.label}
                 </span>
               )}
             </Link>
-          )
+          ),
         )}
       </nav>
     </div>

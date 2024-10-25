@@ -61,7 +61,7 @@ export function Chart() {
 
   const { data: chartData, isLoading: loading } = useSWR<AreaChartType>(
     "/Analytic/Area-Chart",
-    fetchAreaChart
+    fetchAreaChart,
   );
 
   const data = timeRange === "month" ? chartData?.month : chartData?.week;

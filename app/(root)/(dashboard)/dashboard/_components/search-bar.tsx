@@ -28,7 +28,7 @@ export const SearchBar = () => {
   const context = useDebounce(search);
 
   const { data, isLoading } = useSWR<Search>(
-    context ? `/Analytic/Search?Name=${context}` : null
+    context ? `/Analytic/Search?Name=${context}` : null,
   );
 
   useEffect(() => {

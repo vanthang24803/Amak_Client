@@ -15,7 +15,7 @@ export async function generateMetadata({
 }) {
   const uuid = decodeSlug(params.slug);
   const product = (await fetch(`${process.env.API_URL}/Products/${uuid}`).then(
-    (res) => res.json()
+    (res) => res.json(),
   )) as Response<ProductDetail>;
 
   return {

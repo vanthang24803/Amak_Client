@@ -52,7 +52,7 @@ const PaginationLink = ({
         variant: isActive ? "primary" : "ghost",
         size,
       }),
-      className
+      className,
     )}
     {...props}
   />

@@ -42,7 +42,7 @@ export const TopCustomerTable = () => {
 
   const { data, isLoading, error } = useSWR<TopCustomerTable>(
     "/Analytic/Customer",
-    fetchTopCustomers
+    fetchTopCustomers,
   );
 
   const getDataForTimeRange = () => {

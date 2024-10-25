@@ -42,7 +42,7 @@ export const TopProductTable = () => {
 
   const { data, isLoading: loading } = useSWR<TopProductTable>(
     "/Analytic/Product",
-    fetchTopProducts
+    fetchTopProducts,
   );
 
   const getDataForTimeRange = () => {

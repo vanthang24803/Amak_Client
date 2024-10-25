@@ -60,7 +60,7 @@ export const SidebarWrapper = ({
       direction="horizontal"
       onLayout={(sizes: number[]) => {
         document.cookie = `react-resizable-panels:layout:mail=${JSON.stringify(
-          sizes
+          sizes,
         )}`;
       }}
       className="h-full items-stretch"
@@ -74,23 +74,23 @@ export const SidebarWrapper = ({
         onCollapse={() => {
           setIsCollapsed(true);
           document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-            true
+            true,
           )}`;
         }}
         onResize={() => {
           setIsCollapsed(false);
           document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-            false
+            false,
           )}`;
         }}
         className={cn(
-          isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out"
+          isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out",
         )}
       >
         <div
           className={cn(
             "flex h-[52px] items-center justify-center mb-4",
-            isCollapsed ? "h-[52px]" : "px-2"
+            isCollapsed ? "h-[52px]" : "px-2",
           )}
         >
           <Image

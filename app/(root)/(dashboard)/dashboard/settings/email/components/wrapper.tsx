@@ -27,7 +27,7 @@ export type Template = Base & {
 export default function WrapperEmailSetting() {
   const { data, isLoading } = useSWR<Template[]>(
     "/Email/Template",
-    fetchTemplates
+    fetchTemplates,
   );
 
   const [select, setSelect] = useState<TempleType>("ORDER");

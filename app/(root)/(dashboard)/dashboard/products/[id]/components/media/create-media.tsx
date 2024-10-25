@@ -32,7 +32,7 @@ const schema = z.object({
         size: z
           .number()
           .max(MAX_FILE_SIZE, "File hình ảnh phải có size <= 5mb"),
-      })
+      }),
     )
     .min(1, "Hãy tải lên ít nhất 1 hình ảnh")
     .max(5, "Bạn chỉ có thể upload tối đa 5 hình ảnh"),
@@ -77,7 +77,7 @@ export const CreateMedia = ({ handleClose }: Props) => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       toast.promise(handleUpdate, {

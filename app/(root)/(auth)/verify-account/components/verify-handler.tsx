@@ -32,8 +32,8 @@ export default function VerifyAccountHandler() {
       try {
         const response = await _http.get(
           `/Authentication/VerifyAccount?userId=${userId}&token=${encodeURIComponent(
-            token.replaceAll(" ", "+")
-          )}`
+            token.replaceAll(" ", "+"),
+          )}`,
         );
 
         if (response.status === 200) {

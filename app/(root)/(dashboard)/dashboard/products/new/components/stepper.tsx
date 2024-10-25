@@ -18,7 +18,7 @@ export const StepperIndicator = ({ activeStep }: Props) => {
             className={clsx(
               "w-[40px] h-[40px] flex justify-center items-center m-[5px] border-[2px] rounded-full",
               step < activeStep && "bg-primary text-white",
-              step === activeStep && "border-primary text-primary"
+              step === activeStep && "border-primary text-primary",
             )}
           >
             {step >= activeStep ? (
@@ -32,7 +32,7 @@ export const StepperIndicator = ({ activeStep }: Props) => {
               orientation="horizontal"
               className={clsx(
                 "w-[100px] h-[2px]",
-                step <= activeStep - 1 && "bg-primary"
+                step <= activeStep - 1 && "bg-primary",
               )}
             />
           )}

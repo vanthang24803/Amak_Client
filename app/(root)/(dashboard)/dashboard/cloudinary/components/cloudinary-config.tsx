@@ -30,7 +30,7 @@ type CreateFormValue = z.infer<typeof validateCloudinaryConfig>;
 export const CloudinarySettings = () => {
   const { data, isLoading } = useSWR(
     `/Cloudinary/Config`,
-    fetchCloudinaryConfig
+    fetchCloudinaryConfig,
   );
 
   const [update, setUpdate] = useState<boolean>(false);

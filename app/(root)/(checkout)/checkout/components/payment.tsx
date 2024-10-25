@@ -57,7 +57,7 @@ export const Payment = ({
           amount: `${finalPrice}`,
           template: "compact",
         },
-        config
+        config,
       );
 
       if (response.status == 200) {
@@ -208,8 +208,8 @@ export const Payment = ({
                             handleCopy(
                               `${orderId} - Thanh toan don hang - ${format(
                                 Date.now(),
-                                "dd/MM/yyyy"
-                              )}`
+                                "dd/MM/yyyy",
+                              )}`,
                             )
                           }
                         />

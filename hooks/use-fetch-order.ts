@@ -16,7 +16,7 @@ export default function useFetchOrder() {
     fetcher,
     {
       revalidateOnFocus: false,
-    }
+    },
   );
 
   const reloadData = async () => {

@@ -15,7 +15,7 @@ export const Upload = ({ files, setFiles }: Props) => {
   useEffect(() => {
     if (files) {
       const objectUrls = Array.from(files).map((file) =>
-        URL.createObjectURL(file)
+        URL.createObjectURL(file),
       );
       setImgSrcs(objectUrls);
 

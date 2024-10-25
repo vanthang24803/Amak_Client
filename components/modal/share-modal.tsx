@@ -21,7 +21,7 @@ export const ShareModal = ({ id, name, isActive = false }: Props) => {
     if (!isCopying) {
       setIsCopying(true);
       navigator.clipboard.writeText(
-        `${process.env.NEXT_PUBLIC_URL}/products/${generateSlug(name, id)}`
+        `${process.env.NEXT_PUBLIC_URL}/products/${generateSlug(name, id)}`,
       );
 
       toast.success("Copy thành công!");

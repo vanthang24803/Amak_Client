@@ -140,8 +140,8 @@ const useAuth = create(
     {
       name: "amak-authentication",
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 );
 
 export default useAuth;

@@ -36,7 +36,7 @@ export const Chart = () => {
 
   const { data, isLoading: loading } = useSWR<BarChart>(
     "/Analytic/Bar-Chart",
-    fetchBarOverviewChart
+    fetchBarOverviewChart,
   );
 
   const total = useMemo(() => {
@@ -44,7 +44,7 @@ export const Chart = () => {
 
     const total = Object.values(data[timeRange]).reduce(
       (acc, value) => acc + value,
-      0
+      0,
     );
     return total;
   }, [data, timeRange]);

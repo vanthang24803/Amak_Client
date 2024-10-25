@@ -16,7 +16,7 @@ const fetcher = (url: string, params: any) =>
 export default function Figures() {
   const { data, error, isLoading } = useSWR<Pagination<Product[]>>(
     ["/Products", { Category: "Phụ kiện", Limit: 10 }],
-    ([url, params]) => fetcher(url, params)
+    ([url, params]) => fetcher(url, params),
   );
 
   if (error) {

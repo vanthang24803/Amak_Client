@@ -8,7 +8,7 @@ import useSWR from "swr";
 
 export const CloudinaryContainer = () => {
   const { data, isLoading } = useSWR(`/Cloudinary`, () =>
-    fetchCloudinaryPhotos()
+    fetchCloudinaryPhotos(),
   );
 
   return (

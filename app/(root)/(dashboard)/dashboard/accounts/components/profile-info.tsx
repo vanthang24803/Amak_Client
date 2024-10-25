@@ -32,7 +32,7 @@ export const ProfileInfo = ({ open, handleToggle, id, isAdmin }: Props) => {
     error,
     isLoading,
   } = useSWR(id ? `/Analytic/Accounts/${id}` : null, () =>
-    getDetailAccount(id)
+    getDetailAccount(id),
   );
 
   if (error) console.log(error);

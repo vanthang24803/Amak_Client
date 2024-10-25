@@ -15,7 +15,7 @@ export const FigureItem = ({ data }: Props) => {
   const options = data.options;
   const totalPrice = data.options.reduce(
     (total, option) => total + option.price,
-    0
+    0,
   );
   const avgPrice = (totalPrice / options.length).toFixed(0);
 

@@ -12,7 +12,7 @@ import useSWR from "swr";
 export const HeaderOverview = () => {
   const { data, isLoading: loading } = useSWR<AnalyticStatistic>(
     "/Analytic/Statistic",
-    fetchAnalytic
+    fetchAnalytic,
   );
 
   const renderCard = (
@@ -20,7 +20,7 @@ export const HeaderOverview = () => {
     isStock: boolean,
     icon: React.ReactNode,
     total: number,
-    stock: number
+    stock: number,
   ) => (
     <CustomCard
       title={title}
@@ -66,7 +66,7 @@ export const HeaderOverview = () => {
           data.order.isStock,
           <Package className="h-4 w-4 text-muted-foreground" />,
           data.order.total,
-          data.order.stock
+          data.order.stock,
         )}
       {data?.warehouse &&
         renderCard(
@@ -74,7 +74,7 @@ export const HeaderOverview = () => {
           data.warehouse.isStock,
           <Inbox className="h-4 w-4 text-muted-foreground" />,
           data.warehouse.total,
-          data.warehouse.stock
+          data.warehouse.stock,
         )}
       {data?.saleOut &&
         renderCard(
@@ -82,7 +82,7 @@ export const HeaderOverview = () => {
           data.saleOut.isStock,
           <Bookmark className="h-4 w-4 text-muted-foreground" />,
           data.saleOut.total,
-          data.saleOut.stock
+          data.saleOut.stock,
         )}
     </div>
   );

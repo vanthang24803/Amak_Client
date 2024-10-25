@@ -20,7 +20,7 @@ const fetchMailConfig = async () => {
 
 const fetchGoogleConfig = async () => {
   const response = await _http.get<Response<GoogleConfig>>(
-    "/Configuration/Google"
+    "/Configuration/Google",
   );
 
   if (response.status === 200) {
@@ -32,7 +32,7 @@ const fetchGoogleConfig = async () => {
 
 const fetchCloudinaryConfig = async () => {
   const response = await _http.get<Response<CloudinaryConfig>>(
-    "/Configuration/Cloudinary"
+    "/Configuration/Cloudinary",
   );
 
   if (response.status === 200) {
@@ -54,7 +54,7 @@ const fetchMomoConfig = async () => {
 
 const fetchGeminiConfig = async () => {
   const response = await _http.get<Response<GeminiConfig>>(
-    "/Configuration/Gemini"
+    "/Configuration/Gemini",
   );
 
   if (response.status === 200) {
