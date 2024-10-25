@@ -11,6 +11,7 @@ import useSWR from "swr";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { generateSlug } from "@/utils/slug";
+import { Fragment } from "react";
 
 export const Blogs = () => {
   const { data, isLoading, error } = useSWR<Blog[]>(`/Blogs`, () =>
@@ -41,53 +42,57 @@ export const Blogs = () => {
             <Spinner />
           </div>
         ) : (
-          <div className="flex  justify-between flex-col md:flex-row gap-4 md:gap-6">
-            <Link
-              href={`/blogs/${generateSlug(latestBlog.title, latestBlog.id)}`}
-              className="w-full md:w-1/2 flex flex-col gap-2"
-            >
-              <img
-                src={latestBlog.thumbnail}
-                alt={latestBlog.title}
-                className="rounded"
-              />
-              <div className="flex flex-col">
-                <h1 className="font-bold text-xl tracking-tight">
-                  {latestBlog.title}
-                </h1>
-                <p className="text-[14px]">
-                  {format(latestBlog.createAt, "dd 'tháng' MM 'năm' yyyy", {
-                    locale: vi,
-                  })}
-                </p>
-              </div>
-            </Link>
-            <div className="w-full md:w-1/2 flex flex-col gap-2">
-              {blogs.map((blog) => (
+          <Fragment>
+            {latestBlog &&
+              <div className="flex  justify-between flex-col md:flex-row gap-4 md:gap-6">
                 <Link
-                  href={`/blogs/${generateSlug(blog.title, blog.id)}`}
-                  className="flex items-start gap-3"
-                  key={blog.id}
+                  href={`/blogs/${generateSlug(latestBlog.title, latestBlog.id)}`}
+                  className="w-full md:w-1/2 flex flex-col gap-2"
                 >
                   <img
-                    src={blog.thumbnail}
-                    alt={blog.title}
-                    className="w-32 h-[5.5rem] object-fill rounded"
+                    src={latestBlog.thumbnail}
+                    alt={latestBlog.title}
+                    className="rounded"
                   />
                   <div className="flex flex-col">
-                    <h3 className="font-semibold text-[14px] tracking-tight">
+                    <h1 className="font-bold text-xl tracking-tight">
                       {latestBlog.title}
-                    </h3>
-                    <p className="text-[12px]">
+                    </h1>
+                    <p className="text-[14px]">
                       {format(latestBlog.createAt, "dd 'tháng' MM 'năm' yyyy", {
                         locale: vi,
                       })}
                     </p>
                   </div>
                 </Link>
-              ))}
-            </div>
-          </div>
+                <div className="w-full md:w-1/2 flex flex-col gap-2">
+                  {blogs.map((blog) => (
+                    <Link
+                      href={`/blogs/${generateSlug(blog.title, blog.id)}`}
+                      className="flex items-start gap-3"
+                      key={blog.id}
+                    >
+                      <img
+                        src={blog.thumbnail}
+                        alt={blog.title}
+                        className="w-32 h-[5.5rem] object-fill rounded"
+                      />
+                      <div className="flex flex-col">
+                        <h3 className="font-semibold text-[14px] tracking-tight">
+                          {latestBlog.title}
+                        </h3>
+                        <p className="text-[12px]">
+                          {format(latestBlog.createAt, "dd 'tháng' MM 'năm' yyyy", {
+                            locale: vi,
+                          })}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            }
+          </Fragment>
         )}
       </CardContent>
     </Card>
