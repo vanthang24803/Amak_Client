@@ -1,6 +1,7 @@
+import { Response } from "@/types";
+import { Blog } from "@/types/blog";
 import { decodeSlug } from "@/utils/slug";
 import { Container } from "./components/container";
-import { ProductDetail, Response } from "@/types";
 
 type Props = {
   params: {
@@ -10,16 +11,16 @@ type Props = {
 
 export async function generateMetadata({ params }: Props) {
   const uuid = decodeSlug(params.slug);
-  const product = (await fetch(`${process.env.API_URL}/Products/${uuid}`).then(
+  const product = (await fetch(`${process.env.API_URL}/Blogs/${uuid}`).then(
     (res) => res.json(),
-  )) as Response<ProductDetail>;
+  )) as Response<Blog>;
 
   return {
-    title: product.result.name || "Sản phẩm",
+    title: product.result.title || "Giới thiệu",
   };
 }
 
-export default async function Product({ params }: Props) {
+export default function BlogDetail({ params }: Props) {
   const uuid = decodeSlug(params.slug);
-  return <Container id={uuid} />;
+  return <Container blogId={uuid} />;
 }
