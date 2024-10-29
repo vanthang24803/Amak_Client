@@ -1,4 +1,5 @@
 import { Card } from "@/components/card/cart-item";
+import { ProductSkeleton } from "@/components/product-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@/types";
 import { Package2 } from "lucide-react";
@@ -30,10 +31,7 @@ export const ProductContainer = ({ products }: Props) => {
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
           {Array.from({ length: 10 }).map((_, index) => (
-            <Skeleton
-              className="bg-white h-[30vh] md:h-[50vh] lg:h-[30vh] w-full max-w-[200px]"
-              key={index}
-            />
+            <ProductSkeleton key={index} />
           ))}
         </div>
       )}

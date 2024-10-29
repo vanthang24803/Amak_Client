@@ -1,7 +1,7 @@
 "use client";
 
 import { Card } from "@/components/card/cart-item";
-import { Skeleton } from "@/components/ui/skeleton";
+import { ProductSkeleton } from "@/components/product-skeleton";
 import { Product } from "@/types/product";
 
 type Props = {
@@ -15,7 +15,7 @@ export const Products = ({ products, isLoading }: Props) => {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 w-full h-[50vh] md:gap-8">
           {[...Array(5)].map((_, index) => (
-            <Skeleton key={index} className="w-full h-full bg-white " />
+            <ProductSkeleton key={index} />
           ))}
         </div>
       ) : (

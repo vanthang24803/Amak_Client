@@ -3,7 +3,7 @@
 import { Option } from "@/types/options";
 import { Product } from "@/types/product";
 import { convertPrice, formatPrice } from "@/utils/price";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Minus, Plus } from "lucide-react";
 import { DialogTitle } from "../ui/dialog";
@@ -12,20 +12,64 @@ import { Cart } from "@/types";
 import { useCart } from "@/hooks/use-cart";
 import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/use-auth";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   product: Product;
 };
 
+const SkeletonLoader = () => (
+  <div className="flex flex-col space-y-2 p-4">
+    <Skeleton className="h-6 w-3/4 mb-2" />
+    <Skeleton className="h-4 w-1/2 mb-2" />
+    <div className="flex items-center justify-between mb-2">
+      <Skeleton className="h-4 w-1/3" />
+      <Skeleton className="h-4 w-1/3" />
+    </div>
+    <div className="flex items-center space-x-12 py-2">
+      <Skeleton className="h-4 w-1/6" />
+      <div className="flex items-center space-x-2">
+        <Skeleton className="h-6 w-20" />
+        <Skeleton className="h-4 w-16" />
+      </div>
+      <Skeleton className="h-6 w-12" />
+    </div>
+    <div className="flex items-center space-x-2 py-2">
+      <Skeleton className="h-4 w-1/6" />
+      <div className="flex items-center space-x-2">
+        <Skeleton className="h-8 w-16" />
+        <Skeleton className="h-8 w-16" />
+        <Skeleton className="h-8 w-16" />
+      </div>
+    </div>
+    <div className="flex items-center space-x-8 py-4">
+      <Skeleton className="h-4 w-1/6" />
+      <div className="flex items-center space-x-2">
+        <Skeleton className="h-7 w-7" />
+        <Skeleton className="h-7 w-7" />
+        <Skeleton className="h-7 w-7" />
+      </div>
+    </div>
+    <Skeleton className="h-10 w-full" />
+    <Skeleton className="h-10 w-full" />
+  </div>
+);
+
 export default function InformationModal({ product }: Props) {
   const router = useRouter();
   const { isLogin } = useAuth();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [total, setTotal] = useState(1);
-
   const [option, setOption] = useState<Option | undefined>(product?.options[0]);
-
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleOptionChange = (id: string) => {
     const newOption = product?.options.find((option) => option.id === id);
@@ -48,10 +92,12 @@ export default function InformationModal({ product }: Props) {
     addToCart(dataSend);
   };
 
+  if (isLoading) return <SkeletonLoader />;
+
   return (
     <div className="flex flex-col space-y-2 p-4">
       <DialogTitle className="text-md font-bold tracking-tighter">
-        {product?.name}
+        {product.name}
       </DialogTitle>
       <div className="text-[12px] tracking-tighter">
         Mã sản phẩm:{" "}
@@ -98,7 +144,7 @@ export default function InformationModal({ product }: Props) {
       <div className="flex items-center space-x-2 text-sm py-2">
         <span className="font-semibold">Tiêu đề:</span>
         <div className="flex items-center space-x-2">
-          {product?.options.map((item, index) => (
+          {product.options.map((item, index) => (
             <Button
               variant={item.id === option?.id ? "primary" : "outline"}
               key={index}
@@ -167,9 +213,7 @@ export default function InformationModal({ product }: Props) {
         </Button>
       )}
 
-      {product && (
-        <ShareModal id={product.id} name={product.name} isActive={true} />
-      )}
+      <ShareModal id={product.id} name={product.name} isActive={true} />
     </div>
   );
 }

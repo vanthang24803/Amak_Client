@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/card/cart-item";
+import { ProductSkeleton } from "@/components/product-skeleton";
 import {
   Carousel,
   CarouselContent,
@@ -56,7 +57,7 @@ export const BestSeller = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full h-[50vh] md:gap-8">
           {[...Array(4)].map((_, index) => (
-            <Skeleton key={index} className="w-full h-full bg-white " />
+            <ProductSkeleton key={index} />
           ))}
         </div>
       )}
