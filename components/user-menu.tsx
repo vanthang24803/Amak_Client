@@ -14,6 +14,7 @@ import { AvatarImage, Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   LogOut,
   MapPinned,
+  PencilLine,
   Settings,
   ShoppingBasket,
   UserIcon,
@@ -120,6 +121,15 @@ export const UserMenu = () => {
               </span>
             </div>
           </DropdownMenuItem>
+          {profile?.roles.includes("ADMIN") && (
+            <DropdownMenuItem onClick={() => router.push("/profile/blogs")}>
+              <PencilLine className="mr-2 h-4 w-4" />
+              <span className="text-[13.25px] font-medium tracking-tighter">
+                Danh sách bài viết
+              </span>
+            </DropdownMenuItem>
+          )}
+
           {profile?.roles.includes("ADMIN") && (
             <DropdownMenuItem onClick={() => router.push("/dashboard")}>
               <Settings className="mr-2 h-4 w-4" />
