@@ -2,25 +2,23 @@
 
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
 import { Inter } from "next/font/google";
-import { useEffect, useState } from "react";
-import { MessageSquareText } from "lucide-react";
-import { ChatContainer } from "../chat/chat-container";
-import { InputChat } from "../chat/input-chat";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Channel } from "../chat/channel";
-import { AdminChat } from "@/types/admin-chat";
+
 import _http from "@/utils/http";
-import { Response } from "@/types";
-import { useSocket } from "../providers/socket-provider";
-import useAuth from "@/hooks/use-auth";
+
 import { DialogTitle } from "@radix-ui/react-dialog";
 import MessageIcon from "../../public/message.svg";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ChatRoot } from "./chat-root";
+import { ChatWithAI } from "./chat-with-ai";
 
 const font = Inter({ subsets: ["latin"], weight: "400" });
 
@@ -29,19 +27,9 @@ export const ChatWrapper = () => {
   const channelId = searchParams.get("channelId");
   const router = useRouter();
   const [activeChannel, setActiveChannel] = useState<string | null>(channelId);
-  const { connection, isConnected } = useSocket();
-  const [data, setData] = useState<Response<AdminChat[]>>();
-
   const [open, setOpen] = useState(false);
 
-  const { isLogin } = useAuth();
-
-  const { profile } = useAuth();
-
-  const handleChannelClick = (channelId: string) => {
-    setActiveChannel(channelId);
-    router.push(`?channelId=${channelId}`);
-  };
+  const [isChatWithAi, setIsChatWithAi] = useState(false);
 
   const handlerOpen = () => {
     if (open) {
@@ -50,32 +38,6 @@ export const ChatWrapper = () => {
     }
     setOpen(!open);
   };
-
-  useEffect(() => {
-    if (isConnected && isLogin) {
-      const userId = profile?.id;
-
-      if (userId) {
-        connection
-          .invoke("GetAccounts", userId)
-          .catch((error: any) =>
-            console.log("Error fetching accounts:", error),
-          );
-
-        connection.on(`Users-${userId}`, (data: any) => {
-          setData(data);
-        });
-
-        return () => {
-          connection.off(`Users-${userId}`);
-        };
-      }
-    }
-  }, [connection, isLogin, isConnected, profile?.id]);
-
-  const channelActiveData = data?.result.filter(
-    (x) => x.id === activeChannel,
-  )[0];
 
   return (
     <Dialog open={open} onOpenChange={handlerOpen}>
@@ -87,37 +49,73 @@ export const ChatWrapper = () => {
       <DialogContent
         className={`${font.className} md:rounded-2xl lg:max-w-4xl`}
       >
-        <DialogTitle className="font-bold text-xl tracking-tighter">
-          Tin nhắn
+        <DialogTitle className="flex items-center gap-4">
+          <div>
+            {isChatWithAi ? (
+              <div className="flex items-center gap-3">
+                <p className="font-bold text-xl tracking-tighter">
+                  Trò chuyện với AI
+                </p>
+                <Image
+                  src="https://salt.tikicdn.com/ts/ta/7f/77/cf/a2b2c31ea7b0ad4b2e7d0e6ef817241b.png"
+                  width={40}
+                  height={40}
+                  alt="bot"
+                />
+              </div>
+            ) : (
+              <p className="font-bold text-xl tracking-tighter">Trò chuyện</p>
+            )}
+          </div>
         </DialogTitle>
         <div className="max-h-[75vh] min-h-[50vh] hidden md:block">
-          <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel defaultSize={30}>
-              {data && (
-                <Channel
-                  data={data.result}
-                  handleChannelClick={handleChannelClick}
-                  active={activeChannel}
-                />
-              )}
-            </ResizablePanel>
-            <ResizableHandle />
-            <ResizablePanel defaultSize={70}>
-              <div className="h-[75vh] w-full relative overflow-hidden">
-                {activeChannel ? (
-                  <div className="mx-4">
-                    <ChatContainer channel={channelActiveData} />
-                    <InputChat channelId={channelId} />
+          <div className="relative">
+            {isChatWithAi ? (
+              <ChatWithAI />
+            ) : (
+              <ChatRoot
+                channelId={channelId}
+                activeChannel={activeChannel}
+                setActiveChannel={setActiveChannel}
+              />
+            )}
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div
+                    className={`absolute left-0  rounded-md flex items-center justify-center cursor-pointer bottom-0`}
+                    onClick={() => setIsChatWithAi(!isChatWithAi)}
+                  >
+                    {!isChatWithAi ? (
+                      <Image
+                        src="https://salt.tikicdn.com/ts/ta/7f/77/cf/a2b2c31ea7b0ad4b2e7d0e6ef817241b.png"
+                        width={40}
+                        height={40}
+                        alt="bot"
+                      />
+                    ) : (
+                      <div className="w-9 h-9 bg-sky-600 cursor-pointer rounded flex items-center justify-center">
+                        <Image
+                          src="https://salt.tikicdn.com/ts/ta/e1/5e/b4/2e33d86e11e2841a6a571de6084ff365.png"
+                          width={25}
+                          height={25}
+                          alt="bot"
+                        />
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div className="flex items-center justify-center text-neutral-400/90 h-[60vh] flex-col space-y-4">
-                    <MessageSquareText className="w-24 h-24 " />
-                    <h2>Vui lòng chọn đoạn chat!</h2>
-                  </div>
-                )}
-              </div>
-            </ResizablePanel>
-          </ResizablePanelGroup>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="text-[13px] tracking-tight">
+                    {!isChatWithAi
+                      ? " Trò chuyện với AI"
+                      : "Chăm sóc khách hàng"}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

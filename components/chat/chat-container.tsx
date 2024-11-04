@@ -5,7 +5,6 @@ import { useSocket } from "../providers/socket-provider";
 import { ScrollArea } from "../ui/scroll-area";
 import useAuth from "@/hooks/use-auth";
 import { ChatAction } from "./chat-action";
-import { Separator } from "../ui/separator";
 import { AdminChat } from "@/types/admin-chat";
 import { Avatar, AvatarImage } from "../ui/avatar";
 

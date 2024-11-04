@@ -9,7 +9,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@/types/product";
 import _http from "@/utils/http";
 import useSWR from "swr";
@@ -55,7 +54,7 @@ export const BestSeller = () => {
           </div>
         </Carousel>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full h-[50vh] md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full h-[50vh] md:gap-8 pb-10">
           {[...Array(4)].map((_, index) => (
             <ProductSkeleton key={index} />
           ))}
