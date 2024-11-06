@@ -25,6 +25,7 @@ import { mutate } from "swr";
 import toast from "react-hot-toast";
 import { Blog } from "@/types/blog";
 import { generateSlug } from "@/utils/slug";
+import { DeletePostFrom } from "./delete-post-form";
 
 type Props = {
   post: Blog | undefined;
@@ -86,6 +87,21 @@ export const UpdateBlogForm = ({ post, isLoading }: Props) => {
     }
   };
 
+  const handleDeleted = async () => {
+    try {
+      const res = await _http.delete(`/Blogs/${post?.id}`);
+
+      if (res.status === 200) {
+        toast.success("Xóa thành công");
+        mutate(`/Blogs`);
+        router.push(`/profile/blogs`);
+      }
+    } catch (error) {
+      toast.error("Có lỗi xảy ra!");
+      console.log(error);
+    }
+  };
+
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
@@ -138,23 +154,27 @@ export const UpdateBlogForm = ({ post, isLoading }: Props) => {
           className="flex flex-col space-y-4 py-2 pb-20"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <FormField
-            disabled={loading}
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <textarea
-                    placeholder="Tiêu đề"
-                    className="text-3xl mt-6 w-full font-medium h-20 outline-none leading-tight placeholder:opacity-90 resize-none"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="relative">
+            <FormField
+              disabled={loading}
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <textarea
+                      placeholder="Tiêu đề"
+                      className="text-3xl w-full mt-6 font-medium h-20 outline-none leading-tight placeholder:opacity-90 resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <DeletePostFrom handleDelete={handleDeleted} />
+          </div>
 
           <div className="flex md:flex-row flex-col justify-between w-full min-h-[400px]">
             <div className="md:basis-1/2 md:mx-4">
