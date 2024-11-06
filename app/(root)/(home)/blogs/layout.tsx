@@ -18,8 +18,8 @@ import { navigator } from "@/constants/blog-navigator";
 import { generateSlug } from "@/utils/slug";
 
 export default async function BlogLayout({ children }: PropsWithChildren) {
-  const data = (await fetch(`${process.env.API_URL}/Blogs/`).then((res) =>
-    res.json(),
+  const data = (await fetch(`${process.env.API_URL}/Blogs?Limit=5&Page=1`).then(
+    (res) => res.json(),
   )) as Response<Blog[]>;
 
   return (

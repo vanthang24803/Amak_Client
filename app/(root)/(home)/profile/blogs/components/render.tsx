@@ -9,7 +9,6 @@ import { Fragment, useState } from "react";
 import useSWR from "swr";
 import { SkeletonCard } from "../../../blogs/components/skeleton-card";
 import Link from "next/link";
-import { generateSlug } from "@/utils/slug";
 import { Card, CardContent } from "@/components/ui/card";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
@@ -31,7 +30,7 @@ export const Render = () => {
     error,
     isLoading,
   } = useSWR<Pagination<Blog[]>>(
-    ["/Blogs/Author", { Page: currentPage, Limit: 4 }],
+    ["/Blogs/Author", { Page: currentPage, Limit: 8 }],
     ([url, params]) => fetcher(url, params),
   );
 
@@ -51,11 +50,8 @@ export const Render = () => {
         ) : (
           <Fragment>
             {blogs?.result?.map((blog) => (
-              <Link
-                key={blog.id}
-                href={`/blogs/${generateSlug(blog.title, blog.id)}`}
-              >
-                <Card className="flex flex-col cursor-pointer h-[300px]">
+              <Link key={blog.id} href={`/posts/${blog.id}`}>
+                <Card className="flex flex-col cursor-pointer h-[250px]">
                   <CardContent className="p-0 overflow-hidden">
                     <img
                       src={blog.thumbnail}
@@ -67,7 +63,6 @@ export const Render = () => {
                     <h2 className="font-bold text-md hover:text-green-600 cursor-pointer line-clamp-2">
                       {blog.title}
                     </h2>
-                    <p className="line-clamp-2 text-sm">{blog.content}</p>
                     <div className="flex items-start md:items-center gap-1 md:gap-4 text-[13px] mt-2 font-medium text-muted-foreground flex-col md:flex-row">
                       <span>
                         {format(blog.createAt, "dd 'tháng' MM 'năm' yyyy", {
