@@ -43,7 +43,7 @@ export const Blogs = () => {
           </div>
         ) : (
           <Fragment>
-            {latestBlog &&
+            {latestBlog && (
               <div className="flex  justify-between flex-col md:flex-row gap-4 md:gap-6">
                 <Link
                   href={`/blogs/${generateSlug(latestBlog.title, latestBlog.id)}`}
@@ -82,16 +82,20 @@ export const Blogs = () => {
                           {latestBlog.title}
                         </h3>
                         <p className="text-[12px]">
-                          {format(latestBlog.createAt, "dd 'tháng' MM 'năm' yyyy", {
-                            locale: vi,
-                          })}
+                          {format(
+                            latestBlog.createAt,
+                            "dd 'tháng' MM 'năm' yyyy",
+                            {
+                              locale: vi,
+                            },
+                          )}
                         </p>
                       </div>
                     </Link>
                   ))}
                 </div>
               </div>
-            }
+            )}
           </Fragment>
         )}
       </CardContent>

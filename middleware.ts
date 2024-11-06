@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { Role } from "./utils/role";
 import jwt from "jsonwebtoken";
 
 export const config = {
   runtime: "nodejs",
-  matcher: ["/profile/:path*", "/dashboard/:path*", "/new-post"],
+  matcher: ["/profile/:path*", "/dashboard/:path*", "/posts/:path*"],
 };
 
 export function middleware(request: NextRequest) {
@@ -17,16 +18,14 @@ export function middleware(request: NextRequest) {
   try {
     const decodedToken = jwt.decode(token) as {
       [key: string]: any;
-      "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": string[];
+      Role: string[];
     };
 
-    const roleArray =
-      decodedToken[
-        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-      ];
+    const roleArray = decodedToken[Role];
 
     if (
       request.nextUrl.pathname.startsWith("/dashboard") &&
+      request.nextUrl.pathname.startsWith("/posts") &&
       !roleArray.includes("ADMIN")
     ) {
       return NextResponse.redirect(new URL("/", request.url));

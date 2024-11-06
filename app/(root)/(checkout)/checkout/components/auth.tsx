@@ -4,12 +4,13 @@ import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import useAuth from "@/hooks/use-auth";
 import Link from "next/link";
+import { Fragment } from "react";
 
 export const Auth = () => {
   const { profile, logout } = useAuth();
 
   return (
-    <>
+    <Fragment>
       {profile ? (
         <div className="flex items-center space-x-4">
           <Avatar>
@@ -36,6 +37,6 @@ export const Auth = () => {
           </Link>
         </span>
       )}
-    </>
+    </Fragment>
   );
 };

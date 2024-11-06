@@ -65,7 +65,6 @@ export const Container = () => {
                       <h2 className="font-bold text-lg hover:text-green-600 cursor-pointer line-clamp-2">
                         {blog.title}
                       </h2>
-                      <p className="line-clamp-2 text-sm">{blog.content}</p>
                       <div className="flex items-start md:items-center gap-2 md:gap-4 text-[13px] mt-2 font-medium text-muted-foreground flex-col md:flex-row">
                         <span className="flex md:items-center gap-2">
                           <p> bởi:</p>
