@@ -9,8 +9,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import useClient from "@/hooks/use-client";
 import { Product } from "@/types/product";
 import _http from "@/utils/http";
+import { Fragment } from "react";
 import useSWR from "swr";
 
 const handleFetcher = (url: string) =>
@@ -24,7 +26,11 @@ const handleFetcher = (url: string) =>
     .then((res) => res.data.result);
 
 export const BestSeller = () => {
-  const { data } = useSWR<Product[]>("/Products", handleFetcher);
+  const { data, isLoading } = useSWR<Product[]>("/Products", handleFetcher);
+
+  const { isClient } = useClient();
+
+  if (!isClient) return null!;
 
   return (
     <div className="flex flex-col space-y-4 md:space-y-4 py-6">
@@ -32,33 +38,41 @@ export const BestSeller = () => {
         Top sản phẩm bán chạy
       </h1>
 
-      {data ? (
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full"
-        >
-          <CarouselContent>
-            {data?.map((item, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/5">
-                <div className="p-1">
-                  <Card product={item} />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <div className="hidden lg:block">
-            <CarouselPrevious />
-            <CarouselNext />
-          </div>
-        </Carousel>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full h-[50vh] md:gap-8 pb-10">
-          {[...Array(4)].map((_, index) => (
-            <ProductSkeleton key={index} />
-          ))}
-        </div>
+      {!isLoading && (
+        <Fragment>
+          {data ? (
+            <Carousel
+              opts={{
+                align: "start",
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {data &&
+                  data.map((item, index) => (
+                    <CarouselItem
+                      key={index}
+                      className="md:basis-1/2 lg:basis-1/5"
+                    >
+                      <div className="p-1">
+                        <Card product={item} />
+                      </div>
+                    </CarouselItem>
+                  ))}
+              </CarouselContent>
+              <div className="hidden lg:block">
+                <CarouselPrevious />
+                <CarouselNext />
+              </div>
+            </Carousel>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full h-[50vh] md:gap-8 pb-10">
+              {[...Array(4)].map((_, index) => (
+                <ProductSkeleton key={index} />
+              ))}
+            </div>
+          )}
+        </Fragment>
       )}
     </div>
   );

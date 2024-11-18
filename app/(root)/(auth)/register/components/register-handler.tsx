@@ -10,6 +10,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import _http from "@/utils/http";
 import toast from "react-hot-toast";
+import Turnstile from "react-turnstile";
 
 import {
   FormControl,
@@ -35,6 +36,8 @@ export const RegisterHandler = () => {
 
   const [active, setActive] = useState(false);
 
+  const [token, setToken] = useState<string | null>(null);
+
   const form = useForm({
     resolver: zodResolver(registerValidation),
     defaultValues: {
@@ -46,28 +49,30 @@ export const RegisterHandler = () => {
   });
 
   const onSubmit = async (data: LoginFormValue) => {
-    try {
-      toast.loading("Đang xử lý dữ liệu!");
-      setLoading(true);
-      const response = await _http.post(`/Authentication/Register`, data);
+    if (token) {
+      try {
+        toast.loading("Đang xử lý dữ liệu!");
+        setLoading(true);
+        const response = await _http.post(`/Authentication/Register`, data);
 
-      if (response.status == 201) {
-        toast.dismiss();
-        toast.success("Check your email !");
-        setActive(true);
-      }
-    } catch (error: any) {
-      setLoading(false);
-      toast.dismiss();
-      if (error.response && error.response.status === 400) {
-        if (error.response.data.message == "Email existed!") {
-          toast.error("Email đã được sử dụng");
-        } else {
-          toast.error("Dữ liệu không chính xác !");
+        if (response.status == 201) {
+          toast.dismiss();
+          toast.success("Check your email !");
+          setActive(true);
         }
+      } catch (error: any) {
+        setLoading(false);
+        toast.dismiss();
+        if (error.response && error.response.status === 400) {
+          if (error.response.data.message == "Email existed!") {
+            toast.error("Email đã được sử dụng");
+          } else {
+            toast.error("Dữ liệu không chính xác !");
+          }
+        }
+      } finally {
+        setLoading(false);
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -173,6 +178,12 @@ export const RegisterHandler = () => {
                     <FormMessage />
                   </FormItem>
                 )}
+              />
+
+              <Turnstile
+                className="flex items-center justify-center"
+                sitekey={process.env.NEXT_PUBLIC_CLOUDFLARE_SITE_KEY ?? ""}
+                onVerify={(token) => setToken(token)}
               />
 
               <Button type="submit" disabled={loading}>
