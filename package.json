@@ -80,6 +80,7 @@
     "react-hook-form": "^7.52.1",
     "react-hot-toast": "^2.4.1",
     "react-resizable-panels": "^2.0.22",
+    "react-turnstile": "^1.1.4",
     "recharts": "^2.12.7",
     "sharp": "^0.33.5",
     "slugify": "^1.6.6",
