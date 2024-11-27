@@ -85,11 +85,11 @@ export default function CartAction() {
                       key={index}
                       className="flex flex-col space-y-2 text-sm hover:cursor-pointer"
                     >
-                      <div className="flex space-x-4">
+                      <div className="flex gap-1 md:gap-0  md:justify-between">
                         <img
                           src={item.thumbnail}
                           alt="thumbnail"
-                          className="w-1/4 object-fill"
+                          className="h-24 w-1/4 object-contain"
                           onClick={() => {
                             router.push(`/products/${item.productId}`);
                             handleOpen();
@@ -112,7 +112,7 @@ export default function CartAction() {
                             />
                           </div>
                           <div className="flex items-center justify-between w-[220px]">
-                            <span className="text-neutral-400 text-[11px] tracking-tighter">
+                            <span className="text-neutral-400 text-[11px] tracking-tighter line-clamp-1 w-[100px]">
                               {item.optionName}
                             </span>
                             {item.sale > 0 && (

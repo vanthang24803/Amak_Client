@@ -20,6 +20,12 @@ export const AttributeForm = () => {
     register,
   } = useFormContext<StepperFormValues>();
 
+  const handleColTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textarea = e.target;
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
+
   return (
     <Card className="my-4">
       <CardHeader>
@@ -68,9 +74,10 @@ export const AttributeForm = () => {
             Mô tả sản phẩm
           </Label>
           <Textarea
-            className="text-[13px]"
             {...register("introduction")}
             rows={4}
+            className="text-[13px] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+            onInput={handleColTextArea}
           />
         </div>
         <div className="flex flex-col gap-1">
@@ -78,9 +85,10 @@ export const AttributeForm = () => {
             Thông tin sản phẩm
           </Label>
           <Textarea
-            className="text-[13px]"
+            className="text-[13px] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
             {...register("specifications")}
             rows={4}
+            onInput={handleColTextArea}
           />
         </div>
       </CardContent>
