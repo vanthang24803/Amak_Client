@@ -11,6 +11,7 @@ import { ProductModal } from "../modal/product-modal";
 import useAuth from "@/hooks/use-auth";
 import { useCart } from "@/hooks/use-cart";
 import { Cart as CartType } from "@/types";
+import { Fragment } from "react";
 
 type Props = {
   product: Product;
@@ -87,9 +88,9 @@ export const Card = ({ product }: Props) => {
             </Button>
           )}
         </div>
-        <>
+        <Fragment>
           {isLogin && (
-            <>
+            <Fragment>
               {product.options[0]?.quantity > 0 ? (
                 <div
                   className="my-2 flex items-center space-x-4 md:absolute md:bottom-4"
@@ -112,9 +113,9 @@ export const Card = ({ product }: Props) => {
                   </span>
                 </div>
               )}
-            </>
+            </Fragment>
           )}
-        </>
+        </Fragment>
       </div>
     </div>
   );

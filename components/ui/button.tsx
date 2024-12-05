@@ -21,6 +21,8 @@ const buttonVariants = cva(
         primary:
           "bg-green-600 text-primary-foreground hover:bg-green-600/90 dark:bg-green-500 dark:hover:bg-green-500/90 dark:text-primary",
         mix: "bg-sky-600 text-primary-foreground hover:bg-sky-/90 dark:bg-sky-600 dark:hover:bg-sky-600/90 dark:text-primary",
+        gooeyLeft:
+          "text-primary-foreground relative bg-primary z-0 overflow-hidden transition-all duration-400 after:absolute after:inset-0 after:-z-10 after:translate-x-[-150%] after:translate-y-[150%] after:scale-[2.5] after:rounded-[100%] after:bg-gradient-to-l from-zinc-400 after:transition-transform after:duration-1000  hover:after:translate-x-[0%] hover:after:translate-y-[0%] ",
       },
       size: {
         default: "h-9 px-4 py-2",

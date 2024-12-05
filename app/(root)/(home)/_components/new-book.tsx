@@ -32,6 +32,7 @@ export const NewBook = () => {
           Bộ sưu tập mới
         </h2>
         <Button
+          variant="gooeyLeft"
           className="bg-[#417505] text-white font-medium  hover:bg-[#65b10d] h-8 rounded-sm"
           onClick={() => router.push(`/collections/all`)}
         >

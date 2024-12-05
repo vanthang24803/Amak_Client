@@ -32,6 +32,7 @@ export const Manga = () => {
         </h2>
         <Button
           className="bg-[#417505] text-white font-medium  hover:bg-[#65b10d] h-8 rounded-sm"
+          variant="gooeyLeft"
           onClick={() => router.push(`/collections/manga-comic`)}
         >
           Manga-Commic

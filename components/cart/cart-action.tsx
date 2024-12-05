@@ -157,6 +157,7 @@ export default function CartAction() {
             </span>
           </div>
           <Button
+            variant="gooeyLeft"
             className="w-full bg-[#417505] hover:bg-[#65b10d]"
             onClick={() => {
               router.push("/checkout");
