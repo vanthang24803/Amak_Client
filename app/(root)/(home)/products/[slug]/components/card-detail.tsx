@@ -176,7 +176,7 @@ export const DetailCard = ({ product }: Props) => {
                 <>
                   {total > 0 ? (
                     <Button
-                      variant="default"
+                      variant="gooeyLeft"
                       className="bg-[#417505] text-white font-medium  hover:bg-[#65b10d]"
                       onClick={handlerAddToCart}
                     >
