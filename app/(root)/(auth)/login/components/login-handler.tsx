@@ -17,7 +17,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SocialButton } from "./social-btn";
-import toast from "react-hot-toast";
 import _http from "@/utils/http";
 import useAuth from "@/hooks/use-auth";
 import useSocialLogin from "@/hooks/use-social-login";
