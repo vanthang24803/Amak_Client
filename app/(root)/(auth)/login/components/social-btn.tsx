@@ -36,7 +36,7 @@ export const SocialButton = ({ className, onClick, provider, size }: Props) => {
         <Image src={Icon} alt={provider} width={size} height={size} />
       </div>
       <span className="text-[13.5px] tracking-tight">
-        Sign In with {capitalizedProvider}
+        Đăng nhập với {capitalizedProvider}
       </span>
     </Button>
   );
