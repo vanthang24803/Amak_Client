@@ -16,7 +16,7 @@ export const NotFoundOrder = ({ handleReset }: Props) => {
         className="w-[200px] md:w-[400px] h-auto"
       />
       <h4 className="text-base font-bold">Không tìm thấy đơn hàng của bạn</h4>
-      <p className="w-[200px] md:w-[350px] text-[14px] text-center">
+      <p className=" md:w-[350px] text-[14px] text-center">
         Chúng tôi không tìm thấy mã đơn hàng của bạn trong hệ thống. Vui lòng
         kiểm tra lại mã đơn hàng
       </p>
