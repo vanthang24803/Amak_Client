@@ -22,6 +22,14 @@ import useAuth from "@/hooks/use-auth";
 import useSocialLogin from "@/hooks/use-social-login";
 import PasswordInput from "@/components/ui/input-password";
 import { Label } from "@/components/ui/label";
+import { Mail } from "lucide-react";
+import { Roboto } from "next/font/google";
+
+const font = Roboto({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export type LoginFromValue = z.infer<typeof loginValidation>;
 
@@ -62,10 +70,12 @@ export const LoginHandler = () => {
 
   return (
     <AuthModal>
-      <div className="flex flex-col">
-        <h2 className="text-xl font-semibold">Login</h2>
+      <div className={`${font.className} flex flex-col`}>
+        <h2 className="text-xl font-bold capitalize tracking-tight">
+          Đăng Nhập
+        </h2>
         <span className="text-neutral-800 text-sm">
-          to continue to AMAK Store
+          để tiếp tục mua săm tại AMAK
         </span>
       </div>
       <FormProvider {...form}>
@@ -80,12 +90,18 @@ export const LoginHandler = () => {
               <FormItem>
                 <FormControl>
                   <div className="flex flex-col space-y-2">
-                    <Label>Email address</Label>
-                    <Input
-                      {...field}
-                      autoComplete="off"
-                      placeholder="mail@example.com"
-                    />
+                    <Label>Email</Label>
+                    <div className="relative">
+                      <Input
+                        className="peer pe-9"
+                        {...field}
+                        autoComplete="off"
+                        placeholder="mail@example.com"
+                      />
+                      <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
+                        <Mail size={16} strokeWidth={2} aria-hidden="true" />
+                      </div>
+                    </div>
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -116,11 +132,11 @@ export const LoginHandler = () => {
             className="text-end text-[12px] hover:cursor-pointer hover:underline pb-3"
             onClick={() => router.push(`/forgot-password`)}
           >
-            Forgot password
+            Quên mật khẩu?
           </span>
 
-          <Button type="submit" disabled={loading}>
-            Submit
+          <Button type="submit" disabled={loading} variant="primary">
+            Đăng nhập
           </Button>
         </form>
       </FormProvider>
@@ -134,12 +150,12 @@ export const LoginHandler = () => {
       </div>
 
       <div className="flex items-center space-x-2 text-sm">
-        <span className="mt-4 text-neutral-600">No account?</span>
+        <span className="mt-4 text-neutral-600">Chưa có tài khoản?</span>
         <span
           className="mt-4 text-blue-600 hover:cursor-pointer"
           onClick={() => router.push("/register")}
         >
-          Create now
+          Tạo mới
         </span>
       </div>
     </AuthModal>

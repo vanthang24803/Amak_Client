@@ -5,7 +5,7 @@ import { AuthModal } from "@/components/auth-model";
 import useAuth from "@/hooks/use-auth";
 import { registerValidation } from "@/validations";
 import { redirect, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import _http from "@/utils/http";
@@ -21,10 +21,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RegisterSuccess } from "./register-success";
-import { Step } from "./step";
-import PasswordInput from "@/components/ui/input-password";
 import { Label } from "@/components/ui/label";
+import { Mail, X } from "lucide-react";
+import { PasswordStrength } from "./password-strength";
+import PasswordInput from "@/components/ui/input-password";
+import { Roboto } from "next/font/google";
 
+const font = Roboto({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
 type LoginFormValue = z.infer<typeof registerValidation>;
 
 export const RegisterHandler = () => {
@@ -47,6 +54,30 @@ export const RegisterHandler = () => {
       password: "",
     },
   });
+
+  const checkStrength = (pass: string) => {
+    const requirements = [
+      { regex: /.{8,}/, text: "Ít nhất 8 ký tự" },
+      { regex: /[0-9]/, text: "Ít nhất 1 số" },
+      { regex: /[a-z]/, text: "Ít nhất 1 chữ cái thường" },
+      { regex: /[A-Z]/, text: "Ít nhất 1 chữ cái in hoa" },
+      {
+        regex: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/,
+        text: "Ít nhất 1 ký tự đặc biệt",
+      },
+    ];
+
+    return requirements.map((req) => ({
+      met: req.regex.test(pass),
+      text: req.text,
+    }));
+  };
+
+  const strength = checkStrength(form.watch("password"));
+
+  const strengthScore = useMemo(() => {
+    return strength.filter((req) => req.met).length;
+  }, [strength]);
 
   const onSubmit = async (data: LoginFormValue) => {
     if (token) {
@@ -82,11 +113,10 @@ export const RegisterHandler = () => {
 
   return (
     <AuthModal>
-      <div className="flex flex-col justify-center ">
-        <h2 className="text-xl font-semibold tracking-tighter">
+      <div className={`${font.className} flex flex-col justify-center`}>
+        <h2 className="text-xl font-bold tracking-tighter">
           Đăng ký tài khoản
         </h2>
-        <Step isActive={active} />
         <span className="text-neutral-800 text-[12px]">
           {active
             ? "Xác thực tài khoản của bạn"
@@ -99,7 +129,7 @@ export const RegisterHandler = () => {
         <>
           <FormProvider {...form}>
             <form
-              className="flex flex-col space-y-3"
+              className="flex flex-col gap-1"
               onSubmit={form.handleSubmit(onSubmit)}
             >
               <div className="grid grid-cols-2 gap-4">
@@ -151,11 +181,21 @@ export const RegisterHandler = () => {
                     <FormControl>
                       <div className="flex flex-col space-y-2">
                         <Label>Email</Label>
-                        <Input
-                          {...field}
-                          autoComplete="off"
-                          placeholder="mail@example.com"
-                        />
+                        <div className="relative">
+                          <Input
+                            className="peer pe-9"
+                            {...field}
+                            autoComplete="off"
+                            placeholder="mail@example.com"
+                          />
+                          <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
+                            <Mail
+                              size={16}
+                              strokeWidth={2}
+                              aria-hidden="true"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -169,11 +209,20 @@ export const RegisterHandler = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <PasswordInput
-                        placeholder="Password"
-                        {...field}
-                        autoComplete="off"
-                      />
+                      <div>
+                        <PasswordInput
+                          className="pe-9"
+                          placeholder="Password"
+                          {...field}
+                          autoComplete="off"
+                          aria-invalid={strengthScore < 4}
+                          aria-describedby="password-strength"
+                        />
+                        <PasswordStrength
+                          strength={strength}
+                          strengthScore={strengthScore}
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -181,24 +230,24 @@ export const RegisterHandler = () => {
               />
 
               <Turnstile
-                className="flex items-center justify-center"
+                className="flex items-center justify-center my-2"
                 sitekey={process.env.NEXT_PUBLIC_CLOUDFLARE_SITE_KEY ?? ""}
                 onVerify={(token) => setToken(token)}
               />
 
-              <Button type="submit" disabled={loading}>
-                Submit
+              <Button type="submit" variant="mix" disabled={loading}>
+                Đăng ký
               </Button>
             </form>
           </FormProvider>
 
           <div className="flex items-center space-x-2 text-sm">
-            <span className="mt-4 text-neutral-600">Have account?</span>
+            <span className="text-neutral-600">Bạn đã có tài khoản?</span>
             <span
-              className="mt-4 text-blue-600 hover:cursor-pointer"
+              className="text-blue-600 hover:cursor-pointer"
               onClick={() => router.push("/login")}
             >
-              Login now
+              Đăng nhập ngay
             </span>
           </div>
         </>
