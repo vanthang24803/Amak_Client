@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 import { LoaderCircle } from "lucide-react";
+import _http from "@/utils/http";
 
 const formSchema = z.object({
   firstName: z
@@ -46,7 +47,7 @@ const formSchema = z.object({
 });
 
 export const FullNameDialogDashboard = () => {
-  const { profile } = useAuth();
+  const { profile, getProfile } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -64,9 +65,14 @@ export const FullNameDialogDashboard = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      setLoading(true);
-      handleOpen();
-      toast.success("Cập nhật thành công!");
+      const response = await _http.put(`/Me/FullName`, values);
+
+      if (response.status === 200) {
+        getProfile();
+        setLoading(true);
+        handleOpen();
+        toast.success("Cập nhật thành công!");
+      }
 
       console.log(values);
     } catch (error) {
