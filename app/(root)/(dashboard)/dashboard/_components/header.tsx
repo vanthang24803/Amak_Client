@@ -2,80 +2,115 @@
 
 import { AvatarFallback, Avatar, AvatarImage } from "@/components/ui/avatar";
 import useAuth from "@/hooks/use-auth";
-import Image from "next/image";
 import { ThemeToggle } from "./theme-toggle";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { LogOut, UserIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { CommandBar } from "./command";
 import { SearchBar } from "./search-bar";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Info, Languages, Package, UserCircle2Icon } from "lucide-react";
+import { useState } from "react";
+import { Logout } from "./logout";
+import { Profile } from "./profile";
+import { Connection } from "./connection";
+import { About } from "./about";
+import { Language } from "./language";
+
+const nav = [
+  {
+    key: "account",
+    content: (
+      <div className="flex items-center gap-3 p-2">
+        <UserCircle2Icon className="w-4 h-4" /> Tài khoản
+      </div>
+    ),
+  },
+  {
+    key: "connection",
+    content: (
+      <div className="flex items-center gap-3   p-2">
+        <Package className="w-4 h-4" /> Kết nối
+      </div>
+    ),
+  },
+  {
+    key: "language",
+    content: (
+      <div className="flex items-center gap-3   p-2">
+        <Languages className="w-4 h-4" /> Ngôn ngữ
+      </div>
+    ),
+  },
+  {
+    key: "about",
+    content: (
+      <div className="flex items-center gap-3   p-2">
+        <Info className="w-4 h-4" /> Phiên bản
+      </div>
+    ),
+  },
+];
 
 export const Header = () => {
-  const { profile, logout } = useAuth();
+  const { profile } = useAuth();
 
-  const router = useRouter();
+  const [active, setActive] = useState<string>("account");
+
+  const getComponent = (key: string) => {
+    switch (key) {
+      case "account":
+        return <Profile />;
+      case "connection": {
+        return <Connection />;
+      }
+      case "language": {
+        return <Language />;
+      }
+      case "about": {
+        return <About />;
+      }
+    }
+  };
+
   return (
     <header className="flex items-center justify-between border-b-[1px] py-2 px-4">
       <SearchBar />
       <div className="flex items-center space-x-3">
         <ThemeToggle />
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <div className="relative">
-              <Avatar>
-                <AvatarImage
-                  src={profile?.avatar}
-                  className="hover:cursor-pointer"
-                />
-                <AvatarFallback>
-                  {profile?.lastName[0].toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              {profile?.roles.includes("ADMIN") && (
-                <Image
-                  className="absolute -top-1 -right-3  rotate-45"
-                  src="/crown.png"
-                  alt="admin"
-                  width={14}
-                  height={14}
-                />
-              )}
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel className="flex items-center space-x-2">
-              <div>
-                {profile?.lastName} {profile?.firstName}
+        <Dialog>
+          <DialogTrigger>
+            <Avatar>
+              <AvatarImage
+                src={profile?.avatar}
+                className="hover:cursor-pointer"
+              />
+              <AvatarFallback>
+                {profile?.lastName[0].toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+          </DialogTrigger>
+          <DialogContent className="md:rounded-lg md:max-w-screen-lg h-[80vh] flex overflow-hidden dark:bg-neutral-900 md:p-4">
+            <div className="w-1/4  border-r dark:border-neutral-700 flex flex-col justify-between">
+              <div className=" flex flex-col gap-2 px-2">
+                <span className="pl-2 text-[12.5px] font-semibold text-neutral-600 tracking-tight">
+                  Cài đặt
+                </span>
+                {nav.map((item) => (
+                  <div
+                    key={item.key}
+                    className={`text-[12px] w-full cursor-pointer ${
+                      active === item.key
+                        ? "dark:bg-[#242A31] bg-neutral-200 rounded"
+                        : ""
+                    }`}
+                    onClick={() => setActive(item.key)}
+                  >
+                    {item.content}
+                  </div>
+                ))}
               </div>
-              {profile?.roles.includes("ADMIN") && (
-                <Image width={16} height={16} src="/verify.png" alt="admin" />
-              )}
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator className="h-[1.5px]" />
-            <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => router.push("/profile")}>
-                <UserIcon className="mr-2 h-4 w-4" />
-                <span className="text-[13.25px] font-medium tracking-tighter">
-                  Trang cá nhân
-                </span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => logout()}>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span className="text-[13.25px] font-medium tracking-tighter">
-                  Đăng xuất
-                </span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <Logout />
+            </div>
+            <div className="w-3/4 py-4 px-2">{getComponent(active)}</div>
+          </DialogContent>
+        </Dialog>
       </div>
     </header>
   );
