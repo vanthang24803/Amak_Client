@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RegisterSuccess } from "./register-success";
-import { Step } from "./Step";
+import { Step } from "./step";
 import PasswordInput from "@/components/ui/input-password";
 import { Label } from "@/components/ui/label";
 
