@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/form";
 import Turnstile from "react-turnstile";
 import { useState } from "react";
+import _http from "@/utils/http";
+import { Order, Response } from "@/types";
 
 const formSchema = z.object({
   order: z.string().min(1, {
@@ -23,8 +25,13 @@ const formSchema = z.object({
   }),
 });
 
-export const SearchForm = () => {
+type Props = {
+  onSearchResult: (result: Order | null) => void;
+};
+
+export const SearchForm = ({ onSearchResult }: Props) => {
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,9 +40,21 @@ export const SearchForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     if (token) {
-      console.log(values);
+      try {
+        setLoading(true);
+        const response = await _http.get(`/Orders/${values.order}`);
+
+        if (response.status === 200) {
+          onSearchResult(response.data.result);
+        }
+      } catch (error) {
+        console.log(error);
+        onSearchResult(null);
+      } finally {
+        setLoading(false);
+      }
     }
   }
 
@@ -88,7 +107,7 @@ export const SearchForm = () => {
           />
 
           <div className=" flex items-center justify-center">
-            <Button variant="primary" className="w-[200px]">
+            <Button variant="primary" className="w-[200px]" disabled={loading}>
               Tra cứu ngay
               <ArrowRight className="h-4 w-4 " />
             </Button>

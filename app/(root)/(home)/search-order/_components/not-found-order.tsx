@@ -4,7 +4,11 @@
 
 import { Button } from "@/components/ui/button";
 
-export const NotFoundOrder = () => {
+type Props = {
+  handleReset: () => void;
+};
+
+export const NotFoundOrder = ({ handleReset }: Props) => {
   return (
     <div className="flex flex-col gap-4 items-center mb-24">
       <img
@@ -16,7 +20,7 @@ export const NotFoundOrder = () => {
         Chúng tôi không tìm thấy mã đơn hàng của bạn trong hệ thống. Vui lòng
         kiểm tra lại mã đơn hàng
       </p>
-      <Button variant="mix" className="w-[200px]">
+      <Button variant="mix" className="w-[200px]" onClick={handleReset}>
         Trở lại
       </Button>
     </div>
