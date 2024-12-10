@@ -61,10 +61,18 @@ export const EmailDialogDashboard = () => {
 
   const handleSendCode = async () => {
     const mail = form.watch("email");
+    try {
+      const response = await _http.post(`/Me/Email`, {
+        email: mail,
+      });
 
-    console.log(mail);
-
-    setIsSend(true);
+      if (response.status === 200) {
+        setIsSend(true);
+      }
+    } catch (error) {
+      toast.error("Có lỗi xảy ra!");
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -84,16 +92,18 @@ export const EmailDialogDashboard = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // const response = await _http.put(`/Me/FullName`, values);
-
       setLoading(true);
-      handleOpen();
-      console.log(values);
+      const response = await _http.put(`/Me/Email`, values);
 
-      // if (response.status === 200) {
-      //   getProfile();
-      //   toast.success("Cập nhật thành công!");
-      // }
+      if (response.status === 200) {
+        setLoading(true);
+        handleOpen();
+        console.log(values);
+        getProfile();
+        toast.success("Cập nhật thành công!");
+        form.setValue("code", "");
+        setIsSend(false);
+      }
 
       console.log(values);
     } catch (error) {
