@@ -1,6 +1,7 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
+import { LanguageSelector } from "./language-selector";
 
 export const Language = () => {
   return (
@@ -9,6 +10,8 @@ export const Language = () => {
         <h1 className="text-lg font-bold tracking-tight">Ngôn ngữ</h1>
         <Separator />
       </div>
+
+      <LanguageSelector />
     </div>
   );
 };
