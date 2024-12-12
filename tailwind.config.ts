@@ -75,12 +75,17 @@ const config = {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
+        ping: {
+          "0%": { transform: "scale(0.95)", opacity: "1" },
+          "75%, 100%": { transform: "scale(1.5)", opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "shine-animation": "shine-key 8s ease-in-out infinite",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        ping: "ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite",
       },
     },
   },
