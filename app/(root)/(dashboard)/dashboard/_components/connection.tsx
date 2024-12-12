@@ -9,7 +9,7 @@ type SocialType = "google" | "facebook" | "instagram";
 const icons: Record<SocialType, string> = {
   google: "/google.svg",
   facebook: "/fb.png",
-  instagram: "/instagram.svg",
+  instagram: "/instagram.png",
 };
 
 const mockData = [

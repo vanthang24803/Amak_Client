@@ -17,6 +17,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { Separator } from "@/components/ui/separator";
 import useAuth from "@/hooks/use-auth";
 import { formatTime } from "@/utils/date";
@@ -156,20 +163,31 @@ export const EmailDialogDashboard = () => {
                         <FormControl>
                           <div className="flex flex-col space-y-2">
                             <FormLabel>Email</FormLabel>
-                            <div className="relative">
-                              <Input
-                                className="peer pe-9 md:rounded-md"
-                                {...field}
-                                autoComplete="off"
-                                placeholder="mail@example.com"
-                              />
-                              <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
-                                <Mail
-                                  size={16}
-                                  strokeWidth={2}
-                                  aria-hidden="true"
+                            <div className="flex items-center gap-4">
+                              <div className="relative">
+                                <Input
+                                  className="peer pe-9 md:rounded-md w-[350px]"
+                                  {...field}
+                                  autoComplete="off"
+                                  placeholder="mail@example.com"
                                 />
+                                <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
+                                  <Mail
+                                    size={16}
+                                    strokeWidth={2}
+                                    aria-hidden="true"
+                                  />
+                                </div>
                               </div>
+                              <Button
+                                type="button"
+                                disabled={isSend}
+                                variant="gooeyLeft"
+                                onClick={handleSendCode}
+                                className="bg-[#CFC5B6] text-neutral-900 w-[100px] md:p-0"
+                              >
+                                {isSend ? formatTime(countdown) : "Gửi mã"}
+                              </Button>
                             </div>
                           </div>
                         </FormControl>
@@ -186,25 +204,27 @@ export const EmailDialogDashboard = () => {
                         <FormControl>
                           <div className="flex flex-col space-y-2">
                             <FormLabel>Mã xác nhận*</FormLabel>
-                            <div className="flex items-center gap-4">
-                              <Input
-                                autoComplete="off"
-                                className="md:rounded-md"
+                            <div className="flex items-center justify-center w-full">
+                              <InputOTP
+                                maxLength={6}
+                                pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
                                 {...field}
-                              />
-                              <Button
-                                type="button"
-                                disabled={isSend}
-                                variant="gooeyLeft"
-                                onClick={handleSendCode}
-                                className="bg-[#CFC5B6] text-neutral-900 w-[120px]"
                               >
-                                {isSend ? formatTime(countdown) : "Gửi mã"}
-                              </Button>
+                                <InputOTPGroup>
+                                  <InputOTPSlot index={0} />
+                                  <InputOTPSlot index={1} />
+                                  <InputOTPSlot index={2} />
+                                </InputOTPGroup>
+                                <InputOTPSeparator />
+                                <InputOTPGroup>
+                                  <InputOTPSlot index={3} />
+                                  <InputOTPSlot index={4} />
+                                  <InputOTPSlot index={5} />
+                                </InputOTPGroup>
+                              </InputOTP>
                             </div>
                           </div>
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
