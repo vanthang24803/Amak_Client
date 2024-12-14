@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from "react";
 
-export const Countdown = () => {
-  const endDate = "2025-01-01T00:00:00.000Z";
+type Props = {
+  endDate: string;
+};
+
+export const Countdown = ({ endDate }: Props) => {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -35,7 +38,7 @@ export const Countdown = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [endDate]);
 
   return (
     <div className="flex items-center gap-4">
