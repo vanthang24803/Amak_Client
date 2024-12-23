@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { BookmarkCheck } from "lucide-react";
+import { ListProductPopup } from "./list-product";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -85,12 +85,7 @@ export function DataTable<TData, TValue>({
               }
               className="max-w-sm text-[12px] rounded w-[400px]"
             />
-            <div className="relative cursor-pointer">
-              <BookmarkCheck />
-              <div className="w-5 h-5 flex items-center justify-center rounded-full bg-red-500 absolute -top-2 -right-2">
-                <span className="text-white text-[12px]">{0}</span>
-              </div>
-            </div>
+            <ListProductPopup />
           </div>
         </div>
       </div>

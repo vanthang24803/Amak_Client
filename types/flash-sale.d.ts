@@ -18,3 +18,11 @@ export type ListFlashSale = {
 };
 
 export type FlashSaleType = "PENDING" | "ACTIVE" | "COMPLETED";
+
+export type FlashSaleProduct = {
+  id: string;
+  name: string;
+  thumbnail: string;
+  optionName: string;
+  optionId: string;
+};

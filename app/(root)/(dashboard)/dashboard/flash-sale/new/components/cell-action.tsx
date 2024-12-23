@@ -12,10 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { ArrowRight, Plus } from "lucide-react";
 import PhotoModal from "@/components/modal/photo-modal";
-import { Option } from "@/types";
+import { FlashSaleProduct, Option } from "@/types";
 import { convertPrice, formatPrice } from "@/utils/price";
 import { Quicksand } from "next/font/google";
 import { toast } from "sonner";
+import { useFlashSale } from "@/hooks/use-flash-sale";
 
 const font = Quicksand({ subsets: ["latin"] });
 
@@ -25,10 +26,24 @@ interface CellActionProps {
 
 export const CellAction = ({ data }: CellActionProps) => {
   const [option, setOption] = useState<Option | undefined>(data.options[0]);
+  const { addProduct } = useFlashSale();
 
   const handleOptionChange = (id: string) => {
     const newOption = data?.options.find((option) => option.id === id);
     setOption(newOption);
+  };
+
+  const handleAddProduct = () => {
+    const product = {
+      id: data.id,
+      name: data.name,
+      optionId: option?.id,
+      optionName: option?.name,
+      thumbnail: data.thumbnail,
+    } as FlashSaleProduct;
+
+    addProduct(product);
+    toast.success("Đã thêm!");
   };
 
   return (
@@ -100,7 +115,7 @@ export const CellAction = ({ data }: CellActionProps) => {
                 <Button
                   variant="mix"
                   className="mt-8 group"
-                  onClick={() => toast.success("OK")}
+                  onClick={handleAddProduct}
                 >
                   Thêm{" "}
                   <ArrowRight className="group-hover:translate-x-2 transition-all ease-in-out" />

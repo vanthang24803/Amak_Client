@@ -8,8 +8,16 @@ import { CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AttributeForm } from "./attribute-form";
 import { ProductFrom } from "./product-from";
+import { SubmitForm } from "./submit-form";
+import { useFlashSale } from "@/hooks/use-flash-sale";
+import toast from "react-hot-toast";
+import _http from "@/utils/http";
+import { useRouter } from "next/navigation";
+import { mutate } from "swr";
 
 export const CreateFlashSaleForm = () => {
+  const router = useRouter();
+  const { data } = useFlashSale();
   const [activeStep, setActiveStep] = useState(1);
 
   const methods = useForm<StepperFormFlashSaleValue>({
@@ -24,11 +32,12 @@ export const CreateFlashSaleForm = () => {
 
   function getStepContent(step: number) {
     switch (step) {
-      case 2:
-        return <AttributeForm />;
       case 1:
+        return <AttributeForm />;
+      case 2:
         return <ProductFrom />;
-
+      case 3:
+        return <SubmitForm />;
       default:
         return null;
     }
@@ -43,8 +52,29 @@ export const CreateFlashSaleForm = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const onSubmit = async (data: StepperFormFlashSaleValue) => {
-    console.log(data);
+  const onSubmit = async (values: StepperFormFlashSaleValue) => {
+    const sales = data.map((product) => ({
+      productId: product.id,
+      optionId: product.optionId,
+    }));
+
+    const dataSend = {
+      ...values,
+      sales,
+    };
+
+    try {
+      const res = await _http.post(`/FlashSale`, dataSend);
+
+      if (res.status === 201) {
+        mutate(`/FlashSale`);
+        toast.success("Thành công!");
+        router.push(`/dashboard/flash-sale`);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Có lỗi xảy ra!");
+    }
   };
 
   return (
