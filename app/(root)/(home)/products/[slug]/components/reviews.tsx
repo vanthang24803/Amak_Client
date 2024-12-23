@@ -22,8 +22,6 @@ export const Reviews = ({ id }: Props) => {
     productId: id,
   });
 
-  console.log(reviews);
-
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");

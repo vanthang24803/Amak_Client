@@ -1,9 +1,12 @@
 import { parseISO, format, formatDistanceToNow, parse } from "date-fns";
 import { vi } from "date-fns/locale";
 
-const formatStringToDate = (dateString: string) => {
+const formatStringToDate = (
+  dateString: string,
+  formatType: string = "dd/MM/yyyy",
+) => {
   const date = parseISO(dateString);
-  return format(date, "dd/MM/yyyy");
+  return format(date, formatType);
 };
 
 const formatDateToNow = (dateString: string) => {
