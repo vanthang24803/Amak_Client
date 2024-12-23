@@ -10,6 +10,8 @@ import Figures from "./figures";
 import { Blogs } from "./blogs";
 import useClient from "@/hooks/use-client";
 import { Spinner } from "@/components/spinner";
+import { FlashSale } from "./flash-sale";
+import { Ticket } from "./ticket";
 
 export const Wrapper = () => {
   const { isClient } = useClient();
@@ -25,6 +27,8 @@ export const Wrapper = () => {
     <main className="md:max-w-screen-xl mx-auto md:p-8 p-2 flex flex-col space-y-6 md:space-y-8">
       <BillboardComponent />
       <Categories />
+      <FlashSale />
+      <Ticket />
       <BestSeller />
       <Skeleton className="w-full h-10 bg-white" />
       <NewBook />

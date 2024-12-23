@@ -18,6 +18,7 @@ import {
   PanelTopOpen,
   Settings,
   TicketCheck,
+  PartyPopper,
 } from "lucide-react";
 import { Nav } from "./nav";
 import { Separator } from "@/components/ui/separator";
@@ -136,6 +137,11 @@ export const SidebarWrapper = ({
               title: "Mã giảm giá",
               path: "/dashboard/tickets",
               icon: TicketCheck,
+            },
+            {
+              title: "Flash-sale",
+              path: "/dashboard/flash-sale",
+              icon: PartyPopper,
             },
             {
               title: "Thùng rác",

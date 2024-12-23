@@ -7,12 +7,15 @@ import { Fragment } from "react";
 
 type Props = {
   activeStep: number;
+  numberOfSteps?: number;
 };
 
-export const StepperIndicator = ({ activeStep }: Props) => {
+export const StepperIndicator = ({ activeStep, numberOfSteps = 4 }: Props) => {
+  const steps = Array.from({ length: numberOfSteps }, (_, i) => i + 1);
+
   return (
     <div className="flex items-center justify-center">
-      {[1, 2, 3, 4].map((step) => (
+      {steps.map((step) => (
         <Fragment key={step}>
           <div
             className={clsx(
@@ -27,7 +30,7 @@ export const StepperIndicator = ({ activeStep }: Props) => {
               <Check className="h-5 w-5 dark:text-green-600" />
             )}
           </div>
-          {step !== 4 && (
+          {step !== numberOfSteps && (
             <Separator
               orientation="horizontal"
               className={clsx(

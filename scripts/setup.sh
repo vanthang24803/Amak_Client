@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sh env.local.sh
+
 cd ..
 
 echo "Install dependencies  😍😍😍😍😍"
