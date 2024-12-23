@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-// import { CellAction } from "./cell-action";
+import { CellAction } from "./cell-action";
 import { Badge } from "@/components/ui/badge";
 import { FlashSaleType, ListFlashSale } from "@/types";
 import { formatStringToDate } from "@/utils/date";
@@ -68,9 +68,14 @@ export const columns: ColumnDef<ListFlashSale>[] = [
   {
     accessorKey: "products",
     header: "Số lượng sản phẩm",
+    cell: ({ row }) => (
+      <p className="flex items-center justify-center w-[100px]">
+        {row.original.products}
+      </p>
+    ),
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <CellAction data={row.original} />,
-  // },
+  {
+    id: "actions",
+    cell: ({ row }) => <CellAction data={row.original} />,
+  },
 ];

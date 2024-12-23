@@ -1,6 +1,5 @@
 "use client";
 
-import Tiptap from "@/components/tiptap";
 import {
   Card,
   CardContent,

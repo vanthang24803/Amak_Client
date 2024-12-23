@@ -12,3 +12,13 @@ export type StepperFormValues = {
     price: number;
   }>;
 };
+
+export type StepperFormFlashSaleValue = {
+  name?: string;
+  startAt?: Date;
+  endAt?: Date;
+  products: Array<{
+    productId: string;
+    optionId: string;
+  }>;
+};
