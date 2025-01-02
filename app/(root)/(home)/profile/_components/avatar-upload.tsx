@@ -122,7 +122,7 @@ export const AvatarProfile = () => {
             onClick={onSubmit}
             disabled={loading || profile?.avatar == avatar}
           >
-            Save changes
+            Cập nhật
           </Button>
         </DialogFooter>
       </DialogContent>

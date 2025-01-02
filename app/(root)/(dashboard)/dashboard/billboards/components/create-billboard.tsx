@@ -127,7 +127,7 @@ export const CreateBillboard = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Cập nhật</DialogTitle>
+          <DialogTitle>Tạo mới</DialogTitle>
           <DialogDescription className="text-[13px]">
             Hãy tải lên hình ảnh mới và nhấn nút xác nhận để hoàn thành
           </DialogDescription>
