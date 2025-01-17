@@ -41,7 +41,7 @@ export const Address = ({ setAddress }: SelectAddressProps) => {
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
   const [selectedWard, setSelectedWard] = useState<string | null>(null);
 
-  const api = "https://vapi.vnappmob.com/api/province";
+  const api = "https://vapi.vnappmob.com/api/v2/province";
 
   useEffect(() => {
     _http.get(`${api}/`).then((response) => {

@@ -31,7 +31,7 @@ export const PublicAction = () => {
           </Tooltip>
         </TooltipProvider>
       </Link>
-      <Link href="/search-order">
+      <Link href="/tra-cuu">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>

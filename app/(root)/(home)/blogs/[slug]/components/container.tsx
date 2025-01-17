@@ -15,7 +15,6 @@ import { Separator } from "@/components/ui/separator";
 
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
