@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import { Wrapper } from "./components/wrapper";
 
 export const metadata: Metadata = {
-  title: "Xác nhận tài khoản",
+  title: "Đặt lại mật khẩu",
 };
 
-export default function VerifyAccount() {
+export default function ResetPassword() {
   return <Wrapper />;
 }

@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import _http from "@/utils/http";
 import Cookies from "js-cookie";
+import { decodeURIToken } from "@/utils/decode";
 
 export default function VerifyAccountHandler() {
   const { verifyEmail } = useAuth();
@@ -21,8 +22,10 @@ export default function VerifyAccountHandler() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const token = searchParams.get("token");
+  const token = searchParams.get("token") ?? "";
   const userId = searchParams.get("userId");
+
+  const encodedToken = decodeURIToken(token);
 
   useEffect(() => {
     const handlerVerifyAccount = async () => {
@@ -31,9 +34,7 @@ export default function VerifyAccountHandler() {
 
       try {
         const response = await _http.get(
-          `/Authentication/VerifyAccount?userId=${userId}&token=${encodeURIComponent(
-            token.replaceAll(" ", "+"),
-          )}`,
+          `/Authentication/VerifyAccount?userId=${userId}&token=${encodedToken}}`,
         );
 
         if (response.status === 200) {
