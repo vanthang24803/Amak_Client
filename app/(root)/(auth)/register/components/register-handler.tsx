@@ -32,6 +32,25 @@ const font = Roboto({
   subsets: ["latin"],
   display: "swap",
 });
+
+export const checkStrength = (pass: string) => {
+  const requirements = [
+    { regex: /.{8,}/, text: "Ít nhất 8 ký tự" },
+    { regex: /[0-9]/, text: "Ít nhất 1 số" },
+    { regex: /[a-z]/, text: "Ít nhất 1 chữ cái thường" },
+    { regex: /[A-Z]/, text: "Ít nhất 1 chữ cái in hoa" },
+    {
+      regex: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/,
+      text: "Ít nhất 1 ký tự đặc biệt",
+    },
+  ];
+
+  return requirements.map((req) => ({
+    met: req.regex.test(pass),
+    text: req.text,
+  }));
+};
+
 type LoginFormValue = z.infer<typeof registerValidation>;
 
 export const RegisterHandler = () => {
@@ -54,24 +73,6 @@ export const RegisterHandler = () => {
       password: "",
     },
   });
-
-  const checkStrength = (pass: string) => {
-    const requirements = [
-      { regex: /.{8,}/, text: "Ít nhất 8 ký tự" },
-      { regex: /[0-9]/, text: "Ít nhất 1 số" },
-      { regex: /[a-z]/, text: "Ít nhất 1 chữ cái thường" },
-      { regex: /[A-Z]/, text: "Ít nhất 1 chữ cái in hoa" },
-      {
-        regex: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/,
-        text: "Ít nhất 1 ký tự đặc biệt",
-      },
-    ];
-
-    return requirements.map((req) => ({
-      met: req.regex.test(pass),
-      text: req.text,
-    }));
-  };
 
   const strength = checkStrength(form.watch("password"));
 
