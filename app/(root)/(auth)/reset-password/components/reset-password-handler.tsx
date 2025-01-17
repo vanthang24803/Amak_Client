@@ -30,7 +30,7 @@ const font = Roboto({
 
 export type ResetPasswordForm = z.infer<typeof resetPasswordValidation>;
 
-export const ResetHandler = () => {
+export const ResetPasswordHandler = () => {
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
