@@ -20,6 +20,7 @@ AMAK is an shopping web app for book written in NextJS(version >= 14) with TypeS
 
 - [x] _~~Optimize performance for lazy loading~~_
 - [x] _~~Preload data for better performance <= 2ms~~_
+- [ ] Convert to turborepo
 - [ ] Cover all features by integration test
 
 ### Prerequisites
