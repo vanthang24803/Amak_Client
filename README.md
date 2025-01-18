@@ -2,7 +2,7 @@
 
 AMAK is an shopping web app for book written in NextJS(version >= 14) with TypeScript and TailwindCss.
 
-## Technologies
+### Technologies
 
 - [x] [React](https://react.dev/) (v18.2.0)
 - [x] [NextJs](https://nextjs.org/) (v14.2.15)
@@ -16,17 +16,13 @@ AMAK is an shopping web app for book written in NextJS(version >= 14) with TypeS
 - [x] [CI/CD Github Actions](https://docs.github.com/en/actions)
 - [x] [Nginx](https://nginx.org/en/)
 
-## Roadmap
+### Roadmap
 
 - [x] _~~Optimize performance for lazy loading~~_
 - [x] _~~Preload data for better performance <= 2ms~~_
 - [ ] Cover all features by integration test
 
-# Running the Application
-
-This is a basic guide on how to run the AMAK Nextjs application.
-
-## Prerequisites
+### Prerequisites
 
 To run the application, you will need to have the following installed on your machine:
 
@@ -34,9 +30,7 @@ To run the application, you will need to have the following installed on your ma
 - Bun >= 1.1.27: [Download and Install Bun](https://bun.sh/)
 - Git: [Download and Install Git](https://git-scm.com/downloads)
 
-## Environment
-
-## Running Application
+### Running Application
 
 To run the application, follow these steps:
 
