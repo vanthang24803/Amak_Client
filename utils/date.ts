@@ -1,4 +1,10 @@
-import { parseISO, format, formatDistanceToNow, parse } from "date-fns";
+import {
+  parseISO,
+  format,
+  formatDistanceToNow,
+  parse,
+  differenceInDays,
+} from "date-fns";
 import { vi } from "date-fns/locale";
 
 const formatStringToDate = (
@@ -29,9 +35,16 @@ const formatTime = (seconds: number): string => {
   return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 };
 
+const countDaysDifference = (date: string) => {
+  const pastDate = new Date(date);
+  const currentDate = new Date();
+  return differenceInDays(currentDate, pastDate);
+};
+
 export {
   formatStringToDate,
   formatDateToNow,
   convertToVietnameseMonth,
   formatTime,
+  countDaysDifference,
 };

@@ -85,7 +85,7 @@ export const CreateMedia = ({ handleClose }: Props) => {
         success: () => {
           mutate(`/Products/${params.id}`);
           handleClose();
-          return "Tải lên hình ảnh thành công!";
+          return "Quá trình tải ảnh lên thành công! Vui lòng đợi 1 chút để anh được cập nhật";
         },
         error: () => "Định dạng file không hợp lệ",
       });

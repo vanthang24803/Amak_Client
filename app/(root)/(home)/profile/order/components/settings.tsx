@@ -68,7 +68,6 @@ export const SettingOrder = ({ data }: Props) => {
       });
       const response = await _http.put(`/Orders/${data.id}`, dataSend);
       if (response.status === 200) {
-        toast.dismiss();
         handlerOpen();
         toast.success("Cập nhập thông tin thành công!", {
           className: "text-[14px] tracking font-medium tracking-tighter",
@@ -77,11 +76,11 @@ export const SettingOrder = ({ data }: Props) => {
       }
     } catch (error) {
       console.log(error);
-      toast.dismiss();
       toast.error("Có lỗi xảy ra", {
         className: "text-[14px] tracking  tracking-tighter",
       });
     } finally {
+      toast.dismiss();
       setLoading(false);
     }
   };
@@ -167,7 +166,12 @@ export const SettingOrder = ({ data }: Props) => {
               )}
             />
 
-            <Button type="submit" disabled={loading} className="rounded-none">
+            <Button
+              type="submit"
+              variant="primary"
+              disabled={loading}
+              className="rounded-none"
+            >
               {loading ? (
                 <span className="flex items-center gap-2">
                   Đang xử lý <LoaderCircle className="animate-spin w-4 h-4" />

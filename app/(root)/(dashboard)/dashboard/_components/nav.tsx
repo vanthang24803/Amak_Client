@@ -26,6 +26,16 @@ type Props = {
 
 export const Nav = ({ isCollapsed, links }: Props) => {
   const pathname = usePathname();
+
+  const convertLabel = (label: number): string => {
+    if (label >= 1000) {
+      const base = Math.floor(label / 100) / 10;
+      const hasPlus = label % 100 !== 0;
+      return `${base}K${hasPlus ? "+" : ""}`;
+    }
+    return label.toString();
+  };
+
   return (
     <div
       data-collapsed={isCollapsed}
@@ -72,7 +82,7 @@ export const Nav = ({ isCollapsed, links }: Props) => {
                   </span>
                   {link.label && Number(link.label) > 0 && (
                     <span className="ml-auto text-[12px] text-muted-foreground">
-                      {link.label}
+                      {convertLabel(Number(link.label))}
                     </span>
                   )}
                 </TooltipContent>
@@ -115,7 +125,7 @@ export const Nav = ({ isCollapsed, links }: Props) => {
                       "text-background dark:text-white ",
                   )}
                 >
-                  {link.label}
+                  {convertLabel(Number(link.label))}
                 </span>
               )}
             </Link>

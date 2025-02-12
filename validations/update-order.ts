@@ -18,4 +18,8 @@ const updateOrderValidation = z.object({
     }),
 });
 
-export { updateOrderValidation };
+const cancelOrderValidation = z.object({
+  message: z.string().min(1, { message: "Không được bỏ trống!" }),
+});
+
+export { updateOrderValidation, cancelOrderValidation };
