@@ -12,6 +12,9 @@ import { useRouter } from "next/navigation";
 import { ModalReview } from "./review";
 import { SettingOrder } from "./settings";
 import { useCart } from "@/hooks/use-cart";
+import toast from "react-hot-toast";
+import { countDaysDifference } from "@/utils/date";
+import { CancelOrder } from "./cancel-order";
 
 type Props = {
   order: Order;
@@ -63,9 +66,52 @@ export const OrderData = ({ order }: Props) => {
 
   const { handlerBuyBack } = useCart();
 
-  const actionBuy = () => {
+  const buyBack = () => {
     handlerBuyBack(order.orderDetails);
     router.push("/checkout");
+  };
+
+  const isWithin15Days = (date: string): boolean => {
+    return countDaysDifference(date) <= 15;
+  };
+
+  const renderRefundButton = () => (
+    <Button
+      size="sm"
+      variant="outline"
+      className="rounded-sm"
+      onClick={() => toast.success("Đang phát triển")}
+    >
+      Trả hàng / Hoàn tiền
+    </Button>
+  );
+
+  const handlerStatusOrder = (order: Order) => {
+    switch (order.status) {
+      case "SUCCESS":
+        return order.isReviewed ? (
+          <Button
+            size="sm"
+            variant="mix"
+            className="rounded-sm"
+            onClick={() => buyBack}
+          >
+            Mua lại
+          </Button>
+        ) : (
+          <div className="flex items-center gap-2">
+            {isWithin15Days(order.updateAt) && renderRefundButton()}
+            <ModalReview orderId={order.id} />
+          </div>
+        );
+
+      case "PENDING":
+      case "CREATE":
+        return isWithin15Days(order.createAt) && <CancelOrder order={order} />;
+
+      default:
+        return null;
+    }
   };
 
   return (
@@ -129,17 +175,7 @@ export const OrderData = ({ order }: Props) => {
           ))}
           <div className="flex items-center justify-end text-sm pb-4">
             <div className="flex items-center space-x-3 mt-2">
-              {order.status === "SUCCESS" && order.isReviewed ? (
-                <Button
-                  variant="mix"
-                  className="rounded-sm"
-                  onClick={actionBuy}
-                >
-                  Mua lại
-                </Button>
-              ) : (
-                <ModalReview orderId={order.id} />
-              )}
+              {handlerStatusOrder(order)}
               <span>
                 Thành tiền:{" "}
                 <b className="text-xl font-bold text-[#ee4d2d]">

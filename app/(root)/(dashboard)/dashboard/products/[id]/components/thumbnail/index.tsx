@@ -21,7 +21,7 @@ export const Thumbnail = ({ product }: Props) => {
       <div className="w-full bg-white dark:bg-black rounded h-auto p-4 flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <h4 className="scroll-m-20 text-lg font-bold tracking-tighter w-1/2 line-clamp-1">
-            Thumbnail
+            Hình minh họa
           </h4>
           <div className="flex items-center space-x-3">
             <Button

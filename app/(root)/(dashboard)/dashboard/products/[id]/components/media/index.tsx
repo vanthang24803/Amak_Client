@@ -25,7 +25,10 @@ export const Media = ({ product }: Props) => {
     <div className="w-full bg-white dark:bg-black rounded h-auto p-4 flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h4 className="scroll-m-20 text-lg font-bold tracking-tighter w-1/2 line-clamp-1">
-          Hình ảnh
+          Hình ảnh{" "}
+          {product &&
+            product?.photos.length > 0 &&
+            `(${product.photos.length})`}
         </h4>
         <Button variant="outline" size="sm" onClick={handleToggle}>
           <Settings className="w-4 h-4" />
