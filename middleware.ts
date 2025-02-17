@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { Role } from "./utils/role";
-import jwt from "jsonwebtoken";
+import * as JWT from "jose";
 
 export const config = {
   runtime: "nodejs",
   matcher: ["/profile/:path*", "/dashboard/:path*", "/posts/:path*"],
 };
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const token = request.cookies.get("ac_token")?.value;
 
   if (!token) {
@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
   }
 
   try {
-    const decodedToken = jwt.decode(token) as {
+    const decodedToken = JWT.decodeJwt(token) as {
       [key: string]: any;
       Role: string[];
     };
@@ -24,8 +24,8 @@ export function middleware(request: NextRequest) {
     const roleArray = decodedToken[Role];
 
     if (
-      request.nextUrl.pathname.startsWith("/dashboard") &&
-      request.nextUrl.pathname.startsWith("/posts") &&
+      (request.nextUrl.pathname.startsWith("/dashboard") ||
+        request.nextUrl.pathname.startsWith("/posts")) &&
       !roleArray.includes("ADMIN")
     ) {
       return NextResponse.redirect(new URL("/", request.url));
