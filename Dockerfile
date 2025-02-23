@@ -21,7 +21,6 @@ RUN bun run build
 FROM base AS runner
 WORKDIR /app
 
-
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN adduser --system --uid 1001 nextjs

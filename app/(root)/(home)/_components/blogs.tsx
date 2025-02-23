@@ -15,7 +15,7 @@ import { Fragment } from "react";
 
 export const Blogs = () => {
   const { data, isLoading, error } = useSWR<Blog[]>(`/Blogs`, () =>
-    fetchBlog(1, 5),
+    fetchBlog(1, 20),
   );
 
   if (error) console.log(error);
@@ -65,8 +65,8 @@ export const Blogs = () => {
                     </p>
                   </div>
                 </Link>
-                <div className="w-full md:w-1/2 flex flex-col gap-2">
-                  {blogs.map((blog) => (
+                <div className="w-full md:w-1/2 flex flex-col gap-2 mt-0.5">
+                  {blogs.splice(0, 4).map((blog) => (
                     <Link
                       href={`/blogs/${generateSlug(blog.title, blog.id)}`}
                       className="flex items-start gap-3"
@@ -78,17 +78,13 @@ export const Blogs = () => {
                         className="w-32 h-[5.5rem] object-fill rounded"
                       />
                       <div className="flex flex-col">
-                        <h3 className="font-semibold text-[14px] tracking-tight">
-                          {latestBlog.title}
+                        <h3 className="font-semibold text-[14px] tracking-tight tracking-tight">
+                          {blog.title}
                         </h3>
                         <p className="text-[12px]">
-                          {format(
-                            latestBlog.createAt,
-                            "dd 'tháng' MM 'năm' yyyy",
-                            {
-                              locale: vi,
-                            },
-                          )}
+                          {format(blog.createAt, "dd 'tháng' MM 'năm' yyyy", {
+                            locale: vi,
+                          })}
                         </p>
                       </div>
                     </Link>
