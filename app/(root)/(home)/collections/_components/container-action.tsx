@@ -67,7 +67,7 @@ export const Container = ({
                   </h1>
                   <div className="lg:flex hidden items-center space-x-1">
                     <span className="font-bold text-[13px]">
-                      {data?.result?.length || 0}
+                      {data?._totalItems || 0}
                     </span>
                     <span className="text-[13px] text-gray-700 font-medium">
                       sản phẩm

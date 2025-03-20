@@ -30,7 +30,7 @@ export const Render = () => {
     error,
     isLoading,
   } = useSWR<Pagination<Blog[]>>(
-    ["/Blogs/Author", { Page: currentPage, Limit: 8 }],
+    ["/Blogs/Author", { Page: currentPage }],
     ([url, params]) => fetcher(url, params),
   );
 
@@ -42,7 +42,7 @@ export const Render = () => {
 
   return (
     <div className={`${font.className}`}>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4">
         {isLoading ? (
           Array(4)
             .fill(0)

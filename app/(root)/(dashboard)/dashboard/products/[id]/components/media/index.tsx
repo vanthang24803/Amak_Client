@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
 import { Fragment, useState } from "react";
 import { UpdateMedia } from "./update-media";
+import FsLightbox from "fslightbox-react";
 
 type Props = {
   product: ProductDetail | undefined;
@@ -13,7 +14,10 @@ type Props = {
 
 export const Media = ({ product }: Props) => {
   const [open, setOpen] = useState(false);
-  const [showMore, setShowMore] = useState(false); // Trạng thái hiển thị thêm hình ảnh
+  const [showMore, setShowMore] = useState(false);
+  const [toggler, setToggler] = useState(false);
+
+  const urls = product?.photos.map((item) => item.url);
 
   const handleToggle = () => setOpen(!open);
 
@@ -43,8 +47,9 @@ export const Media = ({ product }: Props) => {
                 <img
                   key={item.id}
                   src={item.url}
-                  className="rounded"
-                  alt={`Product photo ${item.id}`}
+                  className="rounded cursor-pointer"
+                  onClick={() => setToggler(!toggler)}
+                  alt={`image-${item.id}`}
                 />
               ))}
             {product?.photos.length > 5 && !showMore && (
@@ -52,6 +57,7 @@ export const Media = ({ product }: Props) => {
                 <Button onClick={handleShowMore}>+ Xem thêm</Button>
               </div>
             )}
+            <FsLightbox toggler={toggler} sources={urls} />
           </Fragment>
         ) : (
           <p className="text-[13px] tracking-tighter">Chưa có hình ảnh</p>

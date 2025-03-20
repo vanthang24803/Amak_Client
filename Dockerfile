@@ -4,7 +4,7 @@ FROM base AS deps
 
 WORKDIR /app
 
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 
 FROM base AS builder
@@ -20,7 +20,6 @@ RUN bun run build
 
 FROM base AS runner
 WORKDIR /app
-
 
 ENV NEXT_TELEMETRY_DISABLED 1
 

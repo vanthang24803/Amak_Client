@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import { ModalReview } from "./review";
 import { SettingOrder } from "./settings";
 import { useCart } from "@/hooks/use-cart";
-import toast from "react-hot-toast";
 import { countDaysDifference } from "@/utils/date";
 import { CancelOrder } from "./cancel-order";
 
@@ -61,6 +60,10 @@ export const statusList: { [key: string]: React.ReactNode } = {
   ),
 };
 
+export const isWithin15Days = (date: string): boolean => {
+  return countDaysDifference(date) <= 15;
+};
+
 export const OrderData = ({ order }: Props) => {
   const router = useRouter();
 
@@ -71,16 +74,12 @@ export const OrderData = ({ order }: Props) => {
     router.push("/checkout");
   };
 
-  const isWithin15Days = (date: string): boolean => {
-    return countDaysDifference(date) <= 15;
-  };
-
-  const renderRefundButton = () => (
+  const renderRefundButton = (order: Order) => (
     <Button
       size="sm"
       variant="outline"
       className="rounded-sm"
-      onClick={() => toast.success("Đang phát triển")}
+      onClick={() => router.push(`/tra-hang/${order.id}`)}
     >
       Trả hàng / Hoàn tiền
     </Button>
@@ -100,7 +99,7 @@ export const OrderData = ({ order }: Props) => {
           </Button>
         ) : (
           <div className="flex items-center gap-2">
-            {isWithin15Days(order.updateAt) && renderRefundButton()}
+            {isWithin15Days(order.updateAt) && renderRefundButton(order)}
             <ModalReview orderId={order.id} />
           </div>
         );
@@ -184,7 +183,6 @@ export const OrderData = ({ order }: Props) => {
               </span>
             </div>
           </div>
-
           <Separator />
         </div>
       </div>

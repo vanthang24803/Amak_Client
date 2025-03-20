@@ -6,6 +6,7 @@ import { Wrench } from "lucide-react";
 import Image from "next/image";
 import { Fragment, useState } from "react";
 import { UpdateThumbnail } from "./update-thumbnail";
+import FsLightbox from "fslightbox-react";
 
 type Props = {
   product: ProductDetail | undefined;
@@ -13,6 +14,7 @@ type Props = {
 
 export const Thumbnail = ({ product }: Props) => {
   const [open, setOpen] = useState(false);
+  const [toggler, setToggler] = useState(false);
 
   const handleToggle = () => setOpen(!open);
 
@@ -37,8 +39,9 @@ export const Thumbnail = ({ product }: Props) => {
         <Image
           width={160}
           height={160}
-          className="rounded"
+          className="rounded cursor-pointer"
           src={product?.thumbnail || ""}
+          onClick={() => setToggler(!toggler)}
           alt="thumbnail"
         />
       </div>
@@ -47,6 +50,7 @@ export const Thumbnail = ({ product }: Props) => {
         handleToggle={handleToggle}
         product={product}
       />
+      <FsLightbox toggler={toggler} sources={[product?.thumbnail ?? ""]} />
     </Fragment>
   );
 };
