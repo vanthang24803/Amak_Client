@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Option, Photo } from "@/types";
 import Link from "next/link";
 import { CellAction } from "./cell-action";
+import Image from "next/image";
 
 export type ProductColumn = {
   id: string;
@@ -22,7 +23,14 @@ export const columns: ColumnDef<ProductColumn>[] = [
     header: "Hình ảnh",
     cell: ({ row }) => (
       <Link href={row.original.thumbnail} target="_blank">
-        <img src={row.original.thumbnail} className="w-12 h-12 object-cover" />
+        <Image
+          src={row.original.thumbnail}
+          width={48}
+          height={48}
+          alt={row.original.name}
+          objectFit="cover"
+        />
+        {/* <img src={row.original.thumbnail} className="w-12 h-12 object-cover" /> */}
       </Link>
     ),
   },

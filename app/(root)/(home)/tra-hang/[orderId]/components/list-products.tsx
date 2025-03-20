@@ -4,6 +4,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Order } from "@/types";
 import { convertPrice } from "@/utils/price";
 import { X } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -35,11 +36,15 @@ export const ListProducts = ({ order }: Props) => {
               {order.orderDetails.map((item) => (
                 <div key={item.productId} className="cursor-pointer">
                   <div className="flex space-x-4">
-                    <img
+                    <Image
                       src={item.thumbnail}
                       alt="thumbnail"
-                      className="w-[20%] md:w-[10%] lg:w-[5%] object-cover"
+                      width={1000}
+                      height={1000}
+                      className="w-[22%] md:w-[10%] lg:w-[6%]"
+                      objectFit="cover"
                       onClick={() => router.push(`/products/${item.productId}`)}
+                      style={{ cursor: "pointer" }}
                     />
                     <div className="flex flex-col w-full gap-1">
                       <div className="flex items-center justify-between">
