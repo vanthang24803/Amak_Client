@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  be:
+    container_name: amak_be
+    image: vanthang24803/amak-api-prod:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_URLS=http://*:8080
+    depends_on:
+      - redis
+      - rabbitmq
+    networks:
+      - amak
+
+  redis:
+    image: redis:latest
+    container_name: amak_prod_redis
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - amak
+
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: amak_prod_rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - amak
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+networks:
+  amak:
+    driver: bridge
+
+volumes:
+  redis-data:

@@ -1,0 +1,107 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: amak-env
+data:
+  NEXT_PUBLIC_API_URL: "http://amak-be:8080"
+  NODE_ENV: "production"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: amak-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: amak-fe
+  template:
+    metadata:
+      labels:
+        app: amak-fe
+    spec:
+      containers:
+        - name: amak-fe
+          image: amak-fe:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: amak-env
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: amak-fe
+spec:
+  selector:
+    app: amak-fe
+  ports:
+    - port: 3000
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  nginx.conf: |
+    events {}
+
+    http {
+      server {
+        listen 80;
+
+        location / {
+          proxy_pass http://amak-fe:3000;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        }
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: amak-fe-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: amak-fe-nginx
+  template:
+    metadata:
+      labels:
+        app: amak-fe-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: amak-fe-nginx
+spec:
+  selector:
+    app: amak-fe-nginx
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
